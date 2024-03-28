@@ -1,44 +1,62 @@
 <div class="dark-blue">
   <section class="recipe-form">
-    <form>
+    <div class="title">
       <h2>Rezept erstellen</h2>
-      <!-- Input für Name -->
-      <div class="form-group">
-        <span class="p-float-label">
-          <input pInputText id="recipe_name" [(ngModel)]="recipe.name" />
-          <label htmlFor="recipe_name">Rezeptname</label>
-        </span>
-      </div>
-
-      <!-- Input für Beschreibung -->
-      <div class="form-group">
-        <span class="p-float-label">
-          <input pInputText id="recipe_description" [(ngModel)]="recipe.description" />
-          <label htmlFor="recipe_description">Rezeptbeschreibung</label>
-        </span>
-      </div>
-
-      <!-- Dynamisches Hinzufügen von Zutaten -->
-      <div class="form-group">
-        <label>Zutaten:</label>
-        @for (ingredient of recipe.ingredients; track ingredient.name){
-        <div class="ingredient">
-          <input type="text" class="form-control" placeholder="Zutat" [(ngModel)]="ingredient.name">
-          <input type="text" class="form-control" placeholder="Menge" [(ngModel)]="ingredient.quantity">
-          <button type="button" (click)="removeIngredient(ingredient.name)">Entfernen</button>
+    </div>
+    <form class="page">
+      <section class="payment">
+        <div class="name-box box">
+          <h2 class="box-title">NAME</h2>
+          <div class="input-group">
+            <input type="text" class="user-input-input" id="name" name="name"/>
+          </div>
         </div>
-        <button type="button" (click)="addIngredient()">Zutat hinzufügen</button>
-        }
-      </div>
-
-      <!-- Upload für Bild -->
-      <div class="form-group">
-        <label for="recipe-image">Bild hochladen:</label>
-        <input type="file" class="form-control-file" id="recipe-image">
-      </div>
-
-      <!-- Submit-Button -->
-      <button type="submit" class="btn btn-primary">Rezept erstellen</button>
+        <div class="cc-box box">
+          <h2 class="box-title">ZUBEREITUNG</h2>
+          <div class="input-group">
+            <textarea class="user-input-textarea" rows="5" cols="55" pInputTextarea [(ngModel)]="recipe.preparation" name="preparation"></textarea>
+          </div>
+        </div>
+      </section>
+      <section class="order box">
+        <h2 class="box-title">ZUTATEN</h2>
+        <div class="ingridient-creator">
+          <input pInputText placeholder="Name" name="Name" [(ngModel)]="ingredientName"/>
+          <input type="number" pInputText placeholder="Menge" name="Menge"[(ngModel)]="ingredientQuantity"/>
+          <p-button icon="pi pi-plus" [rounded]="true" [text]="true" severity="success" (click)="addIngredient(ingredientName,ingredientQuantity)"></p-button>
+        </div>
+        <p></p>
+        <p-scrollPanel [style]="{ width: '100%', height: '250px' }">
+          <ul class="items">
+            @for (ingredient of recipe.ingredients; track ingredient){
+              <li class="item">
+                <div class="item-quantity">{{ingredient.quantity}}x</div>
+                <div class="item-title">{{ingredient.name}}</div>
+                <div class="item-price"><p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger"></p-button></div>
+              </li>
+            }
+          </ul>
+        </p-scrollPanel>
+      </section>
+      <section class="total">
+        <table class="totals-table">
+          <tbody>
+          <tr>
+            <td>Subtotal:</td>
+            <td>$19.27</td>
+          </tr>
+          <tr>
+            <td>Tax:</td>
+            <td>$0.96</td>
+          </tr>
+          <tr class="final-totals">
+            <td>Total:</td>
+            <td>$20.23</td>
+          </tr>
+          </tbody>
+        </table>
+        <button class="checkout" type="button">Place order</button>
+      </section>
     </form>
   </section>
 </div>
