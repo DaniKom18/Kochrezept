@@ -1,10 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {InputTextModule} from "primeng/inputtext";
 import {FormsModule} from "@angular/forms";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {ButtonModule} from "primeng/button";
+import {InputGroupModule} from "primeng/inputgroup";
+import {InputGroupAddonModule} from "primeng/inputgroupaddon";
+import {ScrollPanelModule} from "primeng/scrollpanel";
 
 interface Recipe{
   name:string,
-  description:string,
+  preparation:string,
   ingredients:Ingredients[],
   image:string,
 }
@@ -19,7 +24,12 @@ interface Ingredients{
   standalone: true,
   imports: [
     InputTextModule,
-    FormsModule
+    FormsModule,
+    InputTextareaModule,
+    ButtonModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    ScrollPanelModule
   ],
   templateUrl: './rezept-erstellen.component.html',
   styleUrl: './rezept-erstellen.component.css'
@@ -27,8 +37,10 @@ interface Ingredients{
 export class RezeptErstellenComponent implements OnInit{
 
   currentSection: string = "info"
+  recipe: Recipe = {name: "", preparation: "", image: "", ingredients: []}
 
-  recipe: Recipe = {name: "", description: "", image: "", ingredients: []}
+  ingredientName: string = ""
+  ingredientQuantity: number | null = null
 
   ngOnInit() {
 
@@ -44,7 +56,7 @@ export class RezeptErstellenComponent implements OnInit{
 
   nextSection() {
     if (this.currentSection === 'info') {
-      if (this.recipe.name && this.recipe.description){
+      if (this.recipe.name && this.recipe.preparation){
         this.currentSection = 'ingredients';
       }
     } else if (this.currentSection === 'ingredients') {
@@ -63,8 +75,9 @@ export class RezeptErstellenComponent implements OnInit{
     return false;
   }
 
-  addIngredient() {
-
+  addIngredient(ingredientName: string, ingredientQuantity: number | null) {
+    const ingredient: Ingredients = {name: ingredientName, quantity: ingredientQuantity!}
+    this.recipe.ingredients.push(ingredient)
   }
 
   removeIngredient(i: string) {
