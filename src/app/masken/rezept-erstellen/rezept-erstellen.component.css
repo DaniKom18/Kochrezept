@@ -1,0 +1,13 @@
+.dark-blue{
+  background-color: #011526;
+  min-height: 875px;
+}
+
+.recipe-form{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  width: 1200px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
