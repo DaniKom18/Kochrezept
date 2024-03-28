@@ -1,0 +1,44 @@
+<div class="dark-blue">
+  <section class="recipe-form">
+    <form>
+      <h2>Rezept erstellen</h2>
+      <!-- Input für Name -->
+      <div class="form-group">
+        <span class="p-float-label">
+          <input pInputText id="recipe_name" [(ngModel)]="recipe.name" />
+          <label htmlFor="recipe_name">Rezeptname</label>
+        </span>
+      </div>
+
+      <!-- Input für Beschreibung -->
+      <div class="form-group">
+        <span class="p-float-label">
+          <input pInputText id="recipe_description" [(ngModel)]="recipe.description" />
+          <label htmlFor="recipe_description">Rezeptbeschreibung</label>
+        </span>
+      </div>
+
+      <!-- Dynamisches Hinzufügen von Zutaten -->
+      <div class="form-group">
+        <label>Zutaten:</label>
+        @for (ingredient of recipe.ingredients; track ingredient.name){
+        <div class="ingredient">
+          <input type="text" class="form-control" placeholder="Zutat" [(ngModel)]="ingredient.name">
+          <input type="text" class="form-control" placeholder="Menge" [(ngModel)]="ingredient.quantity">
+          <button type="button" (click)="removeIngredient(ingredient.name)">Entfernen</button>
+        </div>
+        <button type="button" (click)="addIngredient()">Zutat hinzufügen</button>
+        }
+      </div>
+
+      <!-- Upload für Bild -->
+      <div class="form-group">
+        <label for="recipe-image">Bild hochladen:</label>
+        <input type="file" class="form-control-file" id="recipe-image">
+      </div>
+
+      <!-- Submit-Button -->
+      <button type="submit" class="btn btn-primary">Rezept erstellen</button>
+    </form>
+  </section>
+</div>

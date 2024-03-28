@@ -1,0 +1,18 @@
+.dark-blue{
+  background-color: #011526;
+  min-height: 721px;
+}
+
+
+.recipe-panel{
+  width: 1200px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+.container{
+  display: flex;
+  column-gap: 3rem;
+  row-gap: 2rem;
+  flex-wrap: wrap;
+}

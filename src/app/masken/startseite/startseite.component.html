@@ -1,0 +1,13 @@
+<div class="light-blue">
+  <section class="search-bar">
+    <p-multiSelect [options]="ingredients" [maxSelectedLabels]="0" [(ngModel)]="selectedIngredient" optionLabel="name" placeholder="Zutaten Filter"></p-multiSelect>
+    <span class="p-input-icon-right">
+      <i class="pi pi-search"></i>
+      <input class="search-text" type="text" pInputText [(ngModel)]="search" placeholder="Suche Rezept..."/>
+    </span>
+  </section>
+</div>
+
+<div class="gradient"></div>
+
+<app-rezept-panel></app-rezept-panel>

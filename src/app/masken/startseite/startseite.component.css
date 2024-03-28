@@ -1,0 +1,36 @@
+.light-blue{
+  background-color: #4E64A6;
+  height: 150px;
+}
+
+.search-bar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1200px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+.search-text{
+  width: 600px;
+}
+
+:host ::ng-deep  p-overlay > div{
+  min-width: 300px !important;
+}
+
+:host ::ng-deep .p-multiselect-label
+{
+  width: 150px ;
+}
+
+:host ::ng-deep .p-inputtext
+{
+  border-radius: 0;
+}
+
+:host ::ng-deep .p-multiselect
+{
+  border-radius: 0;
+}
