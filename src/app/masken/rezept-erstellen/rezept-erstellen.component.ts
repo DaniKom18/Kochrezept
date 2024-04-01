@@ -6,6 +6,8 @@ import {ButtonModule} from "primeng/button";
 import {InputGroupModule} from "primeng/inputgroup";
 import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 import {ScrollPanelModule} from "primeng/scrollpanel";
+import {FileUploadModule} from "primeng/fileupload";
+import {DropdownModule} from "primeng/dropdown";
 
 interface Recipe{
   name:string,
@@ -16,7 +18,8 @@ interface Recipe{
 
 interface Ingredients{
   name: string,
-  quantity:number
+  quantity:number,
+  measure:string
 }
 
 @Component({
@@ -29,59 +32,41 @@ interface Ingredients{
     ButtonModule,
     InputGroupModule,
     InputGroupAddonModule,
-    ScrollPanelModule
+    ScrollPanelModule,
+    FileUploadModule,
+    DropdownModule
   ],
   templateUrl: './rezept-erstellen.component.html',
   styleUrl: './rezept-erstellen.component.css'
 })
 export class RezeptErstellenComponent implements OnInit{
 
-  currentSection: string = "info"
   recipe: Recipe = {name: "", preparation: "", image: "", ingredients: []}
 
+  // Ingredient Creation Section
   ingredientName: string = ""
   ingredientQuantity: number | null = null
+  ingredientMeasure: string = ""
+
+  measures: string[] | undefined;
 
   ngOnInit() {
-
+    this.measures = ["mg", "g", "ml", "L", "TL", "EL", "Stück"]
   }
 
-  previousSection() {
-    if (this.currentSection === 'image') {
-      this.currentSection = 'ingredients';
-    } else if (this.currentSection === 'ingredients') {
-      this.currentSection = 'info';
-    }
-  }
-
-  nextSection() {
-    if (this.currentSection === 'info') {
-      if (this.recipe.name && this.recipe.preparation){
-        this.currentSection = 'ingredients';
-      }
-    } else if (this.currentSection === 'ingredients') {
-      if (this.recipe.ingredients.length > 0) {
-        this.currentSection = 'image';
-      }
-    }
-  }
-
-  finishAddingRecipe() {
-    // TODO
-  }
-
-  isFormValid() {
-    // TODO
-    return false;
-  }
-
-  addIngredient(ingredientName: string, ingredientQuantity: number | null) {
-    const ingredient: Ingredients = {name: ingredientName, quantity: ingredientQuantity!}
+  addIngredient(name: string, quantity: number | null, measure:string) {
+    if (!name || !quantity || !measure) return
+    const ingredient: Ingredients = {name, quantity, measure}
     this.recipe.ingredients.push(ingredient)
+    this.resetIngredientCreation()
   }
-
-  removeIngredient(i: string) {
-
+  resetIngredientCreation(){
+    this.ingredientQuantity = null
+    this.ingredientName = ""
+    this.ingredientMeasure = ""
+  }
+  removeIngredient(ingredient: Ingredients) {
+    this.recipe.ingredients = this.recipe.ingredients.filter((i: Ingredients) => (i !== ingredient))
   }
 
 }
