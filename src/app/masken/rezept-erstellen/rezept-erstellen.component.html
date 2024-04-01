@@ -4,57 +4,44 @@
       <h2>Rezept erstellen</h2>
     </div>
     <form class="page">
-      <section class="payment">
-        <div class="name-box box">
+      <section class="recipe-details">
+        <div class="box">
           <h2 class="box-title">NAME</h2>
           <div class="input-group">
             <input type="text" class="user-input-input" id="name" name="name"/>
           </div>
         </div>
-        <div class="cc-box box">
+        <div class="box">
           <h2 class="box-title">ZUBEREITUNG</h2>
           <div class="input-group">
             <textarea class="user-input-textarea" rows="5" cols="55" pInputTextarea [(ngModel)]="recipe.preparation" name="preparation"></textarea>
           </div>
         </div>
       </section>
-      <section class="order box">
+      <section class="ingredients box">
         <h2 class="box-title">ZUTATEN</h2>
         <div class="ingridient-creator">
           <input pInputText placeholder="Name" name="Name" [(ngModel)]="ingredientName"/>
-          <input type="number" pInputText placeholder="Menge" name="Menge"[(ngModel)]="ingredientQuantity"/>
-          <p-button icon="pi pi-plus" [rounded]="true" [text]="true" severity="success" (click)="addIngredient(ingredientName,ingredientQuantity)"></p-button>
+          <input type="number" min="1" pInputText style="width: 100px" placeholder="Menge" name="Menge"[(ngModel)]="ingredientQuantity"/>
+          <p-dropdown name="measure" [options]="measures" [(ngModel)]="ingredientMeasure" [style]="{width: '200px'}" placeholder="Mengeneinheit"></p-dropdown>
+          <p-button icon="pi pi-plus" [rounded]="true" [text]="true" severity="success" (click)="addIngredient(ingredientName,ingredientQuantity,ingredientMeasure)"></p-button>
         </div>
-        <p></p>
-        <p-scrollPanel [style]="{ width: '100%', height: '250px' }">
+        <p-scrollPanel [style]="{ width: '100%', height: '240px' }">
           <ul class="items">
             @for (ingredient of recipe.ingredients; track ingredient){
               <li class="item">
-                <div class="item-quantity">{{ingredient.quantity}}x</div>
+                <div class="item-quantity">{{ingredient.quantity}} {{ingredient.measure}}</div>
                 <div class="item-title">{{ingredient.name}}</div>
-                <div class="item-price"><p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger"></p-button></div>
+                <div class="item-delete"><p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" (click)="removeIngredient(ingredient)"></p-button></div>
               </li>
             }
           </ul>
         </p-scrollPanel>
       </section>
       <section class="total">
-        <table class="totals-table">
-          <tbody>
-          <tr>
-            <td>Subtotal:</td>
-            <td>$19.27</td>
-          </tr>
-          <tr>
-            <td>Tax:</td>
-            <td>$0.96</td>
-          </tr>
-          <tr class="final-totals">
-            <td>Total:</td>
-            <td>$20.23</td>
-          </tr>
-          </tbody>
-        </table>
+
+
+
         <button class="checkout" type="button">Place order</button>
       </section>
     </form>

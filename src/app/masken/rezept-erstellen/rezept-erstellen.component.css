@@ -1,6 +1,7 @@
 .dark-blue{
   background-color: #011526;
   min-height: 875px;
+  padding-top: 50px;
 }
 
 .recipe-form{
@@ -10,12 +11,13 @@
   width: 1200px;
   margin: 0 auto;
   padding-top: 50px;
+  background-color: bisque;
+  border-radius: 30px;
 }
 
 .title{
   display: flex;
   justify-content: center;
-  color: white;
 }
 
 /*
@@ -29,7 +31,7 @@
   padding: 30px;
   margin: 0 auto;
   grid-template-areas:
-    "payment order"
+    "recipe-details ingredients"
     "total total";
   grid-template-columns: 1fr 1fr;;
 }
@@ -49,12 +51,12 @@
   font-size: 16px;
 }
 
-.order {
-  grid-area: order;
+.ingredients {
+  grid-area: ingredients;
 }
 
-.payment {
-  grid-area: payment;
+.recipe-details {
+  grid-area: recipe-details;
 }
 
 .total {
@@ -64,6 +66,7 @@
 .ingridient-creator{
   display: flex;
   column-gap: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .items {
@@ -78,9 +81,9 @@
 
   padding: 10px 0;
 
-  grid-template-columns: 1fr 8fr 1fr;
+  grid-template-columns: 2fr 8fr 1fr;
   grid-template-areas:
-    "quantity title   price";
+    "quantity title   delete";
 
   row-gap: 8px;
 
@@ -105,8 +108,8 @@
   flex-wrap: wrap;
 }
 
-.item-price {
-  grid-area: price;
+.item-delete {
+  grid-area: delete;
   font-weight: bold;
 }
 
@@ -145,6 +148,7 @@
   padding: 8px;
   width: 100%;
   font-size: 18px;
+  resize: none;
 }
 
 .short-input {
