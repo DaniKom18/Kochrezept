@@ -3,12 +3,14 @@ import {RezeptErstellenComponent} from "./masken/rezept-erstellen/rezept-erstell
 import {MeineFavoritenComponent} from "./masken/meine-favoriten/meine-favoriten.component";
 import {MeineRezepteComponent} from "./masken/meine-rezepte/meine-rezepte.component";
 import {StartseiteComponent} from "./masken/startseite/startseite.component";
+import {RezeptDetailViewComponent} from "./masken/rezept-detail-view/rezept-detail-view.component";
 
 export const routes: Routes = [
   {path: 'startseite', component: StartseiteComponent },
   {path: 'meine-rezepte', component: MeineRezepteComponent },
   {path: 'meine-favoriten', component: MeineFavoritenComponent },
   {path: 'rezept-erstellen', component: RezeptErstellenComponent },
+  {path: 'rezept-details/:id', component: RezeptDetailViewComponent },
   {path: "", redirectTo:"/startseite", pathMatch:"full"},
   {path: "**", redirectTo:"/startseite", pathMatch:"full"},
 ];
