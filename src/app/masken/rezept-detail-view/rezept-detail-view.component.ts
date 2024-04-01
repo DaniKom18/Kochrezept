@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-rezept-detail-view',
@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './rezept-detail-view.component.css'
 })
 export class RezeptDetailViewComponent {
+  recipeId: number = -1;
 
+  @Input() //Mapped id die durch die URL übergeben wurde auf recipeId
+  set id(value: number){
+    this.recipeId = value;
+  }
 }
