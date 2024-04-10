@@ -8,6 +8,7 @@ import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 import {ScrollPanelModule} from "primeng/scrollpanel";
 import {FileUploadModule} from "primeng/fileupload";
 import {DropdownModule} from "primeng/dropdown";
+import {FileUploadComponent} from "./file-upload/file-upload.component";
 
 interface Recipe{
   name:string,
@@ -34,7 +35,8 @@ interface Ingredients{
     InputGroupAddonModule,
     ScrollPanelModule,
     FileUploadModule,
-    DropdownModule
+    DropdownModule,
+    FileUploadComponent
   ],
   templateUrl: './rezept-erstellen.component.html',
   styleUrl: './rezept-erstellen.component.css'
