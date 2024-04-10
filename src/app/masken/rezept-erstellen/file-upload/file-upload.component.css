@@ -1,0 +1,19 @@
+.file-input {
+  display: none;
+}
+
+.file-upload{
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  color: black;
+  overflow: hidden;
+  max-width: 400px;
+}
+
+.text{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
