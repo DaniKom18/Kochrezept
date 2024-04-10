@@ -28,6 +28,7 @@
 14. **Teilen von Rezepten**: Rezepte können geteilt werden, sofern sie öffentlich sind.
 15. **Account-Löschung**: Nutzer können ihren Account löschen.
 16. **Benutzernamen ändern**: Nutzer haben die Möglichkeit, ihren Benutzernamen zu ändern.
-17. **XP-System für Bewertungen??**:
-    - Anzeige von Levels im User-Profil basierend auf dem erhaltenen Feedback und den Sternen.
-18. **Feedback zu Rezeptbewertungen**: Anzeige darüber, wie viele Nutzer ein Rezept bewertet haben und der Durchschnitt der Sternebewertungen.
+17. **XP Balken anzeige basierend auf dem erhaltenen Sternen**:
+18. **Anzeige von Levels im User-Profil**: Abhängig von XP
+19. **LeaderBoard von den höchsten 10 Level**
+20. **Feedback zu Rezeptbewertungen**: Anzeige darüber, wie viele Nutzer ein Rezept bewertet haben und der Durchschnitt der Sternebewertungen.
