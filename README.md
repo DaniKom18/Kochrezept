@@ -9,6 +9,14 @@
   - **Testing**: Unit Tests
   - **Clients durch OpenApi generieren**: Automatische Erstellung von Frontend-Clients basierend auf der OpenAPI-Spezifikation.
 - **MySql**: Datenbanksystem für die Speicherung aller Daten.
+- **Security**: KeyCloak -> Anmelden/Abmelden + JWT für Kommunikation zwischen Frontend und Backend
+
+## Anmerkung
+
+In Spring Boot sollten 2 Profile vorhanden sein, zum einem ein Test Profil und zum anderen ein Production Profil.
+Das Test Profil validiert keine JWT, damit SOAPUI Tests möglich sind ohne JWT.
+Das Prod profil sollte hingegen die JWT validieren.
+
 
 ## Funktionale Anforderungen
 
