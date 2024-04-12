@@ -1,15 +1,4 @@
-.dark-blue{
-  background-color: #011526;
-  min-height: 875px;
-  padding-top: 50px;
-}
-
 .recipe-form{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 1200px;
-  margin: 0 auto;
   background-color: bisque;
   border-radius: 30px;
 }
