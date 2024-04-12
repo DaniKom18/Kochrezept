@@ -1,0 +1,57 @@
+.leaderboard {
+  text-align: center;
+}
+
+.leaderboard h2 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.leaderboard-list {
+  max-width: 600px;
+  margin: 0 auto;
+  list-style: none;
+  padding: 0;
+}
+
+.leaderboard-item {
+  background: bisque;
+  color: black;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.position {
+  font-size: 2em;
+  font-weight: bold;
+  width: 50px; /* Fixed width for position alignment */
+  margin-right: 20px
+}
+
+.name {
+  max-width: 350px;
+  flex-grow: 1;
+  text-align: left; /* Left align the name */
+  margin-right: auto; /* Push everything else to the right */
+  font-size: 1.2em;
+  font-weight: bold;
+  white-space: nowrap; /* Verhindert Umbruch des Textes */
+  overflow: hidden; /* Versteckt den überlaufenden Text */
+  text-overflow: ellipsis; /* Zeigt Ellipsen an, wenn der Text überläuft */
+}
+
+.score {
+  width: 50px;
+  text-align: right;
+  font-weight: bold;
+  right: 10px; /* Align score to the far right */
+}
+
+.trophy-icon {
+  font-size: 1.5em;
+  margin-right: 10px;
+}
