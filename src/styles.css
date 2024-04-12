@@ -11,3 +11,14 @@ body{
   height: 4px;
   background: linear-gradient(90deg, rgba(235,0,255,1) 0%, rgba(0,212,255,1) 100%);
 }
+
+.dark-blue-page{
+  background-color: #011526;
+  min-height: 875px;
+  padding-top: 50px;
+}
+
+.page-container{
+  width: 1200px;
+  margin: 0 auto;
+}
