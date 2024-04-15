@@ -1,9 +1,9 @@
 .recipe-form{
-  background-color: bisque;
   border-radius: 30px;
 }
 
 .title{
+  color: var(--text);
   display: flex;
   justify-content: center;
 }
@@ -12,12 +12,11 @@
 
  */
 .page {
+  color: var(--text);
+  margin-top: 15px;
   display: grid;
   row-gap: 30px;
   column-gap: 30px;
-  width: 100%;
-  padding: 30px;
-  margin: 0 auto;
   grid-template-areas:
     "recipe-details ingredients"
     "file-upload submit";
@@ -25,7 +24,7 @@
 }
 
 .box {
-  background-color: #FFD1A1;
+  background-color: var(--secondary20);
   border-radius: 5px;
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
   padding: 15px;
@@ -34,7 +33,7 @@
 }
 
 .box-title {
-  color: #885a2d;
+  color: var(--text);
   font-weight: normal;
   font-size: 16px;
 }
@@ -64,7 +63,7 @@
 }
 
 .item {
-  border-bottom: 2px solid #DDB892;
+  border-bottom: 2px solid var(--text);
   display: grid;
 
   padding: 10px 0;
@@ -101,27 +100,14 @@
   font-weight: bold;
 }
 
-.item-options-list {
-  grid-area: options;
-  color: #B08968;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-size: 14px;
-}
-
-.item-option {
-  margin-bottom: 5px;
-}
-
 .input-group {
   margin-bottom: 20px;
 }
 
 .user-input-input {
-  color: #885a2d;
+  color: var(--text);
   background-color: rgba(0,0,0,0);
-  border: 2px #885a2d solid;
+  border: 2px var(--primary) solid;
   padding: 8px;
   border-radius: 100px;
   width: 100%;
@@ -130,9 +116,9 @@
 }
 
 .user-input-textarea{
-  color: #885a2d;
+  color: var(--text);
   background-color: rgba(0,0,0,0);
-  border: 2px #885a2d solid;
+  border: 2px var(--primary) solid;
   padding: 8px;
   width: 100%;
   font-size: 18px;
@@ -152,7 +138,7 @@
 }
 
 .submit-btn {
-  background-color: #FFD1A1;
+  background-color: var(--primary);
   border: none;
   padding: 10px 30px;
   width: 100%;

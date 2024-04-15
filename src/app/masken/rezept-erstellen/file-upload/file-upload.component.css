@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   column-gap: 10px;
-  color: black;
+  color: var(--text);
   overflow: hidden;
   max-width: 400px;
 }
@@ -17,3 +17,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+:host ::ng-deep .p-button{
+  color: #ffffff;
+  background: var(--primary);
+  border: 1px solid var(--primary);
+}
+

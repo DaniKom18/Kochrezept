@@ -2,7 +2,7 @@
        (change)="onFileSelected($event)" #fileUpload>
 
 <div class="file-upload">
-  <p-button (click)="fileUpload.click()" [rounded]="true" severity="warning" icon="pi pi-upload"></p-button>
+  <p-button (click)="fileUpload.click()" [rounded]="true" icon="pi pi-upload"></p-button>
   <div class="text">
     {{fileName || "No file uploaded yet."}}
   </div>
