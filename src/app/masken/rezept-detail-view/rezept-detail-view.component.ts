@@ -1,9 +1,12 @@
 import {Component, Input} from '@angular/core';
+import {ButtonModule} from "primeng/button";
 
 @Component({
   selector: 'app-rezept-detail-view',
   standalone: true,
-  imports: [],
+  imports: [
+    ButtonModule
+  ],
   templateUrl: './rezept-detail-view.component.html',
   styleUrl: './rezept-detail-view.component.css'
 })
