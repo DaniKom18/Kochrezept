@@ -4,3 +4,16 @@
   row-gap: 2rem;
   flex-wrap: wrap;
 }
+
+.fav-btn{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+}
+
+.card-link{
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
+}
