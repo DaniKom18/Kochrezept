@@ -12,31 +12,6 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements OnInit {
-  items: MenuItem[] | undefined;
+export class NavbarComponent {
 
-  ngOnInit() {
-    this.items = [
-      {
-        items: [
-          {
-            label: 'Mein Profil',
-            icon: 'pi pi-refresh'
-          },
-        ]
-      },
-      {
-        separator: true
-      },
-      {
-        items: [
-          {
-            label: 'Abmelden',
-            icon: 'pi pi-upload',
-            routerLink: '/fileupload'
-          }
-        ]
-      }
-    ];
-  }
 }
