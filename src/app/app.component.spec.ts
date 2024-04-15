@@ -1,10 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {NavbarComponent} from "./shared-components/navbar/navbar.component";
+import {RouterTestingModule} from "@angular/router/testing";
+import {By} from "@angular/platform-browser";
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [RouterTestingModule, AppComponent, NavbarComponent],
     }).compileComponents();
   });
 
@@ -14,16 +17,11 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'Kochrezept' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('Kochrezept');
-  });
-
-  it('should render title', () => {
+  it('should render the app-navbar component', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, Kochrezept');
+
+    const navbarElement = fixture.debugElement.query(By.directive(NavbarComponent));
+    expect(navbarElement).toBeTruthy();
   });
 });
