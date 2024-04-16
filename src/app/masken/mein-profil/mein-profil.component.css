@@ -1,0 +1,89 @@
+/* user-profile.component.css */
+.user-profile {
+  display:flex;
+  justify-content: center;
+}
+
+.progress-section {
+  display: flex;
+  column-gap: 15px;
+}
+
+.progress-bar {
+  width: 100%
+}
+
+.box{
+  background-color: var(--secondary20);
+  color: var(--text);
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid var(--secondary);
+  border-radius: 10px;
+}
+
+/*
+
+ */
+
+.user-card {
+  color: var(--text);
+  display: flex;
+  border: 1px solid var(--secondary);
+  background: var(--secondary20);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 700px; /* or your preferred width */
+  margin: 20px auto;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.user-card-left {
+  background-color: var(--secondary);
+  padding: 20px;
+  text-align: center;
+  width: 250px; /* fixed width */
+}
+
+.user-card-left .user-image img {
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.user-card-right {
+  padding: 20px;
+  width: 100%; /* takes the rest of the width */
+}
+
+.user-card-right h3{
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.info-group p {
+  margin: 0;
+  padding: 5px 0;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.social-links a {
+  margin: 0 10px;
+  color: #555; /* Color for your icons */
+}
+
+.social-links a:hover {
+  color: #000; /* Color for icons on hover */
+}
+
+.user-info{
+  display: flex;
+  justify-content: space-between;
+}
+
