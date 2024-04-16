@@ -1,1 +1,64 @@
-<p>mein-profil works!</p>
+<div class="page-content">
+  <div class="page-container">
+    <!--
+    <div class="user-profile">
+      <div class="user-info box">
+        <h2>{{ user.username }}</h2>
+        <p>{{ user.email }}</p>
+        <p-button label="Edit" icon="pi pi-pencil" (onClick)="onEdit()"></p-button>
+        <p-button label="Delete Account" icon="pi pi-trash" styleClass="p-button-danger" (onClick)="onDelete()"></p-button>
+      </div>
+      <div class="box">
+        <h2>Level</h2>
+        <div class="progress-section">
+          <div class="level">{{ user.level }}</div>
+          <div class="progress-bar">
+            <p-progressBar [value]="user.xp" [showValue]="true"></p-progressBar>
+          </div>
+          <div class="level">{{ user.level + 1}}</div>
+        </div>
+      </div>
+    </div>
+    -->
+    <div class="user-card">
+      <div class="user-card-left">
+        <div class="user-image">
+          <img src="https://img.icons8.com/bubbles/100/000000/user.png" alt="User Profile Image">
+        </div>
+        <h2>{{ user.username }}</h2>
+        <div class="edit-icon">
+          <i class="pi pi-pencil"></i>
+        </div>
+      </div>
+      <div class="user-card-right">
+        <h3>Information</h3>
+        <div class="user-info">
+          <div class="info-group">
+            <p>Email</p>
+            <p>G-Ez&#64;gmail.com</p>
+          </div>
+          <div class="info-group">
+            <p>Password</p>
+            <p>*************</p>
+          </div>
+        </div>
+        <div class="user-level">
+          <h3>Level</h3>
+          <div class="progress-section">
+            <div class="level">{{ user.level }}</div>
+            <div class="progress-bar">
+              <p-progressBar [value]="user.xp" [showValue]="true"></p-progressBar>
+            </div>
+            <div class="level">{{ user.level + 1}}</div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="#"><i class="mdi mdi-facebook feather icon-facebook"></i></a>
+          <a href="#"><i class="mdi mdi-twitter feather icon-twitter"></i></a>
+          <a href="#"><i class="mdi mdi-instagram feather icon-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
