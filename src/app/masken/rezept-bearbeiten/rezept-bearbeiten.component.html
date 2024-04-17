@@ -1,0 +1,9 @@
+<div class="page-content">
+  <section class="page-container recipe-form">
+    <app-rezept-verwaltung
+      [title]="'Rezept Bearbeiten'"
+      [recipe]="recipe"
+      (saveRecipe)="updateRecipe($event)"
+    ></app-rezept-verwaltung>
+  </section>
+</div>
