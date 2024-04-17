@@ -9,6 +9,7 @@ import {ScrollPanelModule} from "primeng/scrollpanel";
 import {FileUploadModule} from "primeng/fileupload";
 import {DropdownModule} from "primeng/dropdown";
 import {FileUploadComponent} from "./file-upload/file-upload.component";
+import {RezeptVerwaltungComponent} from "../../shared-components/rezept-verwaltung/rezept-verwaltung.component";
 
 interface Recipe{
   name:string,
@@ -36,39 +37,16 @@ interface Ingredients{
     ScrollPanelModule,
     FileUploadModule,
     DropdownModule,
-    FileUploadComponent
+    FileUploadComponent,
+    RezeptVerwaltungComponent
   ],
   templateUrl: './rezept-erstellen.component.html',
   styleUrl: './rezept-erstellen.component.css'
 })
-export class RezeptErstellenComponent implements OnInit{
+export class RezeptErstellenComponent{
 
-  recipe: Recipe = {name: "", preparation: "", image: "", ingredients: []}
 
-  // Ingredient Creation Section
-  ingredientName: string = ""
-  ingredientQuantity: number | null = null
-  ingredientMeasure: string = ""
-
-  measures: string[] | undefined;
-
-  ngOnInit() {
-    this.measures = ["mg", "g", "ml", "L", "TL", "EL", "Stück"]
+  createRecipe($event: Recipe) {
+    //TODO POST an server um ein neues Rezept zu erstellen
   }
-
-  addIngredient(name: string, quantity: number | null, measure:string) {
-    if (!name || !quantity || !measure) return
-    const ingredient: Ingredients = {name, quantity, measure}
-    this.recipe.ingredients.push(ingredient)
-    this.resetIngredientCreation()
-  }
-  resetIngredientCreation(){
-    this.ingredientQuantity = null
-    this.ingredientName = ""
-    this.ingredientMeasure = ""
-  }
-  removeIngredient(ingredient: Ingredients) {
-    this.recipe.ingredients = this.recipe.ingredients.filter((i: Ingredients) => (i !== ingredient))
-  }
-
 }
