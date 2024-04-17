@@ -1,11 +1,4 @@
 
-.title{
-  color: var(--text);
-  display: flex;
-  justify-content: center;
-}
-
-
 .toggle-switch {
   position: relative;
   display: inline-block;
@@ -62,6 +55,9 @@ input:checked + .slider:before {
   color: var(--text);
   font-weight: normal;
   font-size: 16px;
+}
+:host ::ng-deep .p-datatable>.p-datatable-wrapper {
+  border-radius: 16px;
 }
 
 .action-group{

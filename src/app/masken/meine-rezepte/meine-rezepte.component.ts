@@ -9,6 +9,7 @@ import {NgClass} from "@angular/common";
 interface Rezept{
   name: string,
   image: string,
+  rating: number,
 }
 @Component({
   selector: 'app-meine-rezepte',
@@ -25,7 +26,10 @@ interface Rezept{
   styleUrl: './meine-rezepte.component.css'
 })
 export class MeineRezepteComponent {
-  products:Rezept[] = [{name: 'Lebkuchen', image: 'lebkuchen'}]
+  products:Rezept[] = [
+    {name: 'Lebkuchen', image: 'https://images.pexels.com/photos/906054/pexels-photo-906054.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', rating: 3.4},
+    {name: 'Döner', image: 'https://images.pexels.com/photos/15202777/pexels-photo-15202777/free-photo-of-mahlzeit-fleisch-frisch-essensfotografie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', rating: 5.0}
+  ]
 
   editProduct(product: any) {
 
