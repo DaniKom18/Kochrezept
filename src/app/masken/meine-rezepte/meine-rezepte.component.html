@@ -3,7 +3,7 @@
 
     <!-- Rezepte des Users -->
     <div style="">
-      <p-table [value]="products" dataKey="id" >
+      <p-table [value]="recipes" dataKey="id" >
         <ng-template pTemplate="header">
           <tr class="lightblue">
               <th>Name</th>
@@ -39,8 +39,8 @@
             </td>
             <td>
               <div class="action-group">
-                <p-button class="view" icon="pi pi-external-link" severity="secondary" [rounded]="true" [text]="true" ></p-button>
-                <p-button class="edit" icon="pi pi-pencil" [text]="true" [rounded]="true" (click)="editProduct(product)"></p-button>
+                <p-button class="view" icon="pi pi-external-link" severity="secondary" [rounded]="true" [text]="true" [routerLink]="['/rezept-details', product.id]"></p-button>
+                <p-button class="edit" icon="pi pi-pencil" [text]="true" [rounded]="true" [routerLink]="['/rezept-brearbeiten', product.id]"></p-button>
                 <p-button class="delete" severity="danger"  [rounded]="true" icon="pi pi-times" [text]="true" (click)="deleteProduct(product)"></p-button>
               </div>
             </td>
