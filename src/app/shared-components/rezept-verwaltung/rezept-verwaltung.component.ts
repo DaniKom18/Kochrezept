@@ -6,20 +6,8 @@ import {FormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ScrollPanelModule} from "primeng/scrollpanel";
-
-interface Recipe{
-  id: number,
-  name:string,
-  preparation:string,
-  ingredients:Ingredients[],
-  image:string,
-}
-
-interface Ingredients{
-  name: string,
-  quantity:number,
-  measure:string
-}
+import {Recipe} from "../../models/recipe";
+import {Ingredient} from "../../models/ingredient";
 
 @Component({
   selector: 'app-rezept-verwaltung',
@@ -54,13 +42,13 @@ export class RezeptVerwaltungComponent implements OnInit{
     this.measures = ["mg", "g", "ml", "L", "TL", "EL", "Stück"]
     if (!this.recipe){
       console.log("Es wurde kein Rezept mitgegeben, rezept wird initialisiert")
-      this.recipe = {id: 0, name: "", preparation: "", image: "", ingredients: []}
+      this.recipe = {id: 0, name: "",rating:0, preparation: "", image: "", ingredients: []}
     }
   }
 
   addIngredient(name: string, quantity: number | null, measure:string) {
     if (!name || !quantity || !measure) return
-    const ingredient: Ingredients = {name, quantity, measure}
+    const ingredient: Ingredient = {name, quantity, measure}
     this.recipe.ingredients.push(ingredient)
     this.resetIngredientCreation()
   }
@@ -69,8 +57,8 @@ export class RezeptVerwaltungComponent implements OnInit{
     this.ingredientName = ""
     this.ingredientMeasure = ""
   }
-  removeIngredient(ingredient: Ingredients) {
-    this.recipe.ingredients = this.recipe.ingredients.filter((i: Ingredients) => (i !== ingredient))
+  removeIngredient(ingredient: Ingredient) {
+    this.recipe.ingredients = this.recipe.ingredients.filter((i: Ingredient) => (i !== ingredient))
   }
 
 
