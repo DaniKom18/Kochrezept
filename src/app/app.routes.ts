@@ -6,12 +6,14 @@ import {StartseiteComponent} from "./masken/startseite/startseite.component";
 import {RezeptDetailViewComponent} from "./masken/rezept-detail-view/rezept-detail-view.component";
 import {MeinProfilComponent} from "./masken/mein-profil/mein-profil.component";
 import {LeaderboardComponent} from "./masken/leaderboard/leaderboard.component";
+import {RezeptBearbeitenComponent} from "./masken/rezept-bearbeiten/rezept-bearbeiten.component";
 
 export const routes: Routes = [
   {path: 'startseite', component: StartseiteComponent },
   {path: 'meine-rezepte', component: MeineRezepteComponent },
   {path: 'meine-favoriten', component: MeineFavoritenComponent },
   {path: 'rezept-erstellen', component: RezeptErstellenComponent },
+  {path: 'rezept-brearbeiten/:id', component: RezeptBearbeitenComponent },
   {path: 'rezept-details/:id', component: RezeptDetailViewComponent },
   {path: 'profil', component: MeinProfilComponent },
   {path: 'leaderboard', component: LeaderboardComponent },
