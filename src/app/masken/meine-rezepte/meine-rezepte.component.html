@@ -1,65 +1,52 @@
 <div class="page-content">
   <section class="page-container recipe-form">
 
-    <div class="title">
-      <h2>Meine Rezepte</h2>
-    </div>
     <!-- Rezepte des Users -->
-    <p-table [value]="products" dataKey="id" >
-      <ng-template pTemplate="header">
-        <tr class="lightblue">
-            <th>Name</th>
-            <th>Bild</th>
-            <th>Sichtbarkeit</th>
-            <th>Anonym</th>
-            <th>Aktionen</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-product>
-        <tr>
-          <td>
-            <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input class="p-inputtext" type="text" [(ngModel)]="product.name">
-              </ng-template>
-              <ng-template pTemplate="output">
-                {{ product.name }}
-              </ng-template>
-            </p-cellEditor>
-          </td>
-          <td>
-            <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input class="p-inputtext" type="text" [(ngModel)]="product.image">
-              </ng-template>
-              <ng-template pTemplate="output">
-                {{ product.image }}
-              </ng-template>
-            </p-cellEditor>
-          </td>
-          <td>
-            <label class="toggle-switch">
-              <input type="checkbox" [(ngModel)]="product.visibility" (change)="toggleVisibility(product)">
-              <span class="slider"></span>
-            </label>
-          </td>
-          <td>
-            <label class="toggle-switch">
-              <input type="checkbox" [(ngModel)]="product.anonym" (change)="toggleAnonym(product)">
-              <span class="slider"></span>
-            </label>
-          </td>
-
-
-          <td>
-            <div class="action-group">
-              <p-button class="view" icon="pi pi-external-link" severity="secondary" [rounded]="true" [text]="true" ></p-button>
-              <p-button class="edit" icon="pi pi-pencil" [text]="true" [rounded]="true" (click)="editProduct(product)"></p-button>
-              <p-button class="delete" severity="danger"  [rounded]="true" icon="pi pi-times" [text]="true" (click)="deleteProduct(product)"></p-button>
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <div style="">
+      <p-table [value]="products" dataKey="id" >
+        <ng-template pTemplate="header">
+          <tr class="lightblue">
+              <th>Name</th>
+              <th>Bild</th>
+              <th>Bewertung</th>
+              <th>Sichtbarkeit</th>
+              <th>Anonym</th>
+              <th>Aktionen</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr>
+            <td>
+              {{ product.name }}
+            </td>
+            <td>
+              <img src="{{product.image}}" style="width: 100px; border-radius: 16px">
+            </td>
+            <td>
+              <i class="pi pi-star-fill"></i> {{ product.rating }}
+            </td>
+            <td>
+              <label class="toggle-switch">
+                <input type="checkbox" [(ngModel)]="product.visibility" (change)="toggleVisibility(product)">
+                <span class="slider"></span>
+              </label>
+            </td>
+            <td>
+              <label class="toggle-switch">
+                <input type="checkbox" [(ngModel)]="product.anonym" (change)="toggleAnonym(product)">
+                <span class="slider"></span>
+              </label>
+            </td>
+            <td>
+              <div class="action-group">
+                <p-button class="view" icon="pi pi-external-link" severity="secondary" [rounded]="true" [text]="true" ></p-button>
+                <p-button class="edit" icon="pi pi-pencil" [text]="true" [rounded]="true" (click)="editProduct(product)"></p-button>
+                <p-button class="delete" severity="danger"  [rounded]="true" icon="pi pi-times" [text]="true" (click)="deleteProduct(product)"></p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </section>
 </div>
