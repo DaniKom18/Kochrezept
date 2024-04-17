@@ -1,49 +1,7 @@
 <div class="page-content">
   <section class="page-container recipe-form">
-    <div class="title">
-      <h2>Rezept erstellen</h2>
-    </div>
-    <form class="page">
-      <section class="recipe-details">
-        <div class="box">
-          <h2 class="box-title">NAME</h2>
-          <div class="input-group">
-            <input type="text" class="user-input-input" id="name" name="name"/>
-          </div>
-        </div>
-        <div class="box">
-          <h2 class="box-title">ZUBEREITUNG</h2>
-          <div class="input-group">
-            <textarea class="user-input-textarea" rows="5" cols="55" pInputTextarea [(ngModel)]="recipe.preparation" name="preparation"></textarea>
-          </div>
-        </div>
-      </section>
-      <section class="ingredients box">
-        <h2 class="box-title">ZUTATEN</h2>
-        <div class="ingridient-creator">
-          <input pInputText placeholder="Name" name="Name" [(ngModel)]="ingredientName"/>
-          <input type="number" min="1" pInputText style="width: 100px" placeholder="Menge" name="Menge"[(ngModel)]="ingredientQuantity"/>
-          <p-dropdown name="measure" [options]="measures" [(ngModel)]="ingredientMeasure" [style]="{width: '200px'}" placeholder="Mengeneinheit"></p-dropdown>
-          <p-button icon="pi pi-plus" [rounded]="true" [text]="true" severity="success" (click)="addIngredient(ingredientName,ingredientQuantity,ingredientMeasure)"></p-button>
-        </div>
-        <p-scrollPanel [style]="{ width: '100%', height: '240px' }">
-          <ul class="items">
-            @for (ingredient of recipe.ingredients; track ingredient){
-              <li class="item">
-                <div class="item-quantity">{{ingredient.quantity}} {{ingredient.measure}}</div>
-                <div class="item-title">{{ingredient.name}}</div>
-                <div class="item-delete"><p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" (click)="removeIngredient(ingredient)"></p-button></div>
-              </li>
-            }
-          </ul>
-        </p-scrollPanel>
-      </section>
-      <section class="file-upload">
-        <app-file-upload></app-file-upload>
-      </section>
-      <section class="submit">
-        <button class="submit-btn" type="button">Rezept erstellen</button>
-      </section>
-    </form>
+    <app-rezept-verwaltung [title]="'Rezept Erstellen'"
+                           (saveRecipe)="createRecipe($event)"
+    ></app-rezept-verwaltung>
   </section>
 </div>
