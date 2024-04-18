@@ -14,7 +14,9 @@ import {Recipe} from "../../models/recipe";
 export class RezeptBearbeitenComponent {
   recipeId: number = -1;
 
-  recipe:Recipe = {id: 1, rating: 3, name: "Döner", preparation: "ajsiodjasidioa", image: "ioqaswdjioiqwoeqwioejqiow", ingredients: [{name: "Cluster Me Dady", measure:"ng", quantity:3}]}
+  recipe:Recipe = {
+    id: 1, rating: 3,visibility: true, isAnonymous:false , name: "Döner", preparation: "ajsiodjasidioa", image: "ioqaswdjioiqwoeqwioejqiow", ingredients: [{name: "Cluster Me Dady", measure:"ng", quantity:3}
+    ]}
 
   @Input() //Mapped id die durch die URL übergeben wurde auf recipeId
   set id(value: number){
