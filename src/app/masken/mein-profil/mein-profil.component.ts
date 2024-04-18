@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {ProgressBarModule} from "primeng/progressbar";
+import {User} from "../../models/user";
 
 @Component({
   selector: 'app-mein-profil',
@@ -13,11 +14,13 @@ import {ProgressBarModule} from "primeng/progressbar";
   styleUrl: './mein-profil.component.css'
 })
 export class MeinProfilComponent {
-  user = {
+  user:User = {
     username: 'JohnDoe',
     email: 'john.doe@example.com',
     xp: 75,
-    level: 5
+    level: 5,
+    countOfUploadedRecipes: 23,
+    countOfFavoriteRecipes: 13
   };
 
   onEdit() {

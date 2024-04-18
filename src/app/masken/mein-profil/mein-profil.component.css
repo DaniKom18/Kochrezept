@@ -67,6 +67,13 @@
   padding: 5px 0;
 }
 
+.info-group p:last-child{
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .social-links {
   display: flex;
   justify-content: center;
@@ -84,6 +91,11 @@
 
 .user-info{
   display: flex;
-  justify-content: space-between;
+  column-gap: 100px;
+  margin-top: 16px;
+}
+
+.bold{
+  font-weight: bold;
 }
 
