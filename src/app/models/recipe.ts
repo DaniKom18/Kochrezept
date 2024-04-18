@@ -7,4 +7,6 @@ export interface Recipe {
   ingredients:Ingredient[],
   image:string,
   rating: number,
+  visibility: boolean,
+  isAnonymous: boolean
 }
