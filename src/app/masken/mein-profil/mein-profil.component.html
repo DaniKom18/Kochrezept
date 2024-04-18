@@ -14,12 +14,22 @@
         <h3>Information</h3>
         <div class="user-info">
           <div class="info-group">
-            <p>Email</p>
-            <p>G-Ez&#64;gmail.com</p>
+            <p class="bold">E-Mail <i class="pi pi-pencil"></i></p>
+            <p>{{ user.email }}</p>
           </div>
           <div class="info-group">
-            <p>Password</p>
-            <p>*************</p>
+            <p class="bold">Passwort <i class="pi pi-pencil"></i></p>
+            <p>******************</p>
+          </div>
+        </div>
+        <div class="user-info">
+          <div class="info-group">
+            <p class="bold">Erstellte Rezepte</p>
+            <p>{{ user.countOfUploadedRecipes }}</p>
+          </div>
+          <div class="info-group">
+            <p class="bold">Rezepte Favorisiert</p>
+            <p>{{  user.countOfFavoriteRecipes }}</p>
           </div>
         </div>
         <div class="user-level">
