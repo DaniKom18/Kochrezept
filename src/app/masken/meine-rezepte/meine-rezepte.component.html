@@ -9,8 +9,8 @@
               <th>Name</th>
               <th>Bild</th>
               <th>Bewertung</th>
-              <th>Sichtbarkeit</th>
-              <th>Anonym</th>
+              <th>Veröffentlichen</th>
+              <th>Autor anzeigen</th>
               <th>Aktionen</th>
           </tr>
         </ng-template>
@@ -26,16 +26,10 @@
               <i class="pi pi-star-fill"></i> {{ product.rating }}
             </td>
             <td>
-              <label class="toggle-switch">
-                <input type="checkbox" [(ngModel)]="product.visibility" (change)="toggleVisibility(product)">
-                <span class="slider"></span>
-              </label>
+              <p-inputSwitch (onChange)="toggleVisibility(product)" [(ngModel)]="product.visibility"></p-inputSwitch>
             </td>
             <td>
-              <label class="toggle-switch">
-                <input type="checkbox" [(ngModel)]="product.anonym" (change)="toggleAnonym(product)">
-                <span class="slider"></span>
-              </label>
+              <p-inputSwitch (onChange)="toggleIsAnonymous(product)" [(ngModel)]="product.isAnonymous"></p-inputSwitch>
             </td>
             <td>
               <div class="action-group">

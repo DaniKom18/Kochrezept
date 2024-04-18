@@ -7,6 +7,7 @@ import {RippleModule} from "primeng/ripple";
 import {NgClass} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {Recipe} from "../../models/recipe";
+import {InputSwitchModule} from "primeng/inputswitch";
 
 
 @Component({
@@ -19,7 +20,8 @@ import {Recipe} from "../../models/recipe";
     InputTextModule,
     RippleModule,
     NgClass,
-    RouterLink
+    RouterLink,
+    InputSwitchModule
   ],
   templateUrl: './meine-rezepte.component.html',
   styleUrl: './meine-rezepte.component.css'
@@ -32,7 +34,9 @@ export class MeineRezepteComponent {
       image: 'https://images.pexels.com/photos/906054/pexels-photo-906054.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
       rating: 3.4,
       preparation: '',
-      ingredients: []
+      ingredients: [],
+      visibility: false,
+      isAnonymous: false
     },
     {
       id: 3,
@@ -40,7 +44,9 @@ export class MeineRezepteComponent {
       image: 'https://images.pexels.com/photos/15202777/pexels-photo-15202777/free-photo-of-mahlzeit-fleisch-frisch-essensfotografie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
       rating: 5.0,
       preparation: '',
-      ingredients: []
+      ingredients: [],
+      visibility: false,
+      isAnonymous: false
     }
   ]
 
@@ -52,11 +58,15 @@ export class MeineRezepteComponent {
 
   }
 
-  toggleVisibility(product: any) {
-
+  toggleVisibility(recipe: Recipe) {
+    console.log(recipe)
+    //TODO Backend Call um die Visibility vom Recipe zu ändern
+    // Es sollte nur die Id gesendet werden und der Boolean wert
   }
 
-  toggleAnonym(product: any) {
-
+  toggleIsAnonymous(recipe: Recipe) {
+    console.log(recipe)
+    //TODO Backend Call um die Visibility vom Recipe zu ändern
+    // Es sollte nur die Id gesendet werden und der Boolean wert
   }
 }
