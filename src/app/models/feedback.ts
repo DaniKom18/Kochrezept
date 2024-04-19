@@ -1,6 +1,8 @@
+import {Comment} from "./Comment";
+
 export interface Feedback {
   id: string,
-  comment:number,
+  comment:Comment,
   rating:string,
   recipeId:number,
   userId: string //uuid
