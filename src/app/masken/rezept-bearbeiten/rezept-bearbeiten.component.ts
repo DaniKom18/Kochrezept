@@ -15,8 +15,16 @@ export class RezeptBearbeitenComponent {
   recipeId: number = -1;
 
   recipe:Recipe = {
-    id: 1, rating: 3,visibility: true, isAnonymous:false , name: "Döner", preparation: "ajsiodjasidioa", image: "ioqaswdjioiqwoeqwioejqiow", ingredients: [{name: "Cluster Me Dady", measure:"ng", quantity:3}
-    ]}
+    id: 1,
+    rating: 3,
+    visibility: true,
+    isAnonymous:false ,
+    name: "Döner",
+    preparation: "ajsiodjasidioa",
+    image: "ioqaswdjioiqwoeqwioejqiow",
+    ingredients: [{name: "Cluster Me Dady", measure:"ng", quantity:3}],
+    userId: "uuid-13-asd-e"
+  }
 
   @Input() //Mapped id die durch die URL übergeben wurde auf recipeId
   set id(value: number){

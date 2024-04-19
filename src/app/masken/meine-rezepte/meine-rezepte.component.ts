@@ -36,7 +36,8 @@ export class MeineRezepteComponent {
       preparation: '',
       ingredients: [],
       visibility: false,
-      isAnonymous: false
+      isAnonymous: false,
+      userId: "uuid-13-asd-e"
     },
     {
       id: 3,
@@ -46,7 +47,8 @@ export class MeineRezepteComponent {
       preparation: '',
       ingredients: [],
       visibility: false,
-      isAnonymous: false
+      isAnonymous: false,
+      userId: "uuid-13-asd-e"
     }
   ]
 

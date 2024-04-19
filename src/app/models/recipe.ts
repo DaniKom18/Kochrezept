@@ -8,5 +8,6 @@ export interface Recipe {
   image:string,
   rating: number,
   visibility: boolean,
-  isAnonymous: boolean
+  isAnonymous: boolean,
+  userId:string //uuid
 }

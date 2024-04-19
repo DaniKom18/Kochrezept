@@ -42,7 +42,7 @@ export class RezeptVerwaltungComponent implements OnInit{
     this.measures = ["mg", "g", "ml", "L", "TL", "EL", "Stück"]
     if (!this.recipe){
       console.log("Es wurde kein Rezept mitgegeben, rezept wird initialisiert")
-      this.recipe = {id: 0, name: "",rating:0, preparation: "", image: "", ingredients: [], isAnonymous: false, visibility: false}
+      this.recipe = {id: 0, name: "",rating:0, preparation: "", image: "", ingredients: [], isAnonymous: false, visibility: false, userId: ""}
     }
   }
 
