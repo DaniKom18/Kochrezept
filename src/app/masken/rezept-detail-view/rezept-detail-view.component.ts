@@ -5,6 +5,7 @@ import {TableModule} from "primeng/table";
 import {Comment} from "../../models/comment";
 import {Feedback} from "../../models/feedback";
 import {Ingredient} from "../../models/ingredient";
+import {Recipe} from "../../models/recipe";
 
 @Component({
   selector: 'app-rezept-detail-view',
@@ -24,7 +25,7 @@ export class RezeptDetailViewComponent {
   set id(value: number) {
     this.recipeId = value;
   }
-
+  
   ingredients: Ingredient[] = [
     {
       name: 'Zucker',
@@ -44,6 +45,18 @@ export class RezeptDetailViewComponent {
       quantityWithMeasure: `${ingredient.quantity} ${ingredient.measure}`
     };
   });
+
+  recipe: Recipe = {
+    id: this.recipeId,
+    name: 'Döner',
+    image: 'https://images.pexels.com/photos/15202777/pexels-photo-15202777/free-photo-of-mahlzeit-fleisch-frisch-essensfotografie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    rating: 5.0,
+    preparation: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.",
+    ingredients: this.ingredients,
+    visibility: false,
+    isAnonymous: false,
+    userId: "uuid-13-asd-e"
+  };
 
   comments: Comment[] = [
     {
