@@ -66,6 +66,13 @@
         The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32
       </div>
       <div class="feedback-section">
+        <div class="feedback-title">
+          Kommentare
+        </div>
+        <div class="feedback-form">
+          <textarea class="feedback-textarea" placeholder="Schreibe einen Kommentar"></textarea>
+          <button class="feedback-button">Kommentar absenden</button>
+        </div>
         <div class="comments">
           <div *ngFor="let comment of comments" class="comment">
             <div class="comment-author">Author: {{ feedback.userId }}</div>
