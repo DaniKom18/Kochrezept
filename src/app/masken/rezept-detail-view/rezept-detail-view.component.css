@@ -1,5 +1,5 @@
 /*Provisorisch*/
-.white-background{
+.white-background {
   background-color: white;
   min-height: 875px;
   padding-top: 50px;
@@ -10,8 +10,10 @@
   row-gap: 30px;
   column-gap: 100px;
   grid-template-areas:
-"overview image"
-  "ingredients manuel";
+    "overview image"
+    "ingredients manuel"
+    "feedback-section feedback-section";
+    "comments comments"
 }
 
 .user-interaction-bar {
@@ -28,15 +30,11 @@
 .item {
   border-bottom: 2px solid #DDB892;
   display: grid;
-
   padding: 10px 0;
-
   grid-template-columns: 2fr 8fr 1fr;
   grid-template-areas:
     "quantity title";
-
   row-gap: 8px;
-
 }
 
 .item:last-child {
@@ -56,4 +54,39 @@
   display: flex;
   align-content: center;
   flex-wrap: wrap;
+}
+
+.comment-author {
+  grid-area: comment-author;
+  font-weight: bold;
+}
+
+.comment-rating {
+  grid-area: comment-rating;
+  display: flex;
+  align-items: center;
+}
+
+.comment-text {
+  grid-area: comment-text;
+  display: flex;
+  align-items: center;
+}
+
+.comments {
+  grid-area: comments;
+  display: grid;
+  row-gap: 10px;
+  /*grid-template-areas:*/
+  /*  "comment-author"*/
+  /*  "comment-rating"*/
+  /*  "comment-text";*/
+}
+
+.comment {
+  /*grid-area: comment;*/
+  display: grid;
+  grid-template-areas:
+    "comment-author comment-rating"
+    "comment-text comment-text";
 }

@@ -38,7 +38,7 @@
 
         </ul>
       </div>
-      <div class="manuel">
+      <div class="instructions">
         What is Lorem Ipsum?
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
         standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
@@ -65,7 +65,16 @@
         Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance.
         The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32
       </div>
+      <div class="feedback-section">
+        <div class="comments">
+          <div *ngFor="let comment of comments" class="comment">
+            <div class="comment-author">Author: {{ feedback.userId }}</div>
+            <div class="comment-rating">Rating: {{ feedback.rating }}</div>
+            <div class="comment-text">Comment: {{ comment.text }}</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  <p>Rezept ID: {{ recipeId }}</p>
 </div>
-<p>Rezept ID: {{ recipeId }}</p>
