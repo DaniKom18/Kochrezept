@@ -1,15 +1,18 @@
+import {NgForOf} from "@angular/common";
 import {Component, Input} from '@angular/core';
 import {ButtonModule} from "primeng/button";
+import {TableModule} from "primeng/table";
 import {Comment} from "../../models/comment";
 import {Feedback} from "../../models/feedback";
-import {NgForOf} from "@angular/common";
+import {Ingredient} from "../../models/ingredient";
 
 @Component({
   selector: 'app-rezept-detail-view',
   standalone: true,
   imports: [
     ButtonModule,
-    NgForOf
+    NgForOf,
+    TableModule
   ],
   templateUrl: './rezept-detail-view.component.html',
   styleUrl: './rezept-detail-view.component.css'
@@ -21,6 +24,26 @@ export class RezeptDetailViewComponent {
   set id(value: number) {
     this.recipeId = value;
   }
+
+  ingredients: Ingredient[] = [
+    {
+      name: 'Zucker',
+      quantity: 100,
+      measure: 'g'
+    },
+    {
+      name: 'Mehl',
+      quantity: 200,
+      measure: 'g'
+    }
+  ];
+
+  combinedIngredients: any[] = this.ingredients.map(ingredient => {
+    return {
+      ...ingredient,
+      quantityWithMeasure: `${ingredient.quantity} ${ingredient.measure}`
+    };
+  });
 
   comments: Comment[] = [
     {

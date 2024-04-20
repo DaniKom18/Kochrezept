@@ -8,15 +8,15 @@
         </div>
         <div class="user-interaction-bar">
           <div class="rating">
-            3,4
+            3,4 <i class="pi pi-star-fill"></i>
           </div>
           <div class="favorite">
-            favorite
+            favorite ico TODO <i class="pi pi-heart"></i>
           </div>
         </div>
         <div class="cooking-details">
           <div class="total-time">
-            15 min
+            15 min <i class="pi pi-clock"></i>
           </div>
           <div class="difficulty">
             4
@@ -30,14 +30,29 @@
 
       <div class="ingredients">
         <h2 class="ingredients-title">Zutaten</h2>
-        <ul class="items">
+        <p-table [value]="combinedIngredients" styleClass="p-datatable-striped">
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="right-align">Quantity</th>
+              <th>Name</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-ingredient>
+            <tr>
+              <td class="right-align">{{ ingredient.quantityWithMeasure }}</td>
+              <td>{{ ingredient.name }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
 
-          <li class="item">
-            <div class="item-quantity">5 ml</div>
-            <div class="item-title">Speiseöl</div>
-          </li>
+        <!--        <ul class="items">-->
 
-        </ul>
+        <!--          <li class="item">-->
+        <!--            <div class="item-quantity">5 ml</div>-->
+        <!--            <div class="item-title">Speiseöl</div>-->
+        <!--          </li>-->
+
+        <!--        </ul>-->
       </div>
       <div class="instructions">
         <h2 class="instructions-title">Zubereitung</h2>

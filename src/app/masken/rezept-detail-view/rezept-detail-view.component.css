@@ -90,3 +90,7 @@
     "comment-author comment-rating"
     "comment-text comment-text";
 }
+
+.right-align {
+  text-align: right;
+}
