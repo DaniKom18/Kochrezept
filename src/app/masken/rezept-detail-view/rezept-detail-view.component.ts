@@ -25,7 +25,7 @@ export class RezeptDetailViewComponent {
   set id(value: number) {
     this.recipeId = value;
   }
-  
+
   ingredients: Ingredient[] = [
     {
       name: 'Zucker',
@@ -55,7 +55,6 @@ export class RezeptDetailViewComponent {
     ingredients: this.ingredients,
     visibility: false,
     isAnonymous: false,
-    userId: "uuid-13-asd-e"
   };
 
   comments: Comment[] = [
@@ -73,7 +72,6 @@ export class RezeptDetailViewComponent {
     id: '1',
     comment: this.comments,
     rating: '5',
-    recipeId: this.recipeId,
-    userId: 'uuid-13-asd-e'
+    username: 'Daniel'
   }
 }

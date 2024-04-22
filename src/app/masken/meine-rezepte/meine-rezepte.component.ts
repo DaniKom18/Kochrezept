@@ -37,7 +37,6 @@ export class MeineRezepteComponent {
       ingredients: [],
       visibility: false,
       isAnonymous: false,
-      userId: "uuid-13-asd-e"
     },
     {
       id: 3,
@@ -48,7 +47,6 @@ export class MeineRezepteComponent {
       ingredients: [],
       visibility: false,
       isAnonymous: false,
-      userId: "uuid-13-asd-e"
     }
   ]
 

@@ -54,8 +54,7 @@
         </div>
         <div class="comments">
           <div *ngFor="let comment of comments" class="comment">
-            <div class="comment-author">Author: {{ feedback.userId }}</div>
-            <div class="comment-rating">Rating: {{ feedback.rating }}</div>
+            <div class="comment-author">Author: {{ feedback.username }}</div>
             <div class="comment-text">Comment: {{ comment.text }}</div>
           </div>
         </div>
