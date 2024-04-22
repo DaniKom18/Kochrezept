@@ -11,5 +11,4 @@ public interface FeedbackService {
     List<Feedback> getAllFeedbacks();
     Feedback updateFeedback(Feedback feedback);
     void deleteFeedback(Long id);
-    List<Feedback> findFeedbackByRecipeId(Long recipeId);
 }

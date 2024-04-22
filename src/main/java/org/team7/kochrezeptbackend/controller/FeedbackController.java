@@ -63,12 +63,4 @@ public class FeedbackController {
         }
     }
 
-    @GetMapping("/by-recipe/{recipeId}")
-    public ResponseEntity<List<Feedback>> getFeedbackByRecipeId(@PathVariable Long recipeId) {
-        List<Feedback> feedbacks = feedbackService.findFeedbackByRecipeId(recipeId);
-        if (feedbacks.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(feedbacks, HttpStatus.OK);
-    }
 }

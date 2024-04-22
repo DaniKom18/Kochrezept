@@ -23,7 +23,6 @@ public class Ingredient {
     @Column(nullable = false)
     private String measure;
 
-    @ManyToOne
-    @JoinColumn(name = "recipe_id", nullable = false)
-    private Recipe recipe;  // Verknüpfung zur Recipe-Entität
+    @Column
+    private Long recipeId;  // Verknüpfung zur Recipe-Entität
 }
