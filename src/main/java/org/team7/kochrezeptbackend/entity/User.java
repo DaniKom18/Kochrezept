@@ -40,4 +40,9 @@ public class User {
     @CollectionTable(name = "user_favorite_recipes", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "recipe_id")
     private Set<Long> favRecipes;
+
+    @ElementCollection
+    @CollectionTable(name = "user_recipes", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "recipe_id")
+    private Set<Long> myRecipes;
 }
