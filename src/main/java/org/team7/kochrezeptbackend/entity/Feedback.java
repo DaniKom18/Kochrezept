@@ -17,7 +17,7 @@ public class Feedback {
     private Long id;
 
     @Column(nullable = false)
-    private double rating;
+    private Double rating;
 
     @OneToMany(mappedBy = "feedback", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
