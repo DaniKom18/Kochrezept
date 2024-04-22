@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -39,4 +40,7 @@ public class User {
     @CollectionTable(name = "user_favorite_recipes", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "recipe_id")
     private Set<Integer> favRecipes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Feedback> feedbacks;
 }
