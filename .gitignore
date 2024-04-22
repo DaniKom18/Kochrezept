@@ -1,3 +1,13 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
@@ -19,6 +29,9 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
+.settings
+.springBeans
+.sts4-cache
 
 # Visual Studio Code
 .vscode/*
@@ -27,6 +40,11 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
 
 # Miscellaneous
 /.angular/cache
@@ -36,7 +54,18 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 # System files
 .DS_Store
 Thumbs.db
+### VS Code ###
+.vscode/
