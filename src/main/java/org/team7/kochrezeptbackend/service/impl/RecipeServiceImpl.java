@@ -9,6 +9,7 @@ import org.team7.kochrezeptbackend.service.RecipeService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -38,14 +39,19 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    public List<Recipe> getRecipesByIds(Set<Long> recipeIds) {
+        return recipeRepository.findByIdIn(recipeIds);
+    }
+
+    @Override
     public Recipe updateRecipe(Recipe updatedRecipe) {
         return recipeRepository.findById(updatedRecipe.getId())
                 .map(existingRecipe -> {
                     if (updatedRecipe.getAuthor() != null) existingRecipe.setAuthor(updatedRecipe.getAuthor());
                     if (updatedRecipe.getName() != null) existingRecipe.setName(existingRecipe.getName());
-                    if (updatedRecipe.getFeedbacks() != null) existingRecipe.setFeedbacks(existingRecipe.getFeedbacks());
+                    if (!updatedRecipe.getIngredients().isEmpty()) existingRecipe.setIngredients(existingRecipe.getIngredients());
+                    if (!updatedRecipe.getFeedbacks().isEmpty()) existingRecipe.setFeedbacks(existingRecipe.getFeedbacks());
                     if (updatedRecipe.getImage() != null) existingRecipe.setImage(existingRecipe.getImage());
-                    if (updatedRecipe.getIngredients() != null) existingRecipe.setIngredients(existingRecipe.getIngredients());
                     if (updatedRecipe.getRating() != null) existingRecipe.setRating(existingRecipe.getRating());
                     if (updatedRecipe.getPreparation() != null) existingRecipe.setPreparation(existingRecipe.getPreparation());
                     if (updatedRecipe.getIsAnonymous() != null) existingRecipe.setIsAnonymous(existingRecipe.getIsAnonymous());
