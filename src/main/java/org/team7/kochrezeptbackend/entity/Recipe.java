@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,11 +24,15 @@ public class Recipe {
     @Column(nullable = false)
     private String preparation;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ingredient> ingredients;
+    @ElementCollection
+    @CollectionTable(name = "recipe_ingredients", joinColumns = @JoinColumn(name = "recipe_id"))
+    @Column(name = "ingredient_id")
+    private Set<Long> ingredients;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Feedback> feedbacks;
+    @ElementCollection
+    @CollectionTable(name = "recipe_feedbacks", joinColumns = @JoinColumn(name = "recipe_id"))
+    @Column(name = "feedback_id")
+    private Set<Long> feedbacks;
 
     @Column
     private String image;

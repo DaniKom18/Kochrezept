@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.team7.kochrezeptbackend.entity.Feedback;
 import org.team7.kochrezeptbackend.entity.Recipe;
 import org.team7.kochrezeptbackend.service.RecipeService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,8 +47,8 @@ public class RecipeController {
         }
         Optional<Recipe> existingRecipe = recipeService.getRecipeById(id);
         if (existingRecipe.isPresent()){
-            Recipe updaRecipe = recipeService.updateRecipe(recipe);
-            return new ResponseEntity<>(updaRecipe, HttpStatus.OK);
+            Recipe updateRecipe = recipeService.updateRecipe(recipe);
+            return new ResponseEntity<>(updateRecipe, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

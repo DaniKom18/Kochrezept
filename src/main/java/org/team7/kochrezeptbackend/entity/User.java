@@ -25,10 +25,10 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private double xp;
+    private Double xp;
 
     @Column(nullable = false)
-    private int level;
+    private Integer level;
 
     @Column
     private Integer countOfUploadedRecipes;
@@ -39,8 +39,5 @@ public class User {
     @ElementCollection
     @CollectionTable(name = "user_favorite_recipes", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "recipe_id")
-    private Set<Integer> favRecipes;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Feedback> feedbacks;
+    private Set<Long> favRecipes;
 }

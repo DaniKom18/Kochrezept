@@ -37,7 +37,6 @@ public class IngredientServiceImpl implements IngredientService {
                     if (updatedIngredient.getName() != null) existingIngredient.setName(updatedIngredient.getName());
                     if (updatedIngredient.getQuantity() != null) existingIngredient.setQuantity(updatedIngredient.getQuantity());
                     if (updatedIngredient.getMeasure() != null) existingIngredient.setMeasure(updatedIngredient.getMeasure());
-                    if (updatedIngredient.getRecipe() != null) existingIngredient.setRecipe(updatedIngredient.getRecipe());
                     return ingredientRepository.save(existingIngredient);
                 })
                 .orElseThrow(() -> new RuntimeException("Ingredient not found with id:" + updatedIngredient.getId()));

@@ -18,7 +18,5 @@ public class Comment {
     @Column(nullable = false)
     private String text;
 
-    @ManyToOne
-    @JoinColumn(name = "feedback_id", nullable = false)
-    private Feedback feedback;  // Verbindung zu Feedback-Entität
+    private Long feedbackId;  // Verbindung zu Feedback-Entität
 }

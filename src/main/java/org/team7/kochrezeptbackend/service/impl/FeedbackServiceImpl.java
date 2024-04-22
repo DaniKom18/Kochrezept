@@ -45,8 +45,6 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .map(existingFeedback -> {
                     if (updatedFeedback.getComments() != null) existingFeedback.setComments(updatedFeedback.getComments());
                     if (updatedFeedback.getRating() != null) existingFeedback.setRating(updatedFeedback.getRating());
-                    if (updatedFeedback.getUser() != null) existingFeedback.setUser(updatedFeedback.getUser());
-                    if (updatedFeedback.getRecipe() != null) existingFeedback.setRecipe(updatedFeedback.getRecipe());
                     return feedbackRepository.save(existingFeedback);
                 })
                 .orElseThrow(() -> new RuntimeException("Feedback not found with id: " + updatedFeedback.getId()));
@@ -56,11 +54,5 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Transactional
     public void deleteFeedback(Long id) {
         feedbackRepository.deleteById(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Feedback> findFeedbackByRecipeId(Long recipeId) {
-        return feedbackRepository.findFeedbackByRecipe_Id(recipeId);
     }
 }

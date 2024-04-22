@@ -49,8 +49,8 @@ public class UserServiceImpl implements UserService {
                     if (updatedUser.getCountOfUploadedRecipes() != null) existingUser.setCountOfUploadedRecipes(updatedUser.getCountOfUploadedRecipes());
                     if (updatedUser.getCountOfFavoriteRecipes() != null) existingUser.setCountOfFavoriteRecipes(updatedUser.getCountOfFavoriteRecipes());
                     if (updatedUser.getFavRecipes() != null) existingUser.setFavRecipes(updatedUser.getFavRecipes());
-                    if (updatedUser.getXp() != 0) existingUser.setXp(updatedUser.getXp());
-                    if (updatedUser.getLevel() != 0) existingUser.setLevel(updatedUser.getLevel());
+                    if (updatedUser.getXp() != null) existingUser.setXp(updatedUser.getXp());
+                    if (updatedUser.getLevel() != null) existingUser.setLevel(updatedUser.getLevel());
                     return userRepository.save(existingUser);
                 })
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + updatedUser.getId()));
