@@ -3,68 +3,27 @@
     <div class="leaderboard">
       <h2>Leaderboard</h2>
       <ul class="leaderboard-list">
-        <li class="leaderboard-item">
-          <span class="position">1</span>
-          <span class="name">Daniel</span>
-          <span class="trophy-icon">🥇</span>
-          <span class="level">12323</span>
-        </li>
-
-        <li class="leaderboard-item">
-          <span class="position">2</span>
-          <span class="name">Reinhard Mullag</span>
-          <span class="trophy-icon">🥈</span>
-          <span class="level">8123</span>
-        </li>
-        <li class="leaderboard-item">
-          <span class="position">3</span>
-          <span class="name">Reinhard Mullag</span>
-          <span class="trophy-icon">🥉</span>
-          <span class="level">4123</span>
-        </li>
-        <li class="leaderboard-item">
-          <span class="position">4</span>
-          <span class="name">Reinhard Mullag</span>
-          <span class="trophy-icon"></span>
-          <span class="level">423</span>
-        </li>
-        <li class="leaderboard-item">
-          <span class="position">5</span>
-          <span class="name">Reinhard Mullag</span>
-          <span class="trophy-icon"></span>
-          <span class="level">223</span>
-        </li>
-        <li class="leaderboard-item">
-          <span class="position">6</span>
-          <span class="name">Reinhard Mullag</span>
-          <span class="trophy-icon"></span>
-          <span class="level">23</span>
-        </li>
-        <li class="leaderboard-item">
-          <span class="position">7</span>
-          <span class="name">Reinhard Mullag</span>
-          <span class="trophy-icon"></span>
-          <span class="level">3</span>
-        </li>
-        <li class="leaderboard-item">
-          <span class="position">8</span>
-          <span class="name">Reinhard Mullagaksdioaksiodaois jdioaj dioasjiodjaisodjioajaiosjiaosjdioasjdiojasiodjaiosj diojasijd ioasjdioas</span>
-          <span class="trophy-icon"></span>
-          <span class="level">2</span>
-        </li>
-        <li class="leaderboard-item">
-          <span class="position">9</span>
-          <span class="name">Reinhard Mullag</span>
-          <span class="trophy-icon"></span>
-          <span class="level">1</span>
-        </li>
-        <li class="leaderboard-item">
-          <span class="position">10</span>
-          <span class="name">Reinhard Mullag</span>
-          <span class="trophy-icon"></span>
-          <span class="level">0</span>
-        </li>
-
+        @for (user of users; track user.id) {
+          <li class="leaderboard-item">
+            <span class="position">{{$index+1}}</span>
+            <span class="name">{{ user.username }}</span>
+            @if ($index == 0){
+              <span class="trophy-icon">🥇</span>
+            } @else if ($index == 1){
+              <span class="trophy-icon">🥈</span>
+            }@else if ($index == 2){
+              <span class="trophy-icon">🥉</span>
+            }
+            <span class="level">{{ user.level }}</span>
+          </li>
+        } @empty {
+          <li class="leaderboard-item">
+            <span class="position"></span>
+            <span class="name">keine Benutzer gefunden</span>
+            <span class="trophy-icon"></span>
+            <span class="level"></span>
+          </li>
+        }
       </ul>
     </div>
 
