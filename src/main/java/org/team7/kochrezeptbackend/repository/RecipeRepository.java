@@ -4,7 +4,10 @@ import org.team7.kochrezeptbackend.entity.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Set;
+
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
-    // Hier können Methoden für Rezeptspezifische Abfragen hinzugefügt werden
+    List<Recipe> findByIdIn(Set<Long> recipeIds);
 }

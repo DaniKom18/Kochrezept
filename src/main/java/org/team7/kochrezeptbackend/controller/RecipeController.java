@@ -5,12 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.team7.kochrezeptbackend.entity.Feedback;
+import org.team7.kochrezeptbackend.entity.Ingredient;
 import org.team7.kochrezeptbackend.entity.Recipe;
 import org.team7.kochrezeptbackend.service.RecipeService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/recipes/")
@@ -32,6 +34,15 @@ public class RecipeController {
         Optional<Recipe> recipe = recipeService.getRecipeById(id);
         return recipe.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/byIds")
+    public ResponseEntity<List<Recipe>> getRecipesByIds(@RequestParam Set<Long> ids) {
+        List<Recipe> recipes = recipeService.getRecipesByIds(ids);
+        if (recipes.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(recipes, HttpStatus.OK);
     }
 
     @GetMapping
