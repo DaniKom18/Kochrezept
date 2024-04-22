@@ -12,8 +12,7 @@
   grid-template-areas:
     "overview image"
     "ingredients manuel"
-    "feedback-section feedback-section";
-    "comments comments"
+    "feedback-section feedback-section"
 }
 
 .user-interaction-bar {
@@ -54,6 +53,10 @@
   display: flex;
   align-content: center;
   flex-wrap: wrap;
+}
+
+.feedback-section {
+  grid-area: feedback-section;
 }
 
 .comment-author {
