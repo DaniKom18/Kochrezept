@@ -22,7 +22,4 @@ public class Ingredient {
 
     @Column(nullable = false)
     private String measure;
-
-    @Column
-    private Long recipeId;  // Verknüpfung zur Recipe-Entität
 }
