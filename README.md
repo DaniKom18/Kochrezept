@@ -1,1 +1,1 @@
-<img width="1146" alt="Bildschirmfoto 2024-04-22 um 12 45 19" src="https://github.com/DaniKom18/Kochrezept/assets/106764451/ef0980de-ac08-4d18-8e86-4b6d8b486a5d">
+<img width="1140" alt="Bildschirmfoto 2024-04-22 um 18 23 37" src="https://github.com/DaniKom18/Kochrezept/assets/106764451/2f0aeb8d-cfd8-4e46-8571-90db2d6930ba">
