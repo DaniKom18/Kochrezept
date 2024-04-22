@@ -17,6 +17,4 @@ public class Comment {
     @Lob
     @Column(nullable = false)
     private String text;
-
-    private Long feedbackId;  // Verbindung zu Feedback-Entität
 }
