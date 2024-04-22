@@ -9,7 +9,7 @@ import {User} from "../../models/user";
   styleUrl: './leaderboard.component.css'
 })
 export class LeaderboardComponent {
-  user: User[] = [
+  users: User[] = [
     {username: "Emre", level: 10,  xp: 0.3},
     {username: "Dani", level: 5,  xp: 0.6},
     {username: "Lev oi", level: 5,  xp: 0.4},
