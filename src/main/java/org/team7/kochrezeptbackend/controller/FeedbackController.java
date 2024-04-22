@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/feedback")
@@ -27,18 +28,15 @@ public class FeedbackController {
         return new ResponseEntity<>(savedFeedback, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Feedback> getFeedbackById(@PathVariable Long id) {
-        Optional<Feedback> feedback = feedbackService.getFeedbackById(id);
-        return feedback.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Feedback>> getAllFeedbacks() {
-        List<Feedback> feedbacks = feedbackService.getAllFeedbacks();
+    @GetMapping("/byIds")
+    public ResponseEntity<List<Feedback>> getFeedbacksByIds(@RequestParam Set<Long> ids) {
+        List<Feedback> feedbacks = feedbackService.getFeedbacksByIds(ids);
+        if (feedbacks.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(feedbacks, HttpStatus.OK);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Feedback> updateFeedback(@PathVariable Long id, @RequestBody Feedback feedback) {
@@ -49,16 +47,6 @@ public class FeedbackController {
             Feedback updatedFeedback = feedbackService.updateFeedback(feedback);
             return new ResponseEntity<>(updatedFeedback, HttpStatus.OK);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFeedback(@PathVariable Long id) {
-        try {
-            feedbackService.deleteFeedback(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

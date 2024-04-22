@@ -3,12 +3,10 @@ package org.team7.kochrezeptbackend.service;
 import org.team7.kochrezeptbackend.entity.Feedback;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 public interface FeedbackService {
     Feedback saveFeedback(Feedback feedback);
-    Optional<Feedback> getFeedbackById(Long id);
-    List<Feedback> getAllFeedbacks();
+    List<Feedback> getFeedbacksByIds(Set<Long> feedbackIds);
     Feedback updateFeedback(Feedback feedback);
-    void deleteFeedback(Long id);
 }
