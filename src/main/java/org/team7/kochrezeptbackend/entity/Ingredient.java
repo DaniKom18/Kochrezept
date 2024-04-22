@@ -18,7 +18,7 @@ public class Ingredient {
     private String name;
 
     @Column(nullable = false)
-    private double quantity;
+    private Double quantity;
 
     @Column(nullable = false)
     private String measure;
