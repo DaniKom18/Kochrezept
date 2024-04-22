@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/ingredients")
@@ -23,44 +23,30 @@ public class IngredientController {
 
     @PostMapping
     public ResponseEntity<Ingredient> createIngredient(@RequestBody Ingredient ingredient) {
+        ingredient.setName(ingredient.getName().toLowerCase());
         Ingredient savedIngredient = ingredientService.saveIngredient(ingredient);
         return new ResponseEntity<>(savedIngredient, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Ingredient> getIngredientById(@PathVariable Long id) {
-        Optional<Ingredient> ingredient = ingredientService.getIngredientById(id);
-        return ingredient.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
     @GetMapping
     public ResponseEntity<List<Ingredient>> getAllIngredient() {
-        List<Ingredient> ingredients = ingredientService.getAllIngredient();
+        List<Ingredient> ingredients = ingredientService.getAllIngredients();
         return new ResponseEntity<>(ingredients, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Ingredient> updateIngredient(@PathVariable Long id, @RequestBody Ingredient ingredient) {
-        if (!ingredient.getId().equals(id)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @GetMapping("/byIds")
+    public ResponseEntity<List<Ingredient>> getFeedbacksByIds(@RequestParam Set<Long> ids) {
+        List<Ingredient> ingredients = ingredientService.getIngredientsByIds(ids);
+        if (ingredients.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Optional<Ingredient> existingIngredient = ingredientService.getIngredientById(id);
-        if (existingIngredient.isPresent()) {
-            Ingredient updatedIngredient = ingredientService.updateIngredient(ingredient);
-            return new ResponseEntity<>(updatedIngredient, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ingredients, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteIngredient(@PathVariable Long id) {
-        Optional<Ingredient> ingredient = ingredientService.getIngredientById(id);
-        if (ingredient.isPresent()) {
-            ingredientService.deleteIngredient(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        ingredientService.deleteIngredient(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 
