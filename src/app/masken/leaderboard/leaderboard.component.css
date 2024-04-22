@@ -44,7 +44,7 @@
   text-overflow: ellipsis; /* Zeigt Ellipsen an, wenn der Text überläuft */
 }
 
-.score {
+.level {
   width: 50px;
   text-align: right;
   font-weight: bold;

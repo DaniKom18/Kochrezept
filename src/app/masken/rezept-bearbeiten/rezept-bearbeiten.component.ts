@@ -23,7 +23,6 @@ export class RezeptBearbeitenComponent {
     preparation: "ajsiodjasidioa",
     image: "ioqaswdjioiqwoeqwioejqiow",
     ingredients: [{name: "Cluster Me Dady", measure:"ng", quantity:3}],
-    userId: "uuid-13-asd-e"
   }
 
   @Input() //Mapped id die durch die URL übergeben wurde auf recipeId

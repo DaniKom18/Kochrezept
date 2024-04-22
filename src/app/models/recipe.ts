@@ -9,5 +9,5 @@ export interface Recipe {
   rating: number,
   visibility: boolean,
   isAnonymous: boolean,
-  userId:string //uuid
+  author?:string
 }
