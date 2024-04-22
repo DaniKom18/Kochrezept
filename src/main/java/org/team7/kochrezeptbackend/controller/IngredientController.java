@@ -35,7 +35,7 @@ public class IngredientController {
     }
 
     @GetMapping("/byIds")
-    public ResponseEntity<List<Ingredient>> getFeedbacksByIds(@RequestParam Set<Long> ids) {
+    public ResponseEntity<List<Ingredient>> getIngredientsByIds(@RequestParam Set<Long> ids) {
         List<Ingredient> ingredients = ingredientService.getIngredientsByIds(ids);
         if (ingredients.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
