@@ -33,13 +33,13 @@ public class Recipe {
     private String image;
 
     @Column
-    private double rating;
+    private Double rating;
 
     @Column(nullable = false)
-    private boolean visibility;
+    private Boolean visibility;
 
     @Column(nullable = false)
-    private boolean isAnonymous;
+    private Boolean isAnonymous;
 
     @Column
     private String author;
