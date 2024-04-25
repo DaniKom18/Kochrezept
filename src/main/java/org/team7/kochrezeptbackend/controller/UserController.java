@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(originPatterns = "*")
 public class UserController {
 
     private final UserService userService;
@@ -23,9 +24,17 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User savedUser = userService.saveUser(user);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    public ResponseEntity<User> createUser(@RequestBody User requestUser) {
+        Optional<User> foundUser = userService.getUserById(requestUser.getId());
+
+        User responseUser;
+        if (foundUser.isEmpty()){
+            User newUser = User.createUser(requestUser.getId(), requestUser.getUsername(), requestUser.getEmail());
+            responseUser = userService.saveUser(newUser);
+        }else {
+            responseUser = foundUser.get();
+        }
+        return new ResponseEntity<>(responseUser, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
