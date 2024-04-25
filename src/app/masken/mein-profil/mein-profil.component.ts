@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {ProgressBarModule} from "primeng/progressbar";
 import {User} from "../../models/user";
 import {InputTextModule} from "primeng/inputtext";
 import {AutoFocusModule} from "primeng/autofocus";
+import {UserService} from "../../services/user.service";
+import {userSession} from "../../../environments/user-uuid";
 
 @Component({
   selector: 'app-mein-profil',
@@ -17,20 +19,38 @@ import {AutoFocusModule} from "primeng/autofocus";
   templateUrl: './mein-profil.component.html',
   styleUrl: './mein-profil.component.css'
 })
-export class MeinProfilComponent {
+export class MeinProfilComponent implements OnInit{
 
+  user:User = {};
   editUser:boolean = false;
   editEmail:boolean = false;
   editPassword:boolean = false;
 
-  user:User = {
-    username: 'JohnDoe',
-    email: 'john.doe@example.com',
-    xp: 75,
-    level: 5,
-    countOfUploadedRecipes: 23,
-    countOfFavoriteRecipes: 13
-  };
+  constructor(private userservice: UserService) {}
+
+  ngOnInit(): void {
+    this.loadUserProfile();
+  }
+
+  async loadUserProfile() {
+    console.log(userSession.id)
+    this.userservice.getUserByUuid(userSession.id).subscribe(
+      data => {
+        this.user = {
+          username: data.username,
+          email: data.email,
+          xp: data.xp,
+          level: data.xp,
+          myRecipes: data.myRecipes,
+          favRecipes: data.favRecipes
+        }
+      }
+    )
+
+  }
+
+
+
 
   onEdit() {
     // Logik zum Bearbeiten der Benutzerdaten
@@ -54,4 +74,5 @@ export class MeinProfilComponent {
   toggleEditUsername() {
     this.editUser = !this.editUser
   }
+
 }

@@ -50,11 +50,11 @@
         <div class="user-info">
           <div class="info-group">
             <p class="bold">Erstellte Rezepte</p>
-            <p>{{ user.countOfUploadedRecipes }}</p>
+            <p>{{ user.myRecipes?.length }}</p>
           </div>
           <div class="info-group">
             <p class="bold">Rezepte Favorisiert</p>
-            <p>{{  user.countOfFavoriteRecipes }}</p>
+            <p>{{  user.favRecipes?.length }}</p>
           </div>
         </div>
         <div class="user-level">
@@ -64,7 +64,7 @@
             <div class="progress-bar">
               <p-progressBar [value]="user.xp" [showValue]="true"></p-progressBar>
             </div>
-            <div class="level">{{ user.level + 1}}</div>
+            <div class="level">{{ (user.level ?? 0) + 1}}</div>
           </div>
         </div>
       </div>
