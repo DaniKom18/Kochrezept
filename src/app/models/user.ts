@@ -1,9 +1,9 @@
 export interface User {
   id?: string, // UUID
-  username: string,
+  username?: string,
   email?: string,
-  xp: number,
-  level: number
-  countOfUploadedRecipes?: number
-  countOfFavoriteRecipes?: number
+  xp?: number,
+  level?: number
+  favRecipes?: number[]
+  myRecipes?: number[]
 }
