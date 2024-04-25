@@ -44,10 +44,6 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User updatedUser) {
         return userRepository.findById(updatedUser.getId())
                 .map(existingUser -> {
-                    if (updatedUser.getUsername() != null) existingUser.setUsername(updatedUser.getUsername());
-                    if (updatedUser.getEmail() != null) existingUser.setEmail(updatedUser.getEmail());
-                    if (updatedUser.getCountOfUploadedRecipes() != null) existingUser.setCountOfUploadedRecipes(updatedUser.getCountOfUploadedRecipes());
-                    if (updatedUser.getCountOfFavoriteRecipes() != null) existingUser.setCountOfFavoriteRecipes(updatedUser.getCountOfFavoriteRecipes());
                     if (updatedUser.getFavRecipes() != null) existingUser.setFavRecipes(updatedUser.getFavRecipes());
                     if (updatedUser.getXp() != null) existingUser.setXp(updatedUser.getXp());
                     if (updatedUser.getLevel() != null) existingUser.setLevel(updatedUser.getLevel());
