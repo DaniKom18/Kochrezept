@@ -14,8 +14,13 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue
     private UUID id;
+
+    @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    private String email;
 
     @Column(nullable = false)
     private Double xp;
@@ -32,4 +37,17 @@ public class User {
     @CollectionTable(name = "user_recipes", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "recipe_id")
     private Set<Long> myRecipes;
+
+    public static User createUser(UUID id, String username, String email){
+        User user = new User();
+        user.setId(id);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setLevel(0);
+        user.setXp(0.0);
+        user.setMyRecipes(Set.of());
+        user.setFavRecipes(Set.of());
+        return user;
+
+    }
 }
