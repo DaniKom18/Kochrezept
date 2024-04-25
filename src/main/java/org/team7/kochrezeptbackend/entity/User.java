@@ -19,22 +19,10 @@ public class User {
     private UUID id;
 
     @Column(nullable = false)
-    private String username;
-
-    @Column
-    private String email;
-
-    @Column(nullable = false)
     private Double xp;
 
     @Column(nullable = false)
     private Integer level;
-
-    @Column
-    private Integer countOfUploadedRecipes;
-
-    @Column
-    private Integer countOfFavoriteRecipes;
 
     @ElementCollection
     @CollectionTable(name = "user_favorite_recipes", joinColumns = @JoinColumn(name = "user_id"))
