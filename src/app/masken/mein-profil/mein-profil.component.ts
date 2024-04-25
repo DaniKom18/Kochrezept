@@ -29,7 +29,23 @@ export class MeinProfilComponent implements OnInit{
   constructor(private userservice: UserService) {}
 
   ngOnInit(): void {
-    this.loadUserProfile();
+    this.waitForUserSession().then(() => {
+      this.loadUserProfile();
+    });
+  }
+
+  // Wenn man auf dem URL Pfad **/profil bleibt und die Seite Reloaded wird
+  // Bevor die UUID von KeyCloak geliefert wird schon die Request gemacht
+  // Um das Profil vom User zu bekommen, deshalb wird hier solange gewartet bis die ID da ist
+  waitForUserSession(): Promise<void> {
+    return new Promise((resolve) => {
+      const checkId = setInterval(() => {
+        if (userSession.id !== "") {
+          clearInterval(checkId);
+          resolve();
+        }
+      }, 100); // Überprüft alle 100 Millisekunden
+    });
   }
 
   async loadUserProfile() {
@@ -40,7 +56,7 @@ export class MeinProfilComponent implements OnInit{
           username: data.username,
           email: data.email,
           xp: data.xp,
-          level: data.xp,
+          level: data.level,
           myRecipes: data.myRecipes,
           favRecipes: data.favRecipes
         }
