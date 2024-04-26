@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.team7.kochrezeptbackend.entity.Feedback;
 import org.team7.kochrezeptbackend.entity.Ingredient;
 import org.team7.kochrezeptbackend.entity.Recipe;
+import org.team7.kochrezeptbackend.request.RequestIds;
 import org.team7.kochrezeptbackend.service.RecipeService;
 
 import java.util.ArrayList;
@@ -37,9 +38,9 @@ public class RecipeController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/byIds")
-    public ResponseEntity<List<Recipe>> getRecipesByIds(@RequestParam Set<Long> ids) {
-        List<Recipe> recipes = recipeService.getRecipesByIds(ids);
+    @PostMapping("/byIds")
+    public ResponseEntity<List<Recipe>> getRecipesByIds(@RequestBody RequestIds request) {
+        List<Recipe> recipes = recipeService.getRecipesByIds(request.getIds());
         if (recipes.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
