@@ -1,5 +1,6 @@
 package org.team7.kochrezeptbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,4 +18,9 @@ public class Comment {
     @Lob
     @Column(nullable = false)
     private String text;
+
+    @ManyToOne
+    @JoinColumn(name = "feedbackId")
+    @JsonBackReference
+    private Feedback feedback;
 }

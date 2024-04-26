@@ -2,6 +2,7 @@ package org.team7.kochrezeptbackend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.team7.kochrezeptbackend.entity.Feedback;
@@ -16,7 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("api/recipes")
+@RequestMapping(value = "api/recipes", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 @CrossOrigin(originPatterns = "*")
 public class RecipeController {
 

@@ -1,5 +1,6 @@
 package org.team7.kochrezeptbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,16 +24,6 @@ public class Recipe {
     @Lob
     @Column(nullable = false)
     private String preparation;
-
-    @ElementCollection
-    @CollectionTable(name = "recipe_ingredients", joinColumns = @JoinColumn(name = "recipe_id"))
-    @Column(name = "ingredient_id")
-    private Set<Long> ingredients;
-
-    @ElementCollection
-    @CollectionTable(name = "recipe_feedbacks", joinColumns = @JoinColumn(name = "recipe_id"))
-    @Column(name = "feedback_id")
-    private Set<Long> feedbacks;
 
     @Column
     private String image;
