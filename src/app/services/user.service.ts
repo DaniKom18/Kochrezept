@@ -19,6 +19,11 @@ export class UserService {
 
   saveUser(user: User) {
     const url: string = this.baseUrl;
-    return this.httpClient.post<any>(url, user)
+    return this.httpClient.post<User>(url, user)
+  }
+
+  getLeaderboard() {
+    const url: string = this.baseUrl + "/leaderboard";
+    return this.httpClient.get<User[]>(url)
   }
 }
