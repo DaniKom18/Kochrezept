@@ -21,10 +21,8 @@ import {userSession} from "../../../environments/user-uuid";
 })
 export class MeinProfilComponent implements OnInit{
 
+  protected readonly userSession = userSession;
   user:User = {};
-  editUser:boolean = false;
-  editEmail:boolean = false;
-  editPassword:boolean = false;
 
   constructor(private userservice: UserService) {}
 
@@ -64,31 +62,10 @@ export class MeinProfilComponent implements OnInit{
 
   }
 
-
-
-
-  onEdit() {
-    // Logik zum Bearbeiten der Benutzerdaten
-  }
-
   onDelete() {
     // Logik zum Löschen des Benutzerkontos
     if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
       // Account löschen Logik
     }
   }
-
-  toggleEditPassword() {
-    this.editPassword = !this.editPassword
-  }
-
-  toggleEditEmail() {
-    this.editEmail = !this.editEmail
-  }
-
-  toggleEditUsername() {
-    this.editUser = !this.editUser
-  }
-
-  protected readonly userSession = userSession;
 }
