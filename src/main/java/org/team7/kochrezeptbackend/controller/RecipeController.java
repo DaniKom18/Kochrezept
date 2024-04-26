@@ -15,7 +15,8 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("api/recipes/")
+@RequestMapping("api/recipes")
+@CrossOrigin(originPatterns = "*")
 public class RecipeController {
 
     private final RecipeService recipeService;

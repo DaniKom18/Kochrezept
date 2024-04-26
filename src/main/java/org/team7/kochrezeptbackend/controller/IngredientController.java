@@ -12,6 +12,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/ingredients")
+@CrossOrigin(originPatterns = "*")
 public class IngredientController {
 
     private final IngredientService ingredientService;
