@@ -29,17 +29,17 @@ export class AppComponent implements OnInit{
     if (this.isLoggedIn) {
       this.userProfile = await this.keycloak.loadUserProfile();
       userSession.id = this.userProfile.id!; // User id wird global gespeichert
+      userSession.email = this.userProfile.email!; // Email id wird global gespeichert
 
       const user: User = {
         id: this.userProfile.id!,
-        username: this.userProfile.username!,
-        email: this.userProfile.email!,
+        username: this.userProfile.username!
       }
 
       // Falls user schon existiert wird er im Backend nicht nochmal gespeichert
       this.userservice.saveUser(user).subscribe(
         data => {
-          console.log(data)
+          console.log(data.id + " : " + data.username)
         }
       )
     }
