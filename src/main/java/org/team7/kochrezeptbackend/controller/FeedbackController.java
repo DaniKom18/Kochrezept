@@ -8,11 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/api/feedback")
+@CrossOrigin(originPatterns = "*")
 public class FeedbackController {
 
     private final FeedbackService feedbackService;
