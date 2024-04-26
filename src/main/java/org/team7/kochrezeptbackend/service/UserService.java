@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface UserService {
     User saveUser(User user);
     Optional<User> getUserById(UUID id);
-    List<User> getAllUsers();
+    List<User> getLeaderboard();
     User updateUser(User user);
     void deleteUser(UUID id);
 }
