@@ -8,7 +8,7 @@ import org.team7.kochrezeptbackend.service.IngredientService;
 import org.team7.kochrezeptbackend.repository.IngredientRepository;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 @Service
 public class IngredientServiceImpl implements IngredientService {
@@ -23,13 +23,21 @@ public class IngredientServiceImpl implements IngredientService {
     public Ingredient saveIngredient(Ingredient ingredient) { return ingredientRepository.save(ingredient); }
 
     @Override
+    public Optional<Ingredient> findById(Long ingredientId) {
+        if (ingredientId == null || ingredientId < 0){
+            return Optional.empty();
+        }
+        return ingredientRepository.findById(ingredientId);
+    }
+
+    @Override
     public List<Ingredient> getAllIngredients() {
         return ingredientRepository.findAll();
     }
 
     @Override
-    public List<Ingredient> getIngredientsByIds(Set<Long> ingredientIds) {
-        return ingredientRepository.findByIdIn(ingredientIds);
+    public List<Ingredient> findByRecipeId(Long recipeId) {
+        return ingredientRepository.findByRecipeId(recipeId);
     }
 
     @Override

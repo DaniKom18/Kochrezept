@@ -1,13 +1,11 @@
 package org.team7.kochrezeptbackend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -22,14 +20,14 @@ public class Feedback {
     @Column(nullable = false)
     private Double rating;
 
-    @ElementCollection
-    @CollectionTable(name = "feedback_comments", joinColumns = @JoinColumn(name = "feedback_id"))
-    @Column(name = "comment_id")
-    private Set<Long> comments;
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "feedback")
+    private List<Comment> comments;
 
     @Column
-    private UUID userId;  // Verbindung zu User-Entität
+    private String username;  // Verbindung zu User-Entität
 
-    @Column
-    private Long recipeId;  // Verbindung zu Recipe-Entität
+    @ManyToOne
+    @JoinColumn(name = "recipeId")
+    private Recipe recipe;
 }
