@@ -1,9 +1,12 @@
 package org.team7.kochrezeptbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
@@ -19,8 +22,9 @@ public class Comment {
     @Column(nullable = false)
     private String text;
 
-    @ManyToOne
-    @JoinColumn(name = "feedbackId")
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "feedback_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Feedback feedback;
 }

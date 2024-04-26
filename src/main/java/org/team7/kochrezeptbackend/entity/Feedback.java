@@ -1,9 +1,12 @@
 package org.team7.kochrezeptbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -20,14 +23,12 @@ public class Feedback {
     @Column(nullable = false)
     private Double rating;
 
-    @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "feedback")
-    private List<Comment> comments;
-
     @Column
     private String username;  // Verbindung zu User-Entität
 
-    @ManyToOne
-    @JoinColumn(name = "recipeId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "recipe_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Recipe recipe;
 }
