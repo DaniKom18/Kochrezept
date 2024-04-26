@@ -8,5 +8,5 @@ import java.util.Set;
 
 public interface CommentService {
     Comment saveComment(Comment comment);
-    List<Comment> getCommentsByIds(Set<Long> commentIds);
+    List<Comment> findByFeedbackId(Long feedbackId);
 }

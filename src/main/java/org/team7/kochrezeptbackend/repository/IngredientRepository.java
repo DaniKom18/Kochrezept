@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Repository
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
-    List<Ingredient> findByRecipeId(Long recipeId);
+    List<Ingredient> findIngredientByRecipeId(Long recipeId);
 
     void deleteByRecipeId(Long recipeId);
 

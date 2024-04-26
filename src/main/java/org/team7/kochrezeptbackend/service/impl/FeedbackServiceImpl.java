@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 @Service
 public class FeedbackServiceImpl implements FeedbackService {
@@ -27,21 +27,14 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public List<Feedback> getFeedbacksByIds(Set<Long> feedbackIds) {
-        return feedbackRepository.findByIdIn(feedbackIds);
+    public List<Feedback> findByRecipeId(Long recipeId) {
+        return feedbackRepository.findFeedbackByRecipeId(recipeId);
     }
-
 
     @Override
-    @Transactional
-    public Feedback updateFeedback(Feedback updatedFeedback) {
-        return feedbackRepository.findById(updatedFeedback.getId())
-                .map(existingFeedback -> {
-                    if (updatedFeedback.getComments() != null) existingFeedback.setComments(updatedFeedback.getComments());
-                    if (updatedFeedback.getRating() != null) existingFeedback.setRating(updatedFeedback.getRating());
-                    return feedbackRepository.save(existingFeedback);
-                })
-                .orElseThrow(() -> new RuntimeException("Feedback not found with id: " + updatedFeedback.getId()));
+    public Optional<Feedback> findById(Long feedbackId) {
+        return feedbackRepository.findById(feedbackId);
     }
+
 
 }
