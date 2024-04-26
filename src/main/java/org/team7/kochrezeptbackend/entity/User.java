@@ -20,9 +20,6 @@ public class User {
     private String username;
 
     @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
     private Double xp;
 
     @Column(nullable = false)
@@ -38,11 +35,10 @@ public class User {
     @Column(name = "recipe_id")
     private Set<Long> myRecipes;
 
-    public static User createUser(UUID id, String username, String email){
+    public static User createUser(UUID id, String username){
         User user = new User();
         user.setId(id);
         user.setUsername(username);
-        user.setEmail(email);
         user.setLevel(0);
         user.setXp(0.0);
         user.setMyRecipes(Set.of());
