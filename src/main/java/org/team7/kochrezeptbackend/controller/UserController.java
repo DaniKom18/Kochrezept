@@ -1,6 +1,8 @@
 package org.team7.kochrezeptbackend.controller;
 
+import org.team7.kochrezeptbackend.entity.Recipe;
 import org.team7.kochrezeptbackend.entity.User;
+import org.team7.kochrezeptbackend.service.RecipeService;
 import org.team7.kochrezeptbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -19,7 +22,7 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RecipeService recipeService) {
         this.userService = userService;
     }
 

@@ -1,6 +1,5 @@
 package org.team7.kochrezeptbackend.controller;
 
-import org.hibernate.engine.spi.SessionLazyDelegator;
 import org.team7.kochrezeptbackend.entity.Ingredient;
 import org.team7.kochrezeptbackend.entity.Recipe;
 import org.team7.kochrezeptbackend.service.IngredientService;
@@ -51,7 +50,7 @@ public class IngredientController {
     }
 
     @GetMapping("/recipe/{recipeId}/ingredients")
-    public ResponseEntity<List<Ingredient>> getAllIngredient(@PathVariable Long recipeId) {
+    public ResponseEntity<List<Ingredient>> getAllIngredientsOfRecipe(@PathVariable Long recipeId) {
         Optional<Recipe> recipe = recipeService.getRecipeById(recipeId);
         if (recipe.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -61,10 +60,25 @@ public class IngredientController {
         return new ResponseEntity<>(ingredients, HttpStatus.OK);
     }
 
+    @GetMapping("/ingredients")
+    public ResponseEntity<List<Ingredient>> getAllIngredientsForFilter() {
+        return new ResponseEntity<>(ingredientService.getAllIngredientsForFilter(),HttpStatus.OK);
+    }
 
-    @DeleteMapping("/{id}")
+
+    @DeleteMapping("/ingredients/{id}")
     public ResponseEntity<Void> deleteIngredient(@PathVariable Long id) {
         ingredientService.deleteIngredient(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/recipe/{recipeId}/ingredients")
+    public ResponseEntity<Void> deleteAllIngredientsOfReciepe(@PathVariable Long recipeId) {
+        Optional<Recipe> recipe = recipeService.getRecipeById(recipeId);
+        if (recipe.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        ingredientService.deleteByRecipeId(recipeId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
