@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {RouterLink, RouterLinkActive} from "@angular/router";
+import {KeycloakService} from "keycloak-angular";
 
 @Component({
   selector: 'app-navbar',
@@ -14,4 +15,12 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 })
 export class NavbarComponent {
 
+
+  constructor(private keycloakservice: KeycloakService) {
+  }
+
+  logout() {
+    this.keycloakservice.clearToken()
+    this.keycloakservice.logout()
+  }
 }
