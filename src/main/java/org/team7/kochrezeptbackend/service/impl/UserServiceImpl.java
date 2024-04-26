@@ -1,5 +1,6 @@
 package org.team7.kochrezeptbackend.service.impl;
 
+import org.springframework.data.domain.PageRequest;
 import org.team7.kochrezeptbackend.entity.User;
 import org.team7.kochrezeptbackend.repository.UserRepository;
 import org.team7.kochrezeptbackend.service.UserService;
@@ -35,8 +36,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<User> getLeaderboard() {
+        return userRepository.findTop10ByOrderByLevelDesc(PageRequest.of(0, 10));
     }
 
     @Override
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User updatedUser) {
         return userRepository.findById(updatedUser.getId())
                 .map(existingUser -> {
+                    if (updatedUser.getUsername() != null) existingUser.setUsername(updatedUser.getUsername());
                     if (updatedUser.getFavRecipes() != null) existingUser.setFavRecipes(updatedUser.getFavRecipes());
                     if (updatedUser.getXp() != null) existingUser.setXp(updatedUser.getXp());
                     if (updatedUser.getLevel() != null) existingUser.setLevel(updatedUser.getLevel());
