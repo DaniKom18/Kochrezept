@@ -29,7 +29,7 @@ public class UserController {
 
         User responseUser;
         if (foundUser.isEmpty()){
-            User newUser = User.createUser(requestUser.getId(), requestUser.getUsername(), requestUser.getEmail());
+            User newUser = User.createUser(requestUser.getId(), requestUser.getUsername());
             responseUser = userService.saveUser(newUser);
         }else {
             responseUser = foundUser.get();
@@ -44,9 +44,9 @@ public class UserController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
+    @GetMapping("/leaderboard")
+    public ResponseEntity<List<User>> getLeaderboard() {
+        List<User> users = userService.getLeaderboard();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
