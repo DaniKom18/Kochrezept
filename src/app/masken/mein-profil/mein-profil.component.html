@@ -12,39 +12,18 @@
         <h3>Information</h3>
         <div class="user-info">
           <div class="info-group">
-            <p class="bold">Benutzername <i class="pi {{editUser ? 'pi-times' : 'pi-pencil'}}" (click)="toggleEditUsername()"></i></p>
-            @if (editUser){
-              <div class="p-inputgroup">
-                <input type="text" class="p-inputtext-sm" pInputText [autofocus]="true" placeholder="Neuer Name..." />
-                <button type="button" pButton icon="pi pi-check"></button>
-              </div>
-            }@else {
+            <p class="bold">Benutzername</p>
               <p>{{ user.username }}</p>
-            }
           </div>
           <div class="info-group">
-            <p class="bold">Passwort <i class="pi {{editPassword ? 'pi-times' : 'pi-pencil'}}" (click)="toggleEditPassword()"></i></p>
-            @if (editPassword){
-              <div class="p-inputgroup">
-                <input type="text" class="p-inputtext-sm" pInputText [autofocus]="true" placeholder="Neues Passwort..." />
-                <button type="button" pButton icon="pi pi-check"></button>
-              </div>
-            } @else {
+            <p class="bold">Passwort</p>
               <p>*************</p>
-            }
           </div>
         </div>
         <div class="user-info">
           <div class="info-group">
-            <p class="bold">E-Mail <i class="pi {{editEmail ? 'pi-times' : 'pi-pencil'}}" (click)="toggleEditEmail()"></i></p>
-            @if (editEmail){
-              <div class="p-inputgroup">
-                <input type="text" class="p-inputtext-sm" pInputText [autofocus]="true" placeholder="Neue E-Mail..." />
-                <button type="button" pButton icon="pi pi-check"></button>
-              </div>
-            }@else {
-              <p>{{ userSession.email }}</p>
-            }
+            <p class="bold">E-Mail</p>
+            <p>{{ userSession.email }}</p>
           </div>
         </div>
         <div class="user-info">
