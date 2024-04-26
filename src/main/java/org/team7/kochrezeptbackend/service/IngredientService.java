@@ -8,7 +8,7 @@ public interface IngredientService {
     Ingredient saveIngredient(Ingredient ingredient);
     Optional<Ingredient> findById(Long ingredientId);
     List<Ingredient> getAllIngredientsForFilter();
-    List<Ingredient> findByRecipeId(Long recipeId);
+    List<Ingredient> findIngredientsByRecipeId(Long recipeId);
     void deleteByRecipeId (Long recipeId);
     void deleteIngredient(Long id);
 }

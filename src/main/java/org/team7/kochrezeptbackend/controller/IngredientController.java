@@ -56,7 +56,7 @@ public class IngredientController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        List<Ingredient> ingredients = ingredientService.findByRecipeId(recipeId);
+        List<Ingredient> ingredients = ingredientService.findIngredientsByRecipeId(recipeId);
         return new ResponseEntity<>(ingredients, HttpStatus.OK);
     }
 

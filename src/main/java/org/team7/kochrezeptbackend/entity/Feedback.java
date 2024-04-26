@@ -1,14 +1,14 @@
 package org.team7.kochrezeptbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.List;
+import java.util.UUID;
+
 
 @Getter
 @Setter
@@ -24,7 +24,7 @@ public class Feedback {
     private Double rating;
 
     @Column
-    private String username;  // Verbindung zu User-Entität
+    private UUID user;  // Verbindung zu User-Entität
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "recipe_id", nullable = false)

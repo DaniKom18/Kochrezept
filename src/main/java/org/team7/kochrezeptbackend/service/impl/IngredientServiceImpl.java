@@ -36,8 +36,8 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public List<Ingredient> findByRecipeId(Long recipeId) {
-        return ingredientRepository.findByRecipeId(recipeId);
+    public List<Ingredient> findIngredientsByRecipeId(Long recipeId) {
+        return ingredientRepository.findIngredientByRecipeId(recipeId);
     }
 
     @Override
