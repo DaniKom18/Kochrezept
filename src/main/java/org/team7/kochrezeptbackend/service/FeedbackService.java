@@ -9,4 +9,5 @@ public interface FeedbackService {
     Feedback saveFeedback(Feedback feedback);
     List<Feedback> findByRecipeId(Long recipeId);
     Optional<Feedback> findById(Long feedbackId);
+    Feedback updateFeedback(Feedback updatedFeedback, Feedback existingFeedback);
 }
