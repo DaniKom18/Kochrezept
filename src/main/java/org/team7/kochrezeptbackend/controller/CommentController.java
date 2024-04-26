@@ -2,7 +2,6 @@ package org.team7.kochrezeptbackend.controller;
 
 import org.team7.kochrezeptbackend.entity.Comment;
 import org.team7.kochrezeptbackend.entity.Feedback;
-import org.team7.kochrezeptbackend.entity.Recipe;
 import org.team7.kochrezeptbackend.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,7 @@ import org.team7.kochrezeptbackend.service.FeedbackService;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+
 
 @RestController
 @RequestMapping("/api")

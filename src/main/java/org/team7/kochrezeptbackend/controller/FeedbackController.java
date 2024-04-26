@@ -49,4 +49,18 @@ public class FeedbackController {
         return new ResponseEntity<>(feedbacks, HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Feedback> updateFeedback(@PathVariable Long id, @RequestBody Feedback requestFeedback) {
+        if (!requestFeedback.getId().equals(id)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Optional<Feedback> foundFeedback = feedbackService.findById(id);
+        if (foundFeedback.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Feedback updatedFeedback = feedbackService.updateFeedback(requestFeedback, foundFeedback.get());
+        return new ResponseEntity<>(updatedFeedback, HttpStatus.OK);
+    }
+
 }

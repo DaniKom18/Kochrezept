@@ -36,5 +36,15 @@ public class FeedbackServiceImpl implements FeedbackService {
         return feedbackRepository.findById(feedbackId);
     }
 
+    @Override
+    @Transactional
+    public Feedback updateFeedback(Feedback updatedFeedback, Feedback existingFeedback) {
+        if (!existingFeedback.getRating().equals(updatedFeedback.getRating())){
+            existingFeedback.setRating(updatedFeedback.getRating());
+            return feedbackRepository.save(existingFeedback);
+        }
+        return existingFeedback;
+    }
+
 
 }
