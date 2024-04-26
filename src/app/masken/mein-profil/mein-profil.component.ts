@@ -54,7 +54,6 @@ export class MeinProfilComponent implements OnInit{
       data => {
         this.user = {
           username: data.username,
-          email: data.email,
           xp: data.xp,
           level: data.level,
           myRecipes: data.myRecipes,
@@ -91,4 +90,5 @@ export class MeinProfilComponent implements OnInit{
     this.editUser = !this.editUser
   }
 
+  protected readonly userSession = userSession;
 }
