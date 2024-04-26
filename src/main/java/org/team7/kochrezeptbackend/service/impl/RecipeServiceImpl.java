@@ -49,8 +49,6 @@ public class RecipeServiceImpl implements RecipeService {
                 .map(existingRecipe -> {
                     if (updatedRecipe.getAuthor() != null) existingRecipe.setAuthor(updatedRecipe.getAuthor());
                     if (updatedRecipe.getName() != null) existingRecipe.setName(existingRecipe.getName());
-                    if (!updatedRecipe.getIngredients().isEmpty()) existingRecipe.setIngredients(existingRecipe.getIngredients());
-                    if (!updatedRecipe.getFeedbacks().isEmpty()) existingRecipe.setFeedbacks(existingRecipe.getFeedbacks());
                     if (updatedRecipe.getImage() != null) existingRecipe.setImage(existingRecipe.getImage());
                     if (updatedRecipe.getRating() != null) existingRecipe.setRating(existingRecipe.getRating());
                     if (updatedRecipe.getPreparation() != null) existingRecipe.setPreparation(existingRecipe.getPreparation());
