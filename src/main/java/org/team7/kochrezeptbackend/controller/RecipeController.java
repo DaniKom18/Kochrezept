@@ -73,7 +73,7 @@ public class RecipeController {
         return new ResponseEntity<>(recipes, HttpStatus.OK);
     }
 
-    @PutMapping("recipes/{id}")
+    @PutMapping("/recipes/{id}")
     public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody  Recipe requestRecipe){
         if (!requestRecipe.getId().equals(id)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -94,7 +94,7 @@ public class RecipeController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/recipes/{id}")
     public ResponseEntity<Void> deleteRecipe(@PathVariable Long id){
         Optional<Recipe> recipe = recipeService.getRecipeById(id);
         if (recipe.isPresent()){
