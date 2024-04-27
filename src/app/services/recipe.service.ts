@@ -35,4 +35,10 @@ export class RecipeService {
     const url = this.baseUrl + "/recipes/" + recipe.id
     return this.httpClient.put(url, recipe, this.options)
   }
+
+  deleteRecipe(recipeId: number) {
+    const url = this.baseUrl + "/recipes/" + recipeId
+    this.httpClient.delete(url).subscribe()
+  }
+
 }
