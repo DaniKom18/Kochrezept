@@ -5,6 +5,7 @@ import org.team7.kochrezeptbackend.entity.Recipe;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 public interface RecipeService {
     Recipe saveRecipe(Recipe recipe);
@@ -13,4 +14,6 @@ public interface RecipeService {
     List<Recipe> getRecipesByIds(Set<Long> recipeIds);
     Recipe updateRecipe(Recipe recipe);
     void deleteRecipe(Long id);
+
+    List<Recipe> findByUser(UUID userId);
 }

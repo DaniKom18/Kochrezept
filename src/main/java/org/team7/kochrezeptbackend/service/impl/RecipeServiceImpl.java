@@ -10,6 +10,7 @@ import org.team7.kochrezeptbackend.service.RecipeService;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -51,5 +52,10 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void deleteRecipe(Long id) {
         recipeRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Recipe> findByUser(UUID userId) {
+        return recipeRepository.findRecipeByOwnerId(userId);
     }
 }
