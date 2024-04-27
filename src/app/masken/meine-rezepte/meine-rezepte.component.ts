@@ -39,20 +39,17 @@ export class MeineRezepteComponent implements OnInit{
     this.recipeService.getRecipesOfUser().subscribe(
       data => {
         this.recipes = data
+        console.log(data)
       }
     )
   }
 
   toggleVisibility(recipe: Recipe) {
-    console.log(recipe)
-    //TODO Backend Call um die Visibility vom Recipe zu ändern
-    // Es sollte nur die Id gesendet werden und der Boolean wert
+    this.recipeService.updateRecipe(recipe).subscribe()
   }
 
   toggleIsAnonymous(recipe: Recipe) {
-    console.log(recipe)
-    //TODO Backend Call um die Visibility vom Recipe zu ändern
-    // Es sollte nur die Id gesendet werden und der Boolean wert
+    this.recipeService.updateRecipe(recipe).subscribe()
   }
 
 
