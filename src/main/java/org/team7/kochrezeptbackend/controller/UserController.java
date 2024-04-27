@@ -52,12 +52,23 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody User user) {
-        if (!user.getId().equals(id)) {
+    public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody User requestUser) {
+        if (!requestUser.getId().equals(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Optional<User> existingUser = userService.getUserById(id);
         if (existingUser.isPresent()) {
+            User user = existingUser.get();
+
+            //Level System
+            if (requestUser.getXp() != null){
+                user.setXp(user.getXp() + requestUser.getXp());
+                if (user.getXp() >= 100){
+                    user.setLevel(user.getLevel() + 1);
+                    user.setXp(user.getXp() - 100);
+                }
+            }
+
             User updatedUser = userService.updateUser(user);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         }
