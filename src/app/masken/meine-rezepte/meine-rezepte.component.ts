@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TableModule} from "primeng/table";
 import {ButtonModule} from "primeng/button";
 import {PaginatorModule} from "primeng/paginator";
@@ -8,6 +8,7 @@ import {NgClass} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {Recipe} from "../../models/recipe";
 import {InputSwitchModule} from "primeng/inputswitch";
+import {RecipeService} from "../../services/recipe.service";
 
 
 @Component({
@@ -26,36 +27,20 @@ import {InputSwitchModule} from "primeng/inputswitch";
   templateUrl: './meine-rezepte.component.html',
   styleUrl: './meine-rezepte.component.css'
 })
-export class MeineRezepteComponent {
-  recipes:Recipe[] = [
-    {
-      id: 4,
-      name: 'Lebkuchen',
-      image: 'https://images.pexels.com/photos/906054/pexels-photo-906054.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      rating: 3.4,
-      preparation: '',
-      ingredients: [],
-      visibility: false,
-      isAnonymous: false,
-    },
-    {
-      id: 3,
-      name: 'Döner',
-      image: 'https://images.pexels.com/photos/15202777/pexels-photo-15202777/free-photo-of-mahlzeit-fleisch-frisch-essensfotografie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      rating: 5.0,
-      preparation: '',
-      ingredients: [],
-      visibility: false,
-      isAnonymous: false,
-    }
-  ]
+export class MeineRezepteComponent implements OnInit{
 
-  editProduct(product: any) {
 
+  constructor(private recipeService: RecipeService) {
   }
 
-  deleteProduct(product: any) {
+  recipes:Recipe[] = []
 
+  ngOnInit(): void {
+    this.recipeService.getRecipesOfUser().subscribe(
+      data => {
+        this.recipes = data
+      }
+    )
   }
 
   toggleVisibility(recipe: Recipe) {
@@ -68,5 +53,10 @@ export class MeineRezepteComponent {
     console.log(recipe)
     //TODO Backend Call um die Visibility vom Recipe zu ändern
     // Es sollte nur die Id gesendet werden und der Boolean wert
+  }
+
+
+  deleteProduct(recipe: Recipe) {
+
   }
 }

@@ -1,6 +1,10 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {RezeptVerwaltungComponent} from "../../shared-components/rezept-verwaltung/rezept-verwaltung.component";
 import {Recipe} from "../../models/recipe";
+import {Ingredient} from "../../models/ingredient";
+import {RecipeService} from "../../services/recipe.service";
+import {IngredientService} from "../../services/ingredient.service";
+import {RecipeWithIngredients} from "../../models/recipeWithIngredients";
 
 @Component({
   selector: 'app-rezept-bearbeiten',
@@ -11,30 +15,58 @@ import {Recipe} from "../../models/recipe";
   templateUrl: './rezept-bearbeiten.component.html',
   styleUrl: './rezept-bearbeiten.component.css'
 })
-export class RezeptBearbeitenComponent {
+export class RezeptBearbeitenComponent implements OnInit{
   recipeId: number = -1;
-
-  recipe:Recipe = {
-    id: 1,
-    rating: 3,
-    visibility: true,
-    isAnonymous:false ,
-    name: "Döner",
-    preparation: "ajsiodjasidioa",
-    image: "ioqaswdjioiqwoeqwioejqiow",
-    ingredients: [{name: "Cluster Me Dady", measure:"ng", quantity:3}],
-  }
 
   @Input() //Mapped id die durch die URL übergeben wurde auf recipeId
   set id(value: number){
     this.recipeId = value;
   }
 
+  recipe: Recipe | undefined
+
+  ingredientsOfRecipe: Ingredient[] | undefined
+
+
+  constructor(private recipeService: RecipeService,
+              private ingredientService: IngredientService) {
+  }
+
+  ngOnInit(): void {
+    this.getRecipeById(this.recipeId);
+    this.getIngredientsOfRecipe(this.recipeId)
+  }
+
   //TODO
   // OnInit Get From Service the Recipe by recipeID and save it in recipe
 
 
-  updateRecipe($event: Recipe) {
-    //TODO PUT an Server schicken um Rezept zu aktualisieren
+  updateRecipe($data: RecipeWithIngredients) {
+    this.recipeService.updateRecipe($data.recipe).subscribe(
+      data => {
+        console.log(data)
+      }
+    );
+    this.ingredientService.saveIngredients($data.ingredientsOfRecipe, $data.recipe.id).subscribe(
+      data => {
+        console.log(data)
+      }
+    );
+  }
+
+  private getRecipeById(recipeId: number) {
+    this.recipeService.getRecipeById(recipeId).subscribe(
+      data => {
+        this.recipe = data
+      }
+    )
+  }
+
+  private getIngredientsOfRecipe(recipeId: number) {
+    this.ingredientService.getIngredientsOfRecipe(recipeId).subscribe(
+      data => {
+        this.ingredientsOfRecipe = data
+      }
+    )
   }
 }

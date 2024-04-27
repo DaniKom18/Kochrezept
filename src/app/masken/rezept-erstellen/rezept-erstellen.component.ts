@@ -10,19 +10,10 @@ import {FileUploadModule} from "primeng/fileupload";
 import {DropdownModule} from "primeng/dropdown";
 import {FileUploadComponent} from "./file-upload/file-upload.component";
 import {RezeptVerwaltungComponent} from "../../shared-components/rezept-verwaltung/rezept-verwaltung.component";
-
-interface Recipe{
-  name:string,
-  preparation:string,
-  ingredients:Ingredients[],
-  image:string,
-}
-
-interface Ingredients{
-  name: string,
-  quantity:number,
-  measure:string
-}
+import {RecipeService} from "../../services/recipe.service";
+import {RecipeWithIngredients} from "../../models/recipeWithIngredients";
+import {IngredientService} from "../../services/ingredient.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-rezept-erstellen',
@@ -46,7 +37,15 @@ interface Ingredients{
 export class RezeptErstellenComponent{
 
 
-  createRecipe($event: Recipe) {
-    //TODO POST an server um ein neues Rezept zu erstellen
+  constructor(private recipeService: RecipeService,
+              private ingredientService: IngredientService) {
+  }
+
+  createRecipe($data: RecipeWithIngredients) {
+    this.recipeService.saveRecipe($data.recipe).subscribe(
+      recipe => {
+        this.ingredientService.saveIngredients($data.ingredientsOfRecipe, recipe.id).subscribe();
+      }
+    );
   }
 }
