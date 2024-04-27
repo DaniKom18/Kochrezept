@@ -43,22 +43,9 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.findByIdIn(recipeIds);
     }
 
-
-
     @Override
     public Recipe updateRecipe(Recipe updatedRecipe) {
-        return recipeRepository.findById(updatedRecipe.getId())
-                .map(existingRecipe -> {
-                    if (updatedRecipe.getAuthor() != null) existingRecipe.setAuthor(updatedRecipe.getAuthor());
-                    if (updatedRecipe.getName() != null) existingRecipe.setName(existingRecipe.getName());
-                    if (updatedRecipe.getImage() != null) existingRecipe.setImage(existingRecipe.getImage());
-                    if (updatedRecipe.getRating() != null) existingRecipe.setRating(existingRecipe.getRating());
-                    if (updatedRecipe.getPreparation() != null) existingRecipe.setPreparation(existingRecipe.getPreparation());
-                    if (updatedRecipe.getIsAnonymous() != null) existingRecipe.setIsAnonymous(existingRecipe.getIsAnonymous());
-                    if (updatedRecipe.getVisibility() != null) existingRecipe.setVisibility(existingRecipe.getVisibility());
-                    return recipeRepository.save(existingRecipe);
-                })
-                .orElseThrow(() -> new RuntimeException("Recipe not found with id:" + updatedRecipe.getId()));
+        return recipeRepository.save(updatedRecipe);
     }
 
     @Override

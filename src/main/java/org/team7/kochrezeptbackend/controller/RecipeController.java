@@ -11,13 +11,11 @@ import org.team7.kochrezeptbackend.entity.Recipe;
 import org.team7.kochrezeptbackend.request.RequestIds;
 import org.team7.kochrezeptbackend.service.RecipeService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
-@RequestMapping(value = "api/recipes", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "api/recipes")
 @CrossOrigin(originPatterns = "*")
 public class RecipeController {
 
@@ -55,13 +53,13 @@ public class RecipeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody  Recipe recipe){
-        if (!recipe.getId().equals(id)){
+    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody  Recipe requestRecipe){
+        if (!requestRecipe.getId().equals(id)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Optional<Recipe> existingRecipe = recipeService.getRecipeById(id);
         if (existingRecipe.isPresent()){
-            Recipe updateRecipe = recipeService.updateRecipe(recipe);
+            Recipe updateRecipe = recipeService.updateRecipe(requestRecipe);
             return new ResponseEntity<>(updateRecipe, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
