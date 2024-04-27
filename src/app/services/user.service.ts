@@ -30,4 +30,10 @@ export class UserService {
     const url: string = this.baseUrl + "/leaderboard";
     return this.httpClient.get<User[]>(url)
   }
+
+  updateUser(xp: number) {
+    const user : User = {xp, id:userSession.id}
+    const url: string = `${this.baseUrl}/${userSession.id}`;
+    return this.httpClient.put(url, user, this.options)
+  }
 }
