@@ -25,15 +25,9 @@
             <p class="bold">E-Mail</p>
             <p>{{ userSession.email }}</p>
           </div>
-        </div>
-        <div class="user-info">
           <div class="info-group">
             <p class="bold">Erstellte Rezepte</p>
-            <p>{{ user.myRecipes?.length }}</p>
-          </div>
-          <div class="info-group">
-            <p class="bold">Rezepte Favorisiert</p>
-            <p>{{  user.favRecipes?.length }}</p>
+            <p>{{ countOfUserRecipes }}</p>
           </div>
         </div>
         <div class="user-level">
