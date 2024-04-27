@@ -38,6 +38,7 @@ public class RecipeController {
         }
 
         recipe.setOwner(foundUser.get());
+        recipe.setAuthor(foundUser.get().getUsername());
         Recipe savedRecipe = recipeService.saveRecipe(recipe);
         return new ResponseEntity<>(savedRecipe, HttpStatus.CREATED);
     }
@@ -62,9 +63,13 @@ public class RecipeController {
     }
 
 
+    //TODO Welcher User will alle Rezepte bekommen? USERID zum path hinzufügen
     @GetMapping("/recipes")
     public ResponseEntity<List<Recipe>> getAllRecipe(){
         List<Recipe> recipes = recipeService.getAllRecipe();
+        //TODO gib mir alle Favoriten Rezepten Vom User
+        //TODO extrahieren die ID von FAV Recipes
+        //TODO suche in recipes all diese IDS und lösche sie aus der LISTE
         return new ResponseEntity<>(recipes, HttpStatus.OK);
     }
 
@@ -76,7 +81,6 @@ public class RecipeController {
         Optional<Recipe> existingRecipe = recipeService.getRecipeById(id);
         if (existingRecipe.isPresent()){
             Recipe recipe = existingRecipe.get();
-            recipe.setAuthor(requestRecipe.getAuthor());
             recipe.setName(requestRecipe.getName());
             recipe.setImage(requestRecipe.getImage());
             recipe.setPreparation(requestRecipe.getPreparation());
