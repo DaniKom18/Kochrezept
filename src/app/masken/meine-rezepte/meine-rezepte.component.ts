@@ -54,6 +54,7 @@ export class MeineRezepteComponent implements OnInit{
 
 
   deleteProduct(recipe: Recipe) {
-
+      this.recipeService.deleteRecipe(recipe.id)
+      this.recipes = this.recipes.filter(x => x.id != recipe.id)
   }
 }
