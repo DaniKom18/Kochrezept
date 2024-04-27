@@ -10,7 +10,7 @@ import {Recipe} from "../../models/recipe";
 import {Ingredient} from "../../models/ingredient";
 import {RecipeWithIngredients} from "../../models/recipeWithIngredients";
 import {IngredientService} from "../../services/ingredient.service";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-rezept-verwaltung',
@@ -118,6 +118,6 @@ export class RezeptVerwaltungComponent implements OnInit{
   }
 
   saveImage($event: string) {
-    this.recipe.image = $event;
+    this.recipe.image = "https://picsum.photos/id/237/200/300"
   }
 }

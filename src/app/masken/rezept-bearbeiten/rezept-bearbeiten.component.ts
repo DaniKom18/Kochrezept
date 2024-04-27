@@ -5,6 +5,7 @@ import {Ingredient} from "../../models/ingredient";
 import {RecipeService} from "../../services/recipe.service";
 import {IngredientService} from "../../services/ingredient.service";
 import {RecipeWithIngredients} from "../../models/recipeWithIngredients";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-rezept-bearbeiten',
@@ -29,7 +30,8 @@ export class RezeptBearbeitenComponent implements OnInit{
 
 
   constructor(private recipeService: RecipeService,
-              private ingredientService: IngredientService) {
+              private ingredientService: IngredientService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -45,11 +47,11 @@ export class RezeptBearbeitenComponent implements OnInit{
     this.recipeService.updateRecipe($data.recipe).subscribe(
       data => {
         console.log(data)
+        this.router.navigate(['/meine-rezepte'])
       }
     );
     this.ingredientService.saveIngredients($data.ingredientsOfRecipe, $data.recipe.id).subscribe(
       data => {
-        console.log(data)
       }
     );
   }

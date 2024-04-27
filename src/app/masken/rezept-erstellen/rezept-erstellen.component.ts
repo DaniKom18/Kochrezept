@@ -13,7 +13,7 @@ import {RezeptVerwaltungComponent} from "../../shared-components/rezept-verwaltu
 import {RecipeService} from "../../services/recipe.service";
 import {RecipeWithIngredients} from "../../models/recipeWithIngredients";
 import {IngredientService} from "../../services/ingredient.service";
-import {UserService} from "../../services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-rezept-erstellen',
@@ -38,12 +38,14 @@ export class RezeptErstellenComponent{
 
 
   constructor(private recipeService: RecipeService,
-              private ingredientService: IngredientService) {
+              private ingredientService: IngredientService,
+              private router: Router) {
   }
 
   createRecipe($data: RecipeWithIngredients) {
     this.recipeService.saveRecipe($data.recipe).subscribe(
       recipe => {
+        this.router.navigate(['/meine-rezepte'])
         this.ingredientService.saveIngredients($data.ingredientsOfRecipe, recipe.id).subscribe();
       }
     );
