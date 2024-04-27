@@ -7,8 +7,6 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.UUID;
-
 
 @Getter
 @Setter
@@ -24,7 +22,7 @@ public class Feedback {
     private Double rating;
 
     @Column
-    private UUID user;  // Verbindung zu User-Entität
+    private String username;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "recipe_id", nullable = false)
