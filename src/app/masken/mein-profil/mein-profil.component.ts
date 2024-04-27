@@ -6,6 +6,8 @@ import {InputTextModule} from "primeng/inputtext";
 import {AutoFocusModule} from "primeng/autofocus";
 import {UserService} from "../../services/user.service";
 import {userSession} from "../../../environments/user-uuid";
+import {RecipeService} from "../../services/recipe.service";
+import {dateTimestampProvider} from "rxjs/internal/scheduler/dateTimestampProvider";
 
 @Component({
   selector: 'app-mein-profil',
@@ -23,12 +25,19 @@ export class MeinProfilComponent implements OnInit{
 
   protected readonly userSession = userSession;
   user:User = {};
+  countOfUserRecipes?: number;
 
-  constructor(private userservice: UserService) {}
+  constructor(private userservice: UserService,
+              private recipeService: RecipeService) {}
 
   ngOnInit(): void {
     this.waitForUserSession().then(() => {
       this.loadUserProfile();
+      this.recipeService.getRecipesOfUser().subscribe(
+        data => {
+          this.countOfUserRecipes = data.length
+        }
+      )
     });
   }
 
@@ -54,8 +63,6 @@ export class MeinProfilComponent implements OnInit{
           username: data.username,
           xp: data.xp,
           level: data.level,
-          myRecipes: data.myRecipes,
-          favRecipes: data.favRecipes
         }
       }
     )
