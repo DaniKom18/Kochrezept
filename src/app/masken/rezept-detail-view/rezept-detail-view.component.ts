@@ -52,7 +52,6 @@ export class RezeptDetailViewComponent {
     image: 'https://images.pexels.com/photos/15202777/pexels-photo-15202777/free-photo-of-mahlzeit-fleisch-frisch-essensfotografie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     rating: 5.0,
     preparation: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.",
-    ingredients: this.ingredients,
     visibility: false,
     isAnonymous: false,
   };
@@ -70,7 +69,6 @@ export class RezeptDetailViewComponent {
 
   feedback: Feedback = {
     id: '1',
-    comment: this.comments,
     rating: '5',
     username: 'Daniel'
   }

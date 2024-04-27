@@ -19,14 +19,14 @@
   <section class="ingredients box">
     <h2 class="box-title">ZUTATEN</h2>
     <div class="ingridient-creator">
-      <input pInputText placeholder="Name" name="Name" [(ngModel)]="ingredientName"/>
-      <input type="number" min="1" pInputText style="width: 100px" placeholder="Menge" name="Menge"[(ngModel)]="ingredientQuantity"/>
-      <p-dropdown name="measure" [options]="measures" [(ngModel)]="ingredientMeasure" [style]="{width: '200px'}" placeholder="Mengeneinheit"></p-dropdown>
-      <p-button icon="pi pi-plus" [rounded]="true" [text]="true" severity="success" (click)="addIngredient(ingredientName,ingredientQuantity,ingredientMeasure)"></p-button>
+      <input pInputText placeholder="Name" name="Name" [(ngModel)]="createIngredient.name"/>
+      <input type="number" min="1" pInputText style="width: 100px" placeholder="Menge" name="Menge"[(ngModel)]="createIngredient.quantity"/>
+      <p-dropdown name="measure" [options]="measures" [(ngModel)]="createIngredient.measure" [style]="{width: '200px'}" placeholder="Mengeneinheit"></p-dropdown>
+      <p-button icon="pi pi-plus" [rounded]="true" [text]="true" severity="success" (click)="addIngredient(createIngredient)"></p-button>
     </div>
     <p-scrollPanel [style]="{ width: '100%', height: '240px' }">
       <ul class="items">
-        @for (ingredient of recipe.ingredients; track ingredient){
+        @for (ingredient of ingredientsOfRecipe; track ingredient){
           <li class="item">
             <div class="item-quantity">{{ingredient.quantity}} {{ingredient.measure}}</div>
             <div class="item-title">{{ingredient.name}}</div>
@@ -37,9 +37,9 @@
     </p-scrollPanel>
   </section>
   <section class="file-upload">
-    <app-file-upload></app-file-upload>
+    <app-file-upload [fileName]="recipe.image!" (saveImage)="this.saveImage($event)"></app-file-upload>
   </section>
   <section class="submit">
-    <button class="submit-btn" type="button" (click)="save(recipe)">Rezept erstellen</button>
+    <button class="submit-btn" type="button" (click)="save(recipe, ingredientsOfRecipe)" routerLink="/meine-rezepte">Speichern</button>
   </section>
 </form>

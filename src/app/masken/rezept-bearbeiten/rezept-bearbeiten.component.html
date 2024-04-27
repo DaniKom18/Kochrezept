@@ -2,7 +2,8 @@
   <section class="page-container recipe-form">
     <app-rezept-verwaltung
       [title]="'Rezept Bearbeiten'"
-      [recipe]="recipe"
+      [recipe]="recipe!"
+      [ingredientsOfRecipe]="ingredientsOfRecipe!"
       (saveRecipe)="updateRecipe($event)"
     ></app-rezept-verwaltung>
   </section>

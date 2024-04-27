@@ -3,10 +3,7 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {RezeptPanelComponent} from "../../shared-components/rezept-panel/rezept-panel.component";
 import {InputTextModule} from "primeng/inputtext";
 import {FormsModule} from "@angular/forms";
-
-interface Ingredient {
-  name: string,
-}
+import {Ingredient} from "../../models/ingredient";
 
 @Component({
   selector: 'app-startseite',

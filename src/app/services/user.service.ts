@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {User} from "../models/user";
+import {Recipe} from "../models/recipe";
+import {userSession} from "../../environments/user-uuid";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +11,8 @@ import {User} from "../models/user";
 export class UserService {
 
   baseUrl: string = environment.baseUrl + "/api/users"
+  headers = new HttpHeaders({'Content-Type': 'application/json'});
+  options = { headers: this.headers };
 
   constructor(private httpClient: HttpClient) { }
 
