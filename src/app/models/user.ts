@@ -3,6 +3,4 @@ export interface User {
   username?: string,
   xp?: number,
   level?: number
-  favRecipes?: number[]
-  myRecipes?: number[]
 }
