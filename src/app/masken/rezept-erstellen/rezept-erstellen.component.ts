@@ -14,6 +14,7 @@ import {RecipeService} from "../../services/recipe.service";
 import {RecipeWithIngredients} from "../../models/recipeWithIngredients";
 import {IngredientService} from "../../services/ingredient.service";
 import {Router} from "@angular/router";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-rezept-erstellen',
@@ -39,6 +40,7 @@ export class RezeptErstellenComponent{
 
   constructor(private recipeService: RecipeService,
               private ingredientService: IngredientService,
+              private userService: UserService,
               private router: Router) {
   }
 
@@ -47,6 +49,11 @@ export class RezeptErstellenComponent{
       recipe => {
         this.router.navigate(['/meine-rezepte'])
         this.ingredientService.saveIngredients($data.ingredientsOfRecipe, recipe.id).subscribe();
+        this.userService.updateUser(10).subscribe(
+          data => {
+            console.log(data)
+          }
+        );
       }
     );
   }
