@@ -40,4 +40,10 @@ export class RecipeService {
     const url = this.baseUrl + "/recipes"
     return this.httpClient.get<Recipe[]>(url);
   }
+
+  deleteRecipe(recipeId: number) {
+    const url = this.baseUrl + "/recipes/" + recipeId
+    this.httpClient.delete(url).subscribe()
+  }
+
 }
