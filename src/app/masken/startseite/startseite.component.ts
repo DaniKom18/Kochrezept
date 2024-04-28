@@ -4,6 +4,8 @@ import {RezeptPanelComponent} from "../../shared-components/rezept-panel/rezept-
 import {InputTextModule} from "primeng/inputtext";
 import {FormsModule} from "@angular/forms";
 import {Ingredient} from "../../models/ingredient";
+import {Recipe} from "../../models/recipe";
+import {RecipeService} from "../../services/recipe.service";
 
 @Component({
   selector: 'app-startseite',
@@ -19,8 +21,12 @@ import {Ingredient} from "../../models/ingredient";
 })
 export class StartseiteComponent implements OnInit {
 
-  ingredients!: Ingredient[];
 
+  constructor(private recipeService: RecipeService) {
+  }
+
+  recipes: Recipe[] = [];
+  ingredients!: Ingredient[];
   selectedIngredient!: Ingredient[];
 
   ngOnInit() {
@@ -31,8 +37,16 @@ export class StartseiteComponent implements OnInit {
       {name: 'Eier'},
       {name: 'Paprika'}
     ];
+    this.getAllRecipes();
   }
 
   search: string | undefined = "";
 
+  private getAllRecipes() {
+    this.recipeService.getAllHomePageRecipes().subscribe(
+      data =>  {
+        this.recipes = data
+      }
+    )
+  }
 }
