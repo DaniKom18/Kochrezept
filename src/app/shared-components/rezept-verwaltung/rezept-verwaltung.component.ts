@@ -50,7 +50,7 @@ export class RezeptVerwaltungComponent implements OnInit{
   ngOnInit() {
     if (!this.recipe){
       console.log("Es wurde kein Rezept mitgegeben, rezept wird initialisiert")
-      this.recipe = {id: 0, name: "",rating:0, preparation: "", image: "", isAnonymous: false, visibility: false}
+      this.recipe = {id: 0, name: "",rating:0, preparation: "", image: "", showAuthor: false, visibility: false}
       this.ingredientsOfRecipe = [];
     }
   }
