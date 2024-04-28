@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {RezeptPanelComponent} from "../../shared-components/rezept-panel/rezept-panel.component";
+import {Recipe} from "../../models/recipe";
 
 @Component({
   selector: 'app-meine-favoriten',
@@ -11,5 +12,5 @@ import {RezeptPanelComponent} from "../../shared-components/rezept-panel/rezept-
   styleUrl: './meine-favoriten.component.css'
 })
 export class MeineFavoritenComponent {
-
+  recipes: Recipe[] = []
 }
