@@ -5,6 +5,6 @@ export interface Recipe {
   image:string,
   rating: number,
   visibility: boolean,
-  isAnonymous: boolean,
+  showAuthor: boolean,
   author?:string
 }
