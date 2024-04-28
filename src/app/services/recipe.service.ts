@@ -33,6 +33,11 @@ export class RecipeService {
 
   updateRecipe(recipe: Recipe) {
     const url = this.baseUrl + "/recipes/" + recipe.id
-    return this.httpClient.put(url, recipe, this.options)
+    return this.httpClient.put<Recipe>(url, recipe, this.options)
+  }
+
+  getAllHomePageRecipes() {
+    const url = this.baseUrl + "/recipes"
+    return this.httpClient.get<Recipe[]>(url);
   }
 }
