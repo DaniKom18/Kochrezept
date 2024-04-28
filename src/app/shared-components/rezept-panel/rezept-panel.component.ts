@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {CardModule} from "primeng/card";
 import {ButtonModule} from "primeng/button";
+import {Recipe} from "../../models/recipe";
 
 @Component({
   selector: 'app-rezept-panel',
@@ -16,19 +17,12 @@ import {ButtonModule} from "primeng/button";
 })
 export class RezeptPanelComponent {
 
-  //TODO
-  // @Input Rezepte
-  // @Output Emmit zu Parent, dieser Übernimmt setFav, da Startseite und Meine Favoriten anders mit dem setzten des LikeBtns umgehen
-  // Startseite fügt einfach like hinzu, Meine Favoriten entfernt das Element aus der Liste
+  @Input({required: true}) title: string | undefined;
+  @Input({required: true}) recipes: Recipe[]| undefined;
+  @Output() favEvent = new EventEmitter<Recipe>()
 
-  cardInput = [
-    {id: "2", header: "CordonBleau", subheader: "20 min", difficulty: "Leicht", stars: 3, fav: false},
-    {id: "3", header: "Döner", subheader: "20 min", difficulty: "Leicht", stars: 5, fav: true}
-  ]
-
-  setFav(id: string) {
-    this.cardInput.filter(x => x.id == id).map(x => x.fav = !x.fav);
-    console.log(this.cardInput)
+  setFav(recipe: Recipe) {
+    this.favEvent.emit(recipe)
   }
 
 }
