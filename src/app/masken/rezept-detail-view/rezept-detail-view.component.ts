@@ -53,7 +53,7 @@ export class RezeptDetailViewComponent {
     rating: 5.0,
     preparation: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.",
     visibility: false,
-    isAnonymous: false,
+    showAuthor: false,
   };
 
   comments: Comment[] = [
