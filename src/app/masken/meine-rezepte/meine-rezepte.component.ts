@@ -48,7 +48,7 @@ export class MeineRezepteComponent implements OnInit{
     this.recipeService.updateRecipe(recipe).subscribe()
   }
 
-  toggleIsAnonymous(recipe: Recipe) {
+  toggleShowAuthor(recipe: Recipe) {
     this.recipeService.updateRecipe(recipe).subscribe()
   }
 
