@@ -10,7 +10,12 @@
             {{ recipe.rating }} <i class="pi pi-star-fill"></i>
           </div>
           <div class="favorite">
-            favorite ico TODO <i class="pi pi-heart"></i>
+            <button pButton pRipple type="button" icon="pi pi-heart"
+                    style="outline-color: crimson; border-color: crimson; color: white; background: crimson; "
+                    [style.color]="isFavorite ? 'crimson' : 'white'"
+                    [style.background]="isFavorite ? 'white' : 'crimson'"
+                    (click)="toggleFavorite()"
+                    class="p-button-rounded p-button-help p-button-outlined"></button>
           </div>
         </div>
         <div class="cooking-details">
@@ -18,7 +23,7 @@
             15 min <i class="pi pi-clock"></i>
           </div>
           <div class="difficulty">
-            4
+            4 <i class="pi pi-bolt"></i>
           </div>
         </div>
       </div>
@@ -49,8 +54,8 @@
       <div class="feedback-section">
         <h2 class="feedback-title">Kommentare</h2>
         <div class="feedback-form">
-          <textarea class="feedback-textarea" placeholder="Schreibe einen Kommentar"></textarea>
-          <button class="feedback-button">Kommentar absenden</button>
+          <textarea pInputTextarea placeholder="Schreibe einen Kommentar"></textarea>
+          <button pButton pRipple type="button" label="Kommentar absenden" class="p-button-rounded"></button>
         </div>
         <div class="comments">
           <div *ngFor="let comment of comments" class="comment">

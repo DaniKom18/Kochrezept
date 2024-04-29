@@ -1,11 +1,16 @@
 import {NgForOf} from "@angular/common";
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {TableModule} from "primeng/table";
 import {Comment} from "../../models/comment";
 import {Feedback} from "../../models/feedback";
 import {Ingredient} from "../../models/ingredient";
 import {Recipe} from "../../models/recipe";
+import {ChipsModule} from "primeng/chips";
+import {RippleModule} from "primeng/ripple";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {RecipeService} from "../../services/recipe.service";
+import {IngredientService} from "../../services/ingredient.service";
 
 @Component({
   selector: 'app-rezept-detail-view',
@@ -13,18 +18,26 @@ import {Recipe} from "../../models/recipe";
   imports: [
     ButtonModule,
     NgForOf,
-    TableModule
+    TableModule,
+    ChipsModule,
+    RippleModule,
+    InputTextareaModule
   ],
   templateUrl: './rezept-detail-view.component.html',
   styleUrl: './rezept-detail-view.component.css'
 })
-export class RezeptDetailViewComponent {
+export class RezeptDetailViewComponent implements OnInit {
   recipeId: number = -1;
 
-  @Input() //Mapped id die durch die URL übergeben wurde auf recipeId
-  set id(value: number) {
-    this.recipeId = value;
-  }
+  recipe: Recipe = {
+    id: this.recipeId,
+    name: 'Döner',
+    image: 'https://images.pexels.com/photos/15202777/pexels-photo-15202777/free-photo-of-mahlzeit-fleisch-frisch-essensfotografie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    rating: 5.0,
+    preparation: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.",
+    visibility: false,
+    showAuthor: false,
+  };
 
   ingredients: Ingredient[] = [
     {
@@ -39,22 +52,43 @@ export class RezeptDetailViewComponent {
     }
   ];
 
+  constructor(private recipeService: RecipeService,
+              private ingredientService: IngredientService) {
+  }
+
+  @Input() //Mapped id die durch die URL übergeben wurde auf recipeId
+  set id(value: number) {
+    this.recipeId = value;
+  }
+
+  ngOnInit(): void {
+    this.loadRecipe();
+    this.loadIngredient();
+  }
+
+  private loadIngredient() {
+    this.ingredientService.getIngredientsOfRecipe(this.recipeId).subscribe(
+      data => {
+        this.ingredients = data;
+        console.log(data);
+      })
+  }
+
+  private loadRecipe() {
+    this.recipeService.getRecipeById(this.recipeId).subscribe(
+      data => {
+        this.recipe = data;
+        console.log(data);
+      })
+  }
+
+
   combinedIngredients: any[] = this.ingredients.map(ingredient => {
     return {
       ...ingredient,
       quantityWithMeasure: `${ingredient.quantity} ${ingredient.measure}`
     };
   });
-
-  recipe: Recipe = {
-    id: this.recipeId,
-    name: 'Döner',
-    image: 'https://images.pexels.com/photos/15202777/pexels-photo-15202777/free-photo-of-mahlzeit-fleisch-frisch-essensfotografie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    rating: 5.0,
-    preparation: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.",
-    visibility: false,
-    showAuthor: false,
-  };
 
   comments: Comment[] = [
     {
@@ -71,5 +105,38 @@ export class RezeptDetailViewComponent {
     id: '1',
     rating: '5',
     username: 'Daniel'
+  }
+
+  isFavorite: boolean = false;
+
+  toggleFavorite() {
+    this.isFavorite = !this.isFavorite;
+  }
+
+  comment: string = '';
+
+  addComment() {
+    this.comments.push({
+      id: this.comments.length + 1,
+      text: this.comment
+    });
+    this.comment = '';
+  }
+
+  deleteComment(comment: Comment) {
+    this.comments = this.comments.filter(c => c.id !== comment.id);
+  }
+
+  editComment(comment: Comment) {
+    this.comment = comment.text;
+    this.deleteComment(comment);
+  }
+
+  editRecipe() {
+    this.recipe.visibility = true;
+  }
+
+  saveRecipe() {
+    this.recipe.visibility = false;
   }
 }
