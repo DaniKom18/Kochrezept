@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {User} from "../models/user";
-import {Recipe} from "../models/recipe";
 import {userSession} from "../../environments/user-uuid";
 
 @Injectable({
@@ -35,5 +34,19 @@ export class UserService {
     const user : User = {xp, id:userSession.id}
     const url: string = `${this.baseUrl}/${userSession.id}`;
     return this.httpClient.put(url, user, this.options)
+  }
+
+  // Wenn man auf dem URL Pfad **/profil bleibt und die Seite Reloaded wird
+  // Bevor die UUID von KeyCloak geliefert wird schon die Request gemacht
+  // Um das Profil vom User zu bekommen, deshalb wird hier solange gewartet bis die ID da ist
+  waitForUserSession(): Promise<void> {
+    return new Promise((resolve) => {
+      const checkId = setInterval(() => {
+        if (userSession.id !== "") {
+          clearInterval(checkId);
+          resolve();
+        }
+      }, 100); // Überprüft alle 100 Millisekunden
+    });
   }
 }

@@ -9,6 +9,7 @@ import {RouterLink} from "@angular/router";
 import {Recipe} from "../../models/recipe";
 import {InputSwitchModule} from "primeng/inputswitch";
 import {RecipeService} from "../../services/recipe.service";
+import {UserService} from "../../services/user.service";
 
 
 @Component({
@@ -30,12 +31,19 @@ import {RecipeService} from "../../services/recipe.service";
 export class MeineRezepteComponent implements OnInit{
 
 
-  constructor(private recipeService: RecipeService) {
+  constructor(private recipeService: RecipeService,
+              private userService: UserService) {
   }
 
   recipes:Recipe[] = []
 
   ngOnInit(): void {
+    this.userService.waitForUserSession().then(()=> {
+      this.getUserRecipes();
+    })
+  }
+
+  private getUserRecipes() {
     this.recipeService.getRecipesOfUser().subscribe(
       data => {
         this.recipes = data
