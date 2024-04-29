@@ -37,13 +37,18 @@ export class RecipeService {
   }
 
   getAllHomePageRecipes() {
-    const url = this.baseUrl + "/recipes"
+    const url = this.baseUrl + "/user/" + userSession.id + "/home/recipes"
     return this.httpClient.get<Recipe[]>(url);
   }
 
   getAllFavoritesRecipes() {
-    const url = this.baseUrl + "/user/" + userSession + "/fav/recipes"
+    const url = this.baseUrl + "/user/" + userSession.id + "/fav/recipes"
     return this.httpClient.get<Recipe[]>(url);
+  }
+
+  userClickedRecipeAsFav(recipe: Recipe) {
+    const url = this.baseUrl + "/user/" + userSession.id + "/fav/recipes/" + recipe.id
+    return this.httpClient.put<Recipe>(url, recipe, this.options)
   }
 
   deleteRecipe(recipeId: number) {
