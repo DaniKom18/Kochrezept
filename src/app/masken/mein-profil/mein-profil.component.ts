@@ -31,31 +31,13 @@ export class MeinProfilComponent implements OnInit{
               private recipeService: RecipeService) {}
 
   ngOnInit(): void {
-    this.waitForUserSession().then(() => {
+    this.userservice.waitForUserSession().then(() => {
       this.loadUserProfile();
-      this.recipeService.getRecipesOfUser().subscribe(
-        data => {
-          this.countOfUserRecipes = data.length
-        }
-      )
+      this.loadUserRecipes();
     });
   }
 
-  // Wenn man auf dem URL Pfad **/profil bleibt und die Seite Reloaded wird
-  // Bevor die UUID von KeyCloak geliefert wird schon die Request gemacht
-  // Um das Profil vom User zu bekommen, deshalb wird hier solange gewartet bis die ID da ist
-  waitForUserSession(): Promise<void> {
-    return new Promise((resolve) => {
-      const checkId = setInterval(() => {
-        if (userSession.id !== "") {
-          clearInterval(checkId);
-          resolve();
-        }
-      }, 100); // Überprüft alle 100 Millisekunden
-    });
-  }
-
-  async loadUserProfile() {
+  private loadUserProfile() {
     console.log(userSession.id)
     this.userservice.getUserByUuid(userSession.id).subscribe(
       data => {
@@ -66,7 +48,14 @@ export class MeinProfilComponent implements OnInit{
         }
       }
     )
+  }
 
+  private loadUserRecipes() {
+    this.recipeService.getRecipesOfUser().subscribe(
+      data => {
+        this.countOfUserRecipes = data.length
+      }
+    )
   }
 
   onDelete() {
@@ -75,4 +64,6 @@ export class MeinProfilComponent implements OnInit{
       // Account löschen Logik
     }
   }
+
+
 }
