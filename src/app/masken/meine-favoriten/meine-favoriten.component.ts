@@ -26,10 +26,6 @@ export class MeineFavoritenComponent implements OnInit {
       next: (data: Recipe[]) => {
         this.recipes = data;
       },
-      /*error: (err) => {
-        // Fehlerbehandlung (Optional)
-        console.error("Fehler beim Laden der Lieblingsrezepte:", err);
-      }*/
     });
   }
 
