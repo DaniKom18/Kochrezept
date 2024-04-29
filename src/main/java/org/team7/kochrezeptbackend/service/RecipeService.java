@@ -10,10 +10,10 @@ import java.util.UUID;
 public interface RecipeService {
     Recipe saveRecipe(Recipe recipe);
     Optional<Recipe> getRecipeById(Long id);
-    List<Recipe> getAllRecipe();
+    List<Recipe> getAllHomePageRecipes();
     List<Recipe> getRecipesByIds(Set<Long> recipeIds);
     Recipe updateRecipe(Recipe recipe);
     void deleteRecipe(Long id);
-
     List<Recipe> findByUser(UUID userId);
+    List<Recipe> getFavRecipesOfUser(UUID userId);
 }

@@ -58,18 +58,31 @@ public class RecipeController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-
-    //TODO Welcher User will alle Rezepte bekommen? USERID zum path hinzufügen
-    @GetMapping("/recipes")
-    public ResponseEntity<List<Recipe>> getAllRecipe(){
-        List<Recipe> recipes = recipeService.getAllRecipe();
+    @GetMapping("/user/{userId}/home/recipes")
+    public ResponseEntity<List<Recipe>> getAllHomePageRecipes(@PathVariable UUID userId){
+        List<Recipe> recipes = recipeService.getAllHomePageRecipes();
         //TODO gib mir alle Favoriten Rezepten Vom User
+        List<Recipe> favRecipes = recipeService.getFavRecipesOfUser(userId);
         //TODO extrahieren die ID von FAV Recipes
-        //TODO suche in recipes all diese IDS und lösche sie aus der LISTE
-        //TODO es dürfen nur die Rezepte ausgegeben werden die nicht auf Privat sind
+        for (Recipe recipe : recipes) {
+            for (Recipe favRecipe : favRecipes) {
+                if (recipe.getId().longValue() == favRecipe.getId().longValue()){
+                    recipes.remove(recipe);
+                }
+            }
+        }
         return new ResponseEntity<>(recipes, HttpStatus.OK);
     }
 
+    @GetMapping("/user/{userId}/fav/recipes")
+    public ResponseEntity<List<Recipe>> getAllUserFavRecipies(@PathVariable UUID userId){
+        List<Recipe> favRecipesOfUser = recipeService.getFavRecipesOfUser(userId);
+        return new ResponseEntity<>(favRecipesOfUser, HttpStatus.OK);
+    }
+
+    /**
+     * Verändert nicht das markedAsFavorite Attribut im Recipe, dafür gibt es extra API'S
+     */
     @PutMapping("/recipes/{id}")
     public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody  Recipe requestRecipe){
         if (!requestRecipe.getId().equals(id)){
@@ -84,6 +97,31 @@ public class RecipeController {
             recipe.setRating(requestRecipe.getRating());
             recipe.setVisibility(requestRecipe.getVisibility());
             recipe.setShowAuthor(requestRecipe.getShowAuthor());
+            Recipe updateRecipe = recipeService.updateRecipe(recipe);
+            return new ResponseEntity<>(updateRecipe, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/user/{userId}/fav/recipes/{recipeId}")
+    public ResponseEntity<Recipe> userAddedRecipeAsFav(@PathVariable UUID userId, @PathVariable Long recipeId){
+        Optional<User> foundUser = userService.getUserById(userId);
+        if (foundUser.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<Recipe> existingRecipe = recipeService.getRecipeById(recipeId);
+        if (existingRecipe.isPresent()){
+            Recipe recipe = existingRecipe.get();
+
+            boolean userFound = recipe.getMarkedAsFavorite().contains(foundUser.get());
+
+            if (userFound){
+                recipe.getMarkedAsFavorite().remove(foundUser.get());
+            }else {
+                recipe.getMarkedAsFavorite().add(foundUser.get());
+            }
+
             Recipe updateRecipe = recipeService.updateRecipe(recipe);
             return new ResponseEntity<>(updateRecipe, HttpStatus.OK);
         }
