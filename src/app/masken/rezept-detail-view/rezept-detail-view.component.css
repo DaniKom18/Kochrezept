@@ -59,6 +59,20 @@
   grid-area: feedback-section;
 }
 
+.feedback-form {
+  grid-area: feedback-form;
+  display: grid;
+  grid-template-areas:
+    "comment"
+    /*"rating"*/
+    "submit";
+}
+
+.feedback-form button {
+  width: 200px;
+  margin: 10px auto;
+}
+
 .comment-author {
   grid-area: comment-author;
   font-weight: bold;

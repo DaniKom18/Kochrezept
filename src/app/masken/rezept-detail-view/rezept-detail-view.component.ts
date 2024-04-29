@@ -6,6 +6,9 @@ import {Comment} from "../../models/comment";
 import {Feedback} from "../../models/feedback";
 import {Ingredient} from "../../models/ingredient";
 import {Recipe} from "../../models/recipe";
+import {ChipsModule} from "primeng/chips";
+import {RippleModule} from "primeng/ripple";
+import {InputTextareaModule} from "primeng/inputtextarea";
 
 @Component({
   selector: 'app-rezept-detail-view',
@@ -13,7 +16,10 @@ import {Recipe} from "../../models/recipe";
   imports: [
     ButtonModule,
     NgForOf,
-    TableModule
+    TableModule,
+    ChipsModule,
+    RippleModule,
+    InputTextareaModule
   ],
   templateUrl: './rezept-detail-view.component.html',
   styleUrl: './rezept-detail-view.component.css'
@@ -71,5 +77,38 @@ export class RezeptDetailViewComponent {
     id: '1',
     rating: '5',
     username: 'Daniel'
+  }
+
+  isFavorite: boolean = false;
+
+  toggleFavorite() {
+    this.isFavorite = !this.isFavorite;
+  }
+
+  comment: string = '';
+
+  addComment() {
+    this.comments.push({
+      id: this.comments.length + 1,
+      text: this.comment
+    });
+    this.comment = '';
+  }
+
+  deleteComment(comment: Comment) {
+    this.comments = this.comments.filter(c => c.id !== comment.id);
+  }
+
+  editComment(comment: Comment) {
+    this.comment = comment.text;
+    this.deleteComment(comment);
+  }
+
+  editRecipe() {
+    this.recipe.visibility = true;
+  }
+
+  saveRecipe() {
+    this.recipe.visibility = false;
   }
 }
