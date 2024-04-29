@@ -41,6 +41,11 @@ export class RecipeService {
     return this.httpClient.get<Recipe[]>(url);
   }
 
+  getAllFavoritesRecipes() {
+    const url = this.baseUrl + "/user/" + userSession + "/fav/recipes"
+    return this.httpClient.get<Recipe[]>(url);
+  }
+
   deleteRecipe(recipeId: number) {
     const url = this.baseUrl + "/recipes/" + recipeId
     this.httpClient.delete(url).subscribe()
