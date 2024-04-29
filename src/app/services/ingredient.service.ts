@@ -8,10 +8,10 @@ import {Ingredient} from "../models/ingredient";
 })
 export class IngredientService {
 
-  baseUrl: string = environment.baseUrl + "/api"
+  private baseUrl: string = environment.baseUrl + "/api"
 
-  headers = new HttpHeaders({'Content-Type': 'application/json', 'accept': 'application/json'});
-  options = { headers: this.headers };
+  private headers = new HttpHeaders({'Content-Type': 'application/json', 'accept': 'application/json'});
+  private options = { headers: this.headers };
 
   constructor(private httpClient: HttpClient) { }
 
