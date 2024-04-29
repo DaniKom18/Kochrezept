@@ -2,14 +2,10 @@ package org.team7.kochrezeptbackend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.team7.kochrezeptbackend.entity.Feedback;
-import org.team7.kochrezeptbackend.entity.Ingredient;
 import org.team7.kochrezeptbackend.entity.Recipe;
 import org.team7.kochrezeptbackend.entity.User;
-import org.team7.kochrezeptbackend.request.RequestIds;
 import org.team7.kochrezeptbackend.service.RecipeService;
 import org.team7.kochrezeptbackend.service.UserService;
 
@@ -70,6 +66,7 @@ public class RecipeController {
         //TODO gib mir alle Favoriten Rezepten Vom User
         //TODO extrahieren die ID von FAV Recipes
         //TODO suche in recipes all diese IDS und lösche sie aus der LISTE
+        //TODO es dürfen nur die Rezepte ausgegeben werden die nicht auf Privat sind
         return new ResponseEntity<>(recipes, HttpStatus.OK);
     }
 
@@ -86,7 +83,7 @@ public class RecipeController {
             recipe.setPreparation(requestRecipe.getPreparation());
             recipe.setRating(requestRecipe.getRating());
             recipe.setVisibility(requestRecipe.getVisibility());
-            recipe.setIsAnonymous(requestRecipe.getIsAnonymous());
+            recipe.setShowAuthor(requestRecipe.getShowAuthor());
             Recipe updateRecipe = recipeService.updateRecipe(recipe);
             return new ResponseEntity<>(updateRecipe, HttpStatus.OK);
         }

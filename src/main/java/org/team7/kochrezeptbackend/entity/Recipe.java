@@ -37,7 +37,7 @@ public class Recipe {
     private Boolean visibility;
 
     @Column(nullable = false)
-    private Boolean isAnonymous;
+    private Boolean showAuthor;
 
     @Column
     private String author;
