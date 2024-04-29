@@ -6,6 +6,7 @@ import {FormsModule} from "@angular/forms";
 import {Ingredient} from "../../models/ingredient";
 import {Recipe} from "../../models/recipe";
 import {RecipeService} from "../../services/recipe.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-startseite',
@@ -22,7 +23,8 @@ import {RecipeService} from "../../services/recipe.service";
 export class StartseiteComponent implements OnInit {
 
 
-  constructor(private recipeService: RecipeService) {
+  constructor(private recipeService: RecipeService,
+              private userService: UserService) {
   }
 
   recipes: Recipe[] = [];
@@ -30,14 +32,9 @@ export class StartseiteComponent implements OnInit {
   selectedIngredient!: Ingredient[];
 
   ngOnInit() {
-    this.ingredients = [
-      {name: 'Salz'},
-      {name: 'Zucker'},
-      {name: 'Mehl'},
-      {name: 'Eier'},
-      {name: 'Paprika'}
-    ];
-    this.getAllRecipes();
+    this.userService.waitForUserSession().then(()=> {
+      this.getAllRecipes();
+    })
   }
 
   search: string | undefined = "";
@@ -48,5 +45,10 @@ export class StartseiteComponent implements OnInit {
         this.recipes = data
       }
     )
+  }
+
+  favEvent(recipe: Recipe) {
+    this.recipes = this.recipes.filter(r => r.id != recipe.id);
+    this.recipeService.userClickedRecipeAsFav(recipe).subscribe()
   }
 }

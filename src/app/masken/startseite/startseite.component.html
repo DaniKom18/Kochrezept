@@ -11,4 +11,4 @@
 <div class="gradient"></div>
 
 <app-rezept-panel [title]="'startseite'"
-                  [recipes]="recipes"></app-rezept-panel>
+                  [recipes]="recipes" (favEvent)="favEvent($event)"></app-rezept-panel>
