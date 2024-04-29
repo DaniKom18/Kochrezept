@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import {RezeptPanelComponent} from "../../shared-components/rezept-panel/rezept-panel.component";
-import {Recipe} from "../../models/recipe";
+import { Component, OnInit } from '@angular/core';
+import { RezeptPanelComponent } from "../../shared-components/rezept-panel/rezept-panel.component";
+import { Recipe } from "../../models/recipe";
+import { RecipeService } from "../../services/recipe.service";
 
 @Component({
   selector: 'app-meine-favoriten',
@@ -9,8 +10,27 @@ import {Recipe} from "../../models/recipe";
     RezeptPanelComponent
   ],
   templateUrl: './meine-favoriten.component.html',
-  styleUrl: './meine-favoriten.component.css'
+  styleUrls: ['./meine-favoriten.component.css']
 })
-export class MeineFavoritenComponent {
-  recipes: Recipe[] = []
+export class MeineFavoritenComponent implements OnInit {
+  recipes: Recipe[] = [];
+
+  constructor(private recipeService: RecipeService) {}
+
+  ngOnInit() {
+    this.showFavoriteRecipes();
+  }
+
+  showFavoriteRecipes() {
+    this.recipeService.getAllFavoritesRecipes().subscribe({
+      next: (data: Recipe[]) => {
+        this.recipes = data;
+      },
+      /*error: (err) => {
+        // Fehlerbehandlung (Optional)
+        console.error("Fehler beim Laden der Lieblingsrezepte:", err);
+      }*/
+    });
+  }
+
 }
