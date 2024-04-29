@@ -1,5 +1,6 @@
 package org.team7.kochrezeptbackend.service;
 
+import org.team7.kochrezeptbackend.entity.Recipe;
 import org.team7.kochrezeptbackend.entity.User;
 
 import java.util.List;

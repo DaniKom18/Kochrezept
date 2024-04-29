@@ -35,8 +35,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> getAllRecipe() {
-        return recipeRepository.findAll();
+    public List<Recipe> getAllHomePageRecipes() {
+        return recipeRepository.findAllRecipesWithVisibilityTrue();
     }
 
     @Override
@@ -57,5 +57,10 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<Recipe> findByUser(UUID userId) {
         return recipeRepository.findRecipeByOwnerId(userId);
+    }
+
+    @Override
+    public List<Recipe> getFavRecipesOfUser(UUID userId) {
+        return recipeRepository.findAllFavoriteRecipesByUserId(userId);
     }
 }

@@ -1,6 +1,7 @@
 package org.team7.kochrezeptbackend.service.impl;
 
 import org.springframework.data.domain.PageRequest;
+import org.team7.kochrezeptbackend.entity.Recipe;
 import org.team7.kochrezeptbackend.entity.User;
 import org.team7.kochrezeptbackend.repository.UserRepository;
 import org.team7.kochrezeptbackend.service.UserService;
