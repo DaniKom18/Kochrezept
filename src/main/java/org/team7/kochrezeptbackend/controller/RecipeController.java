@@ -64,10 +64,12 @@ public class RecipeController {
         //TODO gib mir alle Favoriten Rezepten Vom User
         List<Recipe> favRecipes = recipeService.getFavRecipesOfUser(userId);
         //TODO extrahieren die ID von FAV Recipes
-        for (Recipe recipe : recipes) {
-            for (Recipe favRecipe : favRecipes) {
-                if (recipe.getId().longValue() == favRecipe.getId().longValue()){
-                    recipes.remove(recipe);
+        if (favRecipes != null) {
+            for (Recipe recipe : recipes) {
+                for (Recipe favRecipe : favRecipes) {
+                    if (recipe.getId().longValue() == favRecipe.getId().longValue()) {
+                        recipes.remove(recipe);
+                    }
                 }
             }
         }
