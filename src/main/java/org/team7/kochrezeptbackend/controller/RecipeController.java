@@ -61,9 +61,9 @@ public class RecipeController {
     @GetMapping("/user/{userId}/home/recipes")
     public ResponseEntity<List<Recipe>> getAllHomePageRecipes(@PathVariable UUID userId){
         List<Recipe> recipes = recipeService.getAllHomePageRecipes();
-        //TODO gib mir alle Favoriten Rezepten Vom User
+        // gib mir alle Favoriten Rezepten Vom User
         List<Recipe> favRecipes = recipeService.getFavRecipesOfUser(userId);
-        //TODO extrahieren die ID von FAV Recipes
+        //Lösche alle Fav Rezepte des Users aus Allen Rezepten da die hier nicht angezeigt werden sollen
         if (favRecipes != null) {
             for (Recipe recipe : recipes) {
                 for (Recipe favRecipe : favRecipes) {
