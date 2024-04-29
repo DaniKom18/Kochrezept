@@ -1,5 +1,5 @@
 import {NgForOf} from "@angular/common";
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {TableModule} from "primeng/table";
 import {Comment} from "../../models/comment";
@@ -9,6 +9,8 @@ import {Recipe} from "../../models/recipe";
 import {ChipsModule} from "primeng/chips";
 import {RippleModule} from "primeng/ripple";
 import {InputTextareaModule} from "primeng/inputtextarea";
+import {RecipeService} from "../../services/recipe.service";
+import {IngredientService} from "../../services/ingredient.service";
 
 @Component({
   selector: 'app-rezept-detail-view',
@@ -24,13 +26,18 @@ import {InputTextareaModule} from "primeng/inputtextarea";
   templateUrl: './rezept-detail-view.component.html',
   styleUrl: './rezept-detail-view.component.css'
 })
-export class RezeptDetailViewComponent {
+export class RezeptDetailViewComponent implements OnInit {
   recipeId: number = -1;
 
-  @Input() //Mapped id die durch die URL übergeben wurde auf recipeId
-  set id(value: number) {
-    this.recipeId = value;
-  }
+  recipe: Recipe = {
+    id: this.recipeId,
+    name: 'Döner',
+    image: 'https://images.pexels.com/photos/15202777/pexels-photo-15202777/free-photo-of-mahlzeit-fleisch-frisch-essensfotografie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    rating: 5.0,
+    preparation: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.",
+    visibility: false,
+    showAuthor: false,
+  };
 
   ingredients: Ingredient[] = [
     {
@@ -45,22 +52,43 @@ export class RezeptDetailViewComponent {
     }
   ];
 
+  constructor(private recipeService: RecipeService,
+              private ingredientService: IngredientService) {
+  }
+
+  @Input() //Mapped id die durch die URL übergeben wurde auf recipeId
+  set id(value: number) {
+    this.recipeId = value;
+  }
+
+  ngOnInit(): void {
+    this.loadRecipe();
+    this.loadIngredient();
+  }
+
+  private loadIngredient() {
+    this.ingredientService.getIngredientsOfRecipe(this.recipeId).subscribe(
+      data => {
+        this.ingredients = data;
+        console.log(data);
+      })
+  }
+
+  private loadRecipe() {
+    this.recipeService.getRecipeById(this.recipeId).subscribe(
+      data => {
+        this.recipe = data;
+        console.log(data);
+      })
+  }
+
+
   combinedIngredients: any[] = this.ingredients.map(ingredient => {
     return {
       ...ingredient,
       quantityWithMeasure: `${ingredient.quantity} ${ingredient.measure}`
     };
   });
-
-  recipe: Recipe = {
-    id: this.recipeId,
-    name: 'Döner',
-    image: 'https://images.pexels.com/photos/15202777/pexels-photo-15202777/free-photo-of-mahlzeit-fleisch-frisch-essensfotografie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    rating: 5.0,
-    preparation: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.",
-    visibility: false,
-    showAuthor: false,
-  };
 
   comments: Comment[] = [
     {
