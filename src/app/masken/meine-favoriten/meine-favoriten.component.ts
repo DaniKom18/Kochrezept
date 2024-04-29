@@ -29,4 +29,8 @@ export class MeineFavoritenComponent implements OnInit {
     });
   }
 
+  favEvent(recipe: Recipe) {
+    this.recipes = this.recipes.filter(r => r.id != recipe.id);
+    this.recipeService.userClickedRecipeAsFav(recipe).subscribe()
+  }
 }
