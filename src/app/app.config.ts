@@ -5,6 +5,8 @@ import { routes } from './app.routes';
 import {provideAnimations} from "@angular/platform-browser/animations";
 import {KeycloakBearerInterceptor, KeycloakService} from "keycloak-angular";
 import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
+import {MessageService} from "primeng/api";
+
 
 // Function to initialize Keycloak with the necessary configurations
 function initializeKeycloak(keycloak: KeycloakService) {
@@ -54,5 +56,6 @@ export const appConfig: ApplicationConfig = {
     KeycloakService, // Service for Keycloak
     provideRouter(routes, withComponentInputBinding()),
     provideAnimations(),
+    MessageService
   ]
 };
