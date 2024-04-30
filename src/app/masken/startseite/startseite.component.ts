@@ -49,7 +49,7 @@ export class StartseiteComponent implements OnInit {
   }
 
   favEvent(recipe: Recipe) {
-    this.messageService.add({ severity: 'success', summary: 'Erfolgreich', detail: 'Rezept wurde Erfolgreich zu deinen Favoriten hinzugefügt' });
+    this.messageService.add({ severity: 'success', summary: 'Erfolgreich', detail: 'Rezept wurde erfolgreich zu deinen Favoriten hinzugefügt' });
     this.filteredRecipes = this.filteredRecipes.filter(r => r.id != recipe.id);
     this.recipeService.userClickedRecipeAsFav(recipe).subscribe()
   }
