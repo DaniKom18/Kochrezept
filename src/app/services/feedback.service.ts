@@ -1,9 +1,29 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {environment} from "../../environments/environment";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Feedback} from "../models/feedback";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedbackService {
 
-  constructor() { }
+  private baseUrl: string = environment.baseUrl + "/api"
+
+  private headers = new HttpHeaders({'Content-Type': 'application/json', 'accept': 'application/json'});
+  private options = {headers: this.headers};
+
+  constructor(private httpClient: HttpClient) {
+  }
+
+  getAllFeedbackOfRecipe(recipeId: number) {
+    const url = this.baseUrl + "/recipe/" + recipeId + "/feedback"
+    return this.httpClient.get<Feedback[]>(url)
+  }
+
+  saveFeedback(feedbackOfRecipe: Feedback[], recipeId: number) {
+    console.log("Save Feedback On Recipe:=" + recipeId)
+    const url = this.baseUrl + "/recipe/" + recipeId + "/feedback"
+    return this.httpClient.post(url, feedbackOfRecipe, this.options)
+  }
 }
