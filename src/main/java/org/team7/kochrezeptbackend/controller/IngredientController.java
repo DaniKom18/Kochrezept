@@ -60,12 +60,6 @@ public class IngredientController {
         return new ResponseEntity<>(ingredients, HttpStatus.OK);
     }
 
-    @GetMapping("/ingredients")
-    public ResponseEntity<List<Ingredient>> getAllIngredientsForFilter() {
-        return new ResponseEntity<>(ingredientService.getAllIngredientsForFilter(),HttpStatus.OK);
-    }
-
-
     @DeleteMapping("/ingredients/{id}")
     public ResponseEntity<Void> deleteIngredient(@PathVariable Long id) {
         ingredientService.deleteIngredient(id);
