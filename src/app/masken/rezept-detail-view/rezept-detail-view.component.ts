@@ -11,6 +11,15 @@ import {RippleModule} from "primeng/ripple";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {RecipeService} from "../../services/recipe.service";
 import {IngredientService} from "../../services/ingredient.service";
+import {CommentService} from "../../services/comment.service";
+import {FeedbackService} from "../../services/feedback.service";
+import {userSession} from "../../../environments/user-uuid";
+import {FormsModule} from "@angular/forms";
+
+class CommentWithUsername {
+  text: string = '';
+  username: string = '';
+}
 
 @Component({
   selector: 'app-rezept-detail-view',
@@ -21,7 +30,8 @@ import {IngredientService} from "../../services/ingredient.service";
     TableModule,
     ChipsModule,
     RippleModule,
-    InputTextareaModule
+    InputTextareaModule,
+    FormsModule
   ],
   templateUrl: './rezept-detail-view.component.html',
   styleUrl: './rezept-detail-view.component.css'
@@ -30,30 +40,29 @@ export class RezeptDetailViewComponent implements OnInit {
   recipeId: number = -1;
 
   recipe: Recipe = {
-    id: this.recipeId,
-    name: 'Döner',
-    image: 'https://images.pexels.com/photos/15202777/pexels-photo-15202777/free-photo-of-mahlzeit-fleisch-frisch-essensfotografie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    rating: 5.0,
-    preparation: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.",
+    id: -1,
+    name: '',
+    preparation: '',
+    image: '',
+    rating: -1,
     visibility: false,
     showAuthor: false,
-  };
+  }
 
-  ingredients: Ingredient[] = [
-    {
-      name: 'Zucker',
-      quantity: 100,
-      measure: 'g'
-    },
-    {
-      name: 'Mehl',
-      quantity: 200,
-      measure: 'g'
-    }
-  ];
+  ingredients: Ingredient[] = []
+
+  combinedIngredients: any[] = [];
+
+  comments: Comment[] = []
+
+  commentz: CommentWithUsername[] = []
+
+  feedback: Feedback[] = []
 
   constructor(private recipeService: RecipeService,
-              private ingredientService: IngredientService) {
+              private ingredientService: IngredientService,
+              private commentService: CommentService,
+              private feedbackService: FeedbackService) {
   }
 
   @Input() //Mapped id die durch die URL übergeben wurde auf recipeId
@@ -64,14 +73,9 @@ export class RezeptDetailViewComponent implements OnInit {
   ngOnInit(): void {
     this.loadRecipe();
     this.loadIngredient();
-  }
-
-  private loadIngredient() {
-    this.ingredientService.getIngredientsOfRecipe(this.recipeId).subscribe(
-      data => {
-        this.ingredients = data;
-        console.log(data);
-      })
+    this.loadFeedback(() => {
+      this.loadComment(); // Aufruf von loadComment() nach dem Abschluss von loadFeedback()
+    });
   }
 
   private loadRecipe() {
@@ -79,32 +83,52 @@ export class RezeptDetailViewComponent implements OnInit {
       data => {
         this.recipe = data;
         console.log(data);
-      })
+      }
+    )
   }
 
+  private updateCombinedIngredients() {
+    this.combinedIngredients = this.ingredients.map(ingredient => {
+      return {
+        ...ingredient,
+        quantityWithMeasure: `${ingredient.quantity} ${ingredient.measure}`
+      };
+    });
+  }
 
-  combinedIngredients: any[] = this.ingredients.map(ingredient => {
-    return {
-      ...ingredient,
-      quantityWithMeasure: `${ingredient.quantity} ${ingredient.measure}`
-    };
-  });
+  private loadIngredient() {
+    this.ingredientService.getIngredientsOfRecipe(this.recipeId).subscribe(
+      data => {
+        this.ingredients = data;
+        console.log(data);
+        this.updateCombinedIngredients();
+      }
+    )
+  }
 
-  comments: Comment[] = [
-    {
-      id: 1,
-      text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
-    },
-    {
-      id: 2,
-      text: "At vero eos et accusam et justo duo dolores et ea rebum.",
-    }
-  ];
+  private loadFeedback(callback: () => void) {
+    this.feedbackService.getAllFeedbackOfRecipe(this.recipeId).subscribe(
+      data => {
+        this.feedback = data;
+        console.log(data);
+        callback();
+      }
+    )
+  }
 
-  feedback: Feedback = {
-    id: '1',
-    rating: '5',
-    username: 'Daniel'
+  private loadComment() {
+    console.log("loadComment()");
+    this.commentz = [];
+    this.feedback.forEach(feedback => {
+      this.commentService.getAllCommentsOfFeedback(feedback.id).subscribe(
+        data => {
+          data.forEach(comment => {
+            this.commentz.push({text: comment.text, username: feedback.username});
+            console.log("Comment: " + comment.text + " Username: " + feedback.username);
+          });
+        }
+      )
+    });
   }
 
   isFavorite: boolean = false;
@@ -113,30 +137,48 @@ export class RezeptDetailViewComponent implements OnInit {
     this.isFavorite = !this.isFavorite;
   }
 
-  comment: string = '';
+  newComment: Comment = {
+    id: 0,
+    text: '',
+  };
 
-  addComment() {
-    this.comments.push({
-      id: this.comments.length + 1,
-      text: this.comment
-    });
-    this.comment = '';
+  refreshComments() {
+    this.loadComment();
   }
 
-  deleteComment(comment: Comment) {
-    this.comments = this.comments.filter(c => c.id !== comment.id);
+  validateComment() {
+    return this.newComment.text.trim() !== '';
   }
 
-  editComment(comment: Comment) {
-    this.comment = comment.text;
-    this.deleteComment(comment);
+  addCommentToFeedback() {
+    // go through all feedbacks and add the comment to the matching username
+    if (this.validateComment()) {
+      this.feedback.forEach(feedback => {
+          if (feedback.username === userSession.username) {
+            this.commentService.saveComment(this.newComment, feedback.id).subscribe(
+              data => {
+                this.newComment.text = '';
+                console.log(data);
+              }
+            );
+          }
+        }
+      );
+    }
   }
 
-  editRecipe() {
-    this.recipe.visibility = true;
+  submitComment() {
+    console.log(this.newComment.text);
+    this.addCommentToFeedback();
+    this.saveFeedback();
+    this.refreshComments();
   }
 
-  saveRecipe() {
-    this.recipe.visibility = false;
+  saveFeedback() {
+    this.feedbackService.saveFeedback(this.feedback, this.recipeId).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
   }
 }
