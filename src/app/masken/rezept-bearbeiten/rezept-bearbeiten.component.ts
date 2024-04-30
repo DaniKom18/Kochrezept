@@ -6,6 +6,7 @@ import {RecipeService} from "../../services/recipe.service";
 import {IngredientService} from "../../services/ingredient.service";
 import {RecipeWithIngredients} from "../../models/recipeWithIngredients";
 import {Router} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-rezept-bearbeiten',
@@ -31,7 +32,8 @@ export class RezeptBearbeitenComponent implements OnInit{
 
   constructor(private recipeService: RecipeService,
               private ingredientService: IngredientService,
-              private router: Router) {
+              private router: Router,
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -39,14 +41,10 @@ export class RezeptBearbeitenComponent implements OnInit{
     this.getIngredientsOfRecipe(this.recipeId)
   }
 
-  //TODO
-  // OnInit Get From Service the Recipe by recipeID and save it in recipe
-
-
   updateRecipe($data: RecipeWithIngredients) {
     this.recipeService.updateRecipe($data.recipe).subscribe(
       data => {
-        console.log(data)
+        this.messageService.add({ severity: 'success', summary: 'Erfolgreich', detail: 'Rezept wurde erfolgreich bearbeitet' });
         this.router.navigate(['/meine-rezepte'])
       }
     );

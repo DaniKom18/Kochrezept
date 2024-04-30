@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RezeptPanelComponent } from "../../shared-components/rezept-panel/rezept-panel.component";
 import { Recipe } from "../../models/recipe";
 import { RecipeService } from "../../services/recipe.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-meine-favoriten',
@@ -15,7 +16,8 @@ import { RecipeService } from "../../services/recipe.service";
 export class MeineFavoritenComponent implements OnInit {
   recipes: Recipe[] = [];
 
-  constructor(private recipeService: RecipeService) {}
+  constructor(private recipeService: RecipeService,
+              private messageService: MessageService) {}
 
   ngOnInit() {
     this.showFavoriteRecipes();
@@ -30,6 +32,7 @@ export class MeineFavoritenComponent implements OnInit {
   }
 
   favEvent(recipe: Recipe) {
+    this.messageService.add({ severity: 'success', summary: 'Erfolgreich', detail: 'Rezept wurde erfolgreich aus deinen Favoriten entfernt' });
     this.recipes = this.recipes.filter(r => r.id != recipe.id);
     this.recipeService.userClickedRecipeAsFav(recipe).subscribe()
   }

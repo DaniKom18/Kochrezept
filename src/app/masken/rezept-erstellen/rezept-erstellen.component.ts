@@ -15,6 +15,7 @@ import {RecipeWithIngredients} from "../../models/recipeWithIngredients";
 import {IngredientService} from "../../services/ingredient.service";
 import {Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-rezept-erstellen',
@@ -41,7 +42,8 @@ export class RezeptErstellenComponent{
   constructor(private recipeService: RecipeService,
               private ingredientService: IngredientService,
               private userService: UserService,
-              private router: Router) {
+              private router: Router,
+              private messageService: MessageService) {
   }
 
   createRecipe($data: RecipeWithIngredients) {
@@ -49,11 +51,8 @@ export class RezeptErstellenComponent{
       recipe => {
         this.router.navigate(['/meine-rezepte'])
         this.ingredientService.saveIngredients($data.ingredientsOfRecipe, recipe.id).subscribe();
-        this.userService.updateUser(10).subscribe(
-          data => {
-            console.log(data)
-          }
-        );
+        this.userService.updateUser(10).subscribe();
+        this.messageService.add({ severity: 'success', summary: 'Erfolgreich', detail: 'Rezept wurde erfolgreich erstellt' });
       }
     );
   }
