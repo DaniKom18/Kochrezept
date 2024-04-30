@@ -17,3 +17,12 @@
   position: relative;
   z-index: 1;
 }
+
+.card-image{
+  border-radius: 5px 5px 0 0;
+  width: 100%;
+}
+
+.white-background{
+  background: white;
+}
