@@ -4,17 +4,12 @@
       @for (recipe of recipes; track recipe){
         <div style="position: relative;">
           <a [routerLink]="['/rezept-details', recipe.id]" class="card-link">
-            <p-card header="{{recipe.name}}" subheader="{{recipe.preparation}}" [style]="{ width: '300px' }">
+            <p-card header="{{recipe.name}}" subheader="Autor: {{ recipe.showAuthor? recipe.author : 'Unbekannt' }}" [style]="{ width: '300px' }">
               <ng-template pTemplate="header">
                 <div>
                   <img class="card-image" alt="Card" src="{{recipe.image}}">
                 </div>
               </ng-template>
-              <p>
-                @if (recipe.showAuthor){
-                  {{recipe.author}}
-                }
-              </p>
               <p>
                 <i class="pi pi-star-fill"></i> {{recipe.rating}}
               </p>
