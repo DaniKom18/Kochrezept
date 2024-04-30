@@ -54,12 +54,12 @@
       <div class="feedback-section">
         <h2 class="feedback-title">Kommentare</h2>
         <div class="feedback-form">
-          <textarea pInputTextarea placeholder="Schreibe einen Kommentar"></textarea>
-          <button pButton pRipple type="button" label="Kommentar absenden" class="p-button-rounded"></button>
+          <textarea [(ngModel)]="newComment.text" pInputTextarea placeholder="Schreibe einen Kommentar"></textarea>
+          <button (click)="submitComment()" pButton pRipple type="button" label="Kommentar absenden" class="p-button-rounded"></button>
         </div>
         <div class="comments">
-          <div *ngFor="let comment of comments" class="comment">
-            <div class="comment-author">Author: {{ feedback.username }}</div>
+          <div *ngFor="let comment of commentz" class="comment">
+            <div class="comment-author">Author: {{ comment.username }}</div>
             <div class="comment-text">Comment: {{ comment.text }}</div>
           </div>
         </div>
