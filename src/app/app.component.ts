@@ -6,11 +6,12 @@ import {KeycloakProfile} from "keycloak-js";
 import {UserService} from "./services/user.service";
 import {userSession} from "../environments/user-uuid";
 import {User} from "./models/user";
+import {ToastModule} from "primeng/toast";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, NavbarComponent, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
