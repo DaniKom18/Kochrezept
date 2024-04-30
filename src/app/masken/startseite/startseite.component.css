@@ -14,23 +14,7 @@
 
 .search-text{
   width: 600px;
+  border-radius: 20px;
 }
 
-:host ::ng-deep  p-overlay > div{
-  min-width: 300px !important;
-}
 
-:host ::ng-deep .p-multiselect-label
-{
-  width: 150px ;
-}
-
-:host ::ng-deep .p-inputtext
-{
-  border-radius: 0;
-}
-
-:host ::ng-deep .p-multiselect
-{
-  border-radius: 0;
-}

@@ -27,9 +27,9 @@ export class StartseiteComponent implements OnInit {
               private userService: UserService) {
   }
 
-  recipes: Recipe[] = [];
-  ingredients!: Ingredient[];
-  selectedIngredient!: Ingredient[];
+  allRecipes: Recipe[] = []; // Behält alle Rezepte
+  filteredRecipes: Recipe[] = [] // Verändert sich durch nutzung der Such- oder Filterfunktion
+  search: string | undefined = "";
 
   ngOnInit() {
     this.userService.waitForUserSession().then(()=> {
@@ -37,18 +37,25 @@ export class StartseiteComponent implements OnInit {
     })
   }
 
-  search: string | undefined = "";
-
   private getAllRecipes() {
     this.recipeService.getAllHomePageRecipes().subscribe(
       data =>  {
-        this.recipes = data
+        this.allRecipes = data
+        this.filteredRecipes = data
       }
     )
   }
 
   favEvent(recipe: Recipe) {
-    this.recipes = this.recipes.filter(r => r.id != recipe.id);
+    this.filteredRecipes = this.filteredRecipes.filter(r => r.id != recipe.id);
     this.recipeService.userClickedRecipeAsFav(recipe).subscribe()
+  }
+
+  ExecuteSearchOnInput(search: string | undefined) {
+    if (!search){
+      this.filteredRecipes = [...this.allRecipes]
+    }else {
+      this.filteredRecipes = this.allRecipes.filter(r => r.name.toLowerCase().includes(search.toLowerCase()))
+    }
   }
 }
