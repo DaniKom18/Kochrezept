@@ -13,7 +13,4 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
     List<Ingredient> findIngredientByRecipeId(Long recipeId);
 
     void deleteByRecipeId(Long recipeId);
-
-    @Query(value = "SELECT distinct name from Ingredient")
-    List<Ingredient> getAllIngredientsForFilter();
 }
