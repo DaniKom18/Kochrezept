@@ -118,6 +118,6 @@ export class RezeptVerwaltungComponent implements OnInit{
   }
 
   saveImage($event: string) {
-    this.recipe.image = "https://picsum.photos/id/237/200/300"
+    this.recipe.image = "https://picsum.photos/id/237/1900"
   }
 }
