@@ -11,6 +11,7 @@ import {Ingredient} from "../../models/ingredient";
 import {RecipeWithIngredients} from "../../models/recipeWithIngredients";
 import {IngredientService} from "../../services/ingredient.service";
 import {Router, RouterLink} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-rezept-verwaltung',
@@ -44,7 +45,8 @@ export class RezeptVerwaltungComponent implements OnInit{
   }
 
 
-  constructor(private ingredientService: IngredientService) {
+  constructor(private ingredientService: IngredientService,
+              private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -57,15 +59,15 @@ export class RezeptVerwaltungComponent implements OnInit{
   addIngredient(ingredient: Ingredient) {
     if (!this.isIngredientValid(ingredient)) return
     this.ingredientsOfRecipe.push(ingredient)
-    this.resetIngredientCreation()
+    this.createIngredient = this.resetIngredient()
   }
 
   isIngredientValid(ingredient: Ingredient){
     return (ingredient.name && ingredient.measure && ingredient.quantity)
   }
 
-  resetIngredientCreation(){
-    this.createIngredient = {
+  resetIngredient(){
+    return <Ingredient> {
       name: "",
       quantity: undefined,
       measure: ""
@@ -87,29 +89,24 @@ export class RezeptVerwaltungComponent implements OnInit{
   }
 
   private isRecipeValid(recipe: Recipe, ingredientsOfRecipe: Ingredient[]) {
-    if (!recipe) {
-      console.error('Das Rezept ist leer.');
-      return false;
-    }
 
     if (!recipe.name || recipe.name.trim() === '') {
-      console.error('Der Rezeptname ist erforderlich.');
+      this.messageService.add({ severity: 'error', summary: 'Fehler', detail: 'Der Rezeptname ist erforderlich' });
       return false;
     }
 
     if (!recipe.preparation || recipe.preparation.trim() === '') {
-      console.error('Die Zubereitungsinformationen sind erforderlich.');
+      this.messageService.add({ severity: 'error', summary: 'Fehler', detail: 'Die Zubereitungsinformationen sind erforderlich' });
       return false;
     }
 
     if (!ingredientsOfRecipe|| ingredientsOfRecipe.length === 0) {
-      console.error('Mindestens eine Zutat ist erforderlich.');
+      this.messageService.add({ severity: 'error', summary: 'Fehler', detail: 'Mindestens eine Zutat ist erforderlich' });
       return false;
     }
 
     if (!recipe.image || recipe.image.trim() === '') {
-      console.error('Das Bild des Rezepts ist erforderlich.');
-      console.log(recipe.image)
+      this.messageService.add({ severity: 'error', summary: 'Fehler', detail: 'Das Bild des Rezepts ist erforderlich' });
       return false;
     }
 
@@ -117,6 +114,7 @@ export class RezeptVerwaltungComponent implements OnInit{
   }
 
   saveImage($event: string) {
+    // Dummy Pic wird hinzugefügt, Bilder vom User aktuell noch ignoriert
     this.recipe.image = "https://picsum.photos/id/237/1900"
   }
 }
