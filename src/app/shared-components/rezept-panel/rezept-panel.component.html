@@ -10,9 +10,7 @@
                   <img class="card-image" alt="Card" src="{{recipe.image}}">
                 </div>
               </ng-template>
-              <p>
-                <i class="pi pi-star-fill"></i> {{recipe.rating}}
-              </p>
+              <i class="pi pi-star-fill"></i> {{recipe.rating}}
             </p-card>
           </a>
           <button pButton type="button" (click)="setFav(recipe)" icon="{{title?.includes('favorites') ? 'pi pi-heart-fill' : 'pi pi-heart'}}" class="fav-btn p-button-rounded p-button-danger p-button-secondary {{title?.includes('favorites') ? '' : 'p-button-outlined white-background'}}"></button>
