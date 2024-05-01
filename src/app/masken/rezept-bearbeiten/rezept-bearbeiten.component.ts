@@ -26,9 +26,8 @@ export class RezeptBearbeitenComponent implements OnInit{
   }
 
   recipe: Recipe | undefined
-
   ingredientsOfRecipe: Ingredient[] | undefined
-
+  deleteIngredientsQueue: number[] = []
 
   constructor(private recipeService: RecipeService,
               private ingredientService: IngredientService,
@@ -45,6 +44,7 @@ export class RezeptBearbeitenComponent implements OnInit{
     this.recipeService.updateRecipe($data.recipe).subscribe(
       data => {
         this.messageService.add({ severity: 'success', summary: 'Erfolgreich', detail: 'Rezept wurde erfolgreich bearbeitet' });
+        this.removeIngredients();
         this.router.navigate(['/meine-rezepte'])
       }
     );
@@ -52,6 +52,14 @@ export class RezeptBearbeitenComponent implements OnInit{
       data => {
       }
     );
+  }
+
+  private removeIngredients() {
+    if (this.deleteIngredientsQueue.length > 0){
+      for (let ingredientId of this.deleteIngredientsQueue) {
+        this.ingredientService.deleteIngredient(ingredientId).subscribe()
+      }
+    }
   }
 
   private getRecipeById(recipeId: number) {
@@ -68,5 +76,13 @@ export class RezeptBearbeitenComponent implements OnInit{
         this.ingredientsOfRecipe = data
       }
     )
+  }
+
+  // Ingredients dürfen erst gelöscht werden wenn der Update des Rezeptes durchgeführt wird, deshalb werden erstmals die ID's gesammelt
+  deleteIngredientQueue(ingredient: Ingredient) {
+    const foundIngredient: Ingredient | undefined = this.ingredientsOfRecipe?.find(i => i.id == ingredient.id);
+    if (foundIngredient){
+      this.deleteIngredientsQueue.push(ingredient.id!)
+    }
   }
 }

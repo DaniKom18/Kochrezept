@@ -35,6 +35,7 @@ export class RezeptVerwaltungComponent implements OnInit{
   @Input() recipe!: Recipe;
   @Input() ingredientsOfRecipe!: Ingredient[];
   @Output() saveRecipe = new EventEmitter<RecipeWithIngredients>();
+  @Output() deleteIngredientEvent = new EventEmitter<Ingredient>(); // Wird nur beim Bearbeiten von Rezepten verwendet
   measures: string[] = ["mg", "g", "ml", "L", "TL", "EL", "Stück"];
 
   // Ingredient Creation Section
@@ -77,7 +78,7 @@ export class RezeptVerwaltungComponent implements OnInit{
   removeIngredient(ingredient: Ingredient) {
     this.ingredientsOfRecipe = this.ingredientsOfRecipe.filter((i: Ingredient) => (i !== ingredient))
     if (this.title.includes("Bearbeiten")){
-      this.ingredientService.deleteIngredient(ingredient.id!).subscribe();
+      this.deleteIngredientEvent.emit(ingredient);
     }
   }
 
