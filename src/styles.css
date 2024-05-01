@@ -92,3 +92,11 @@ body{
   width: 1200px;
   margin: 0 auto;
 }
+
+.p-toast-message-error {
+  background-color: white;
+}
+
+.p-toast-message-success {
+  background-color: white;
+}
