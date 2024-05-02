@@ -24,30 +24,21 @@
       </div>
       <div class="ingredients">
         <h2 class="ingredients-title">Zutaten</h2>
-        <p-table [value]="combinedIngredients" styleClass="p-datatable-striped">
-          <ng-template pTemplate="header">
-            <tr>
-              <th class="right-align">Quantity</th>
-              <th>Name</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-ingredient>
-            <tr>
-              <td class="right-align">{{ ingredient.quantityWithMeasure }}</td>
-              <td>{{ ingredient.name }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
+        <ul class="ingredients-list">
+          @for (ingredient of ingredients; track ingredient.id){
+            <li><input type="checkbox">{{ingredient.quantity + " " + ingredient.measure + " " + ingredient.name}}</li>
+          }
+        </ul>
       </div>
       <div class="preparation">
         <h2 class="preparation-title">Zubereitung</h2>
-        <p>{{ recipe.preparation }}</p>
+        <div class="preparation-text">{{ recipe.preparation }}</div>
       </div>
       <div class="feedback-section">
         <h2 class="feedback-title">Kommentare</h2>
         <div class="feedback-form">
           <textarea [(ngModel)]="newComment.text" pInputTextarea placeholder="Schreibe einen Kommentar"></textarea>
-          <button (click)="submitComment()" pButton pRipple type="button" label="Kommentar absenden" class="p-button-rounded"></button>
+          <button class="submit-btn" type="button" (click)="submitComment()">Kommentar absenden</button>
         </div>
         <div class="comments">
           <div *ngFor="let comment of commentz" class="comment">
@@ -58,5 +49,4 @@
       </div>
     </div>
   </div>
-  <p>Rezept ID: {{ recipeId }}</p>
 </div>
