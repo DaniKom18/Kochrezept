@@ -18,6 +18,7 @@
 
 h2 {
   color: var(--text);
+  font-size: 32px;
 }
 
 .user-interaction-bar {
@@ -87,6 +88,26 @@ h2 {
   grid-area: ingredients ;
 }
 
+.ingredients-list {
+  list-style-type: none;
+  padding: 0;
+  color: var(--text)
+}
+
+.ingredients-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.ingredients-list li input {
+  margin-right: 10px;
+  transform: scale(2.0); /* Ändert die Größe der Checkbox */
+  accent-color: var(--accent);
+}
+
+
 .preparation {
   grid-area: preparation;
 }
@@ -142,4 +163,22 @@ h2 {
 
 .right-align {
   text-align: right;
+}
+
+.submit-btn {
+  background-color: var(--primary);
+  border: none;
+  padding: 10px 30px;
+  width: 100%;
+  border-radius: 100px;
+  font-size: 16px;
+}
+
+.preparation-text {
+  line-height: 1.6; /* Setzt den Zeilenabstand auf 1.6 */
+  text-align: justify; /* Justiert den Text */
+  padding: 10px; /* Fügt Abstand zum Textblock hinzu */
+  border: 1px solid #ccc; /* Fügt eine leichte Umrandung hinzu */
+  border-radius: 5px; /* Rundet die Ecken des Textblocks ab */
+  color: var(--text);
 }
