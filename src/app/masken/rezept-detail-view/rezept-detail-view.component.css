@@ -10,14 +10,32 @@
   row-gap: 30px;
   column-gap: 100px;
   grid-template-areas:
-    "overview image"
-    "ingredients manuel"
+    "recipe-overview recipe-overview"
+    "image-container image-container"
+    "ingredients preparation"
     "feedback-section feedback-section"
+}
+
+h2 {
+  color: var(--text);
 }
 
 .user-interaction-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  column-gap: 100px;
+}
+
+.image-container {
+  grid-area: image-container;
+  display: flex;
+  justify-content: center;
+}
+
+.recipe-name {
+  display: flex;
+  justify-content: center;
 }
 
 .items {
@@ -57,6 +75,20 @@
 
 .feedback-section {
   grid-area: feedback-section;
+}
+
+.recipe-overview {
+  grid-area: recipe-overview;
+  color: var(--text);
+
+}
+
+.ingredients {
+  grid-area: ingredients ;
+}
+
+.preparation {
+  grid-area: preparation;
 }
 
 .feedback-form {
