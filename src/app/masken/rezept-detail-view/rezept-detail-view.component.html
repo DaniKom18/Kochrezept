@@ -1,4 +1,4 @@
-<div class="white-background">
+<div class="page-content">
   <div class="page-container">
     <div class="page">
       <div class="recipe-overview">
@@ -7,7 +7,7 @@
         </div>
         <div class="user-interaction-bar">
           <div class="rating">
-            {{ recipe.rating }} <i class="pi pi-star-fill"></i>
+            <i class="pi pi-star-fill"></i> {{ recipe.rating }}
           </div>
           <div class="favorite">
             <button pButton pRipple type="button" icon="pi pi-heart"
@@ -18,16 +18,8 @@
                     class="p-button-rounded p-button-help p-button-outlined"></button>
           </div>
         </div>
-        <div class="cooking-details">
-          <div class="total-time">
-            15 min <i class="pi pi-clock"></i>
-          </div>
-          <div class="difficulty">
-            4 <i class="pi pi-bolt"></i>
-          </div>
-        </div>
       </div>
-      <div class="image">
+      <div class="image-container">
         <img src="{{ recipe.image }}" alt="recipe" style="width: 500px; border-radius: 16px">
       </div>
       <div class="ingredients">
