@@ -16,6 +16,7 @@ import {IngredientService} from "../../services/ingredient.service";
 import {Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
 import {MessageService} from "primeng/api";
+import {Ingredient} from "../../models/ingredient";
 
 @Component({
   selector: 'app-rezept-erstellen',
@@ -38,7 +39,6 @@ import {MessageService} from "primeng/api";
 })
 export class RezeptErstellenComponent{
 
-
   constructor(private recipeService: RecipeService,
               private ingredientService: IngredientService,
               private userService: UserService,
@@ -46,14 +46,44 @@ export class RezeptErstellenComponent{
               private messageService: MessageService) {
   }
 
+  earnedXP = 10;
+
   createRecipe($data: RecipeWithIngredients) {
-    this.recipeService.saveRecipe($data.recipe).subscribe(
-      recipe => {
-        this.router.navigate(['/meine-rezepte'])
-        this.ingredientService.saveIngredients($data.ingredientsOfRecipe, recipe.id).subscribe();
-        this.userService.updateUser(10).subscribe();
-        this.messageService.add({ severity: 'success', summary: 'Erfolgreich', detail: 'Rezept wurde erfolgreich erstellt' });
+    this.recipeService.saveRecipe($data.recipe).subscribe({
+      next: recipe => {
+        this.saveIngredientsAndHandleErrors($data.ingredientsOfRecipe, recipe.id);
+        this.updateUserAndHandleErrors();
+        this.displaySuccessMessage();
+        this.router.navigate(['/meine-rezepte']);
+      },
+      error: error => {
+        this.displayErrorMessage(error);
       }
-    );
+    });
+  }
+
+  private saveIngredientsAndHandleErrors(ingredients: Ingredient[], recipeId: number) {
+    this.ingredientService.saveIngredients(ingredients, recipeId).subscribe({
+      error: error => {
+        this.displayErrorMessage(error);
+      }
+    });
+  }
+
+  private updateUserAndHandleErrors() {
+    this.userService.updateUser(this.earnedXP).subscribe({
+      error: error => {
+        this.displayErrorMessage(error);
+      }
+    });
+  }
+
+  private displaySuccessMessage() {
+    this.messageService.add({ severity: 'success', summary: 'Erfolgreich', detail: 'Rezept wurde erfolgreich erstellt' });
+  }
+
+  private displayErrorMessage(error: any) {
+    console.error('Fehler:', error);
+    this.messageService.add({ severity: 'error', summary: 'Fehler', detail: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.' });
   }
 }
