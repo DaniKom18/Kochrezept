@@ -41,41 +41,68 @@ export class RezeptBearbeitenComponent implements OnInit{
   }
 
   updateRecipe($data: RecipeWithIngredients) {
-    this.recipeService.updateRecipe($data.recipe).subscribe(
-      data => {
-        this.messageService.add({ severity: 'success', summary: 'Erfolgreich', detail: 'Rezept wurde erfolgreich bearbeitet' });
+    this.recipeService.updateRecipe($data.recipe).subscribe({
+      next: () => {
+        //TODO Keine Perfekte Lösung...
+        // Alle Http Calls werden Synchron ausgeführt statt nacheinander
+        // Und wird bei Fehlermeldungen uns um die Ohren Fliegen :p
+        // Wollte aber vorerst das HTTP Nesting vermeiden
         this.removeIngredients();
-        this.router.navigate(['/meine-rezepte'])
+        this.saveIngredients($data.ingredientsOfRecipe, $data.recipe.id);
+        this.handleRecipeUpdateSuccess();
+      },
+      error: error => {
+        this.displayErrorMessage(error);
       }
-    );
-    this.ingredientService.saveIngredients($data.ingredientsOfRecipe, $data.recipe.id).subscribe(
-      data => {
-      }
-    );
+    });
   }
 
+  private handleRecipeUpdateSuccess() {
+    this.messageService.add({ severity: 'success', summary: 'Erfolgreich', detail: 'Rezept wurde erfolgreich bearbeitet' });
+    this.router.navigate(['/meine-rezepte']);
+  }
+
+  private saveIngredients(ingredients: Ingredient[], recipeId: number) {
+    this.ingredientService.saveIngredients(ingredients, recipeId).subscribe({
+      error: error => {
+        this.displayErrorMessage(error);
+      }
+    });
+  }
+
+  //Zutaten die schon zu einem Rezept gehört haben und in der Bearbeitung gelöscht wurden werden nun gelöscht
   private removeIngredients() {
-    if (this.deleteIngredientsQueue.length > 0){
+    if (this.deleteIngredientsQueue.length > 0) {
       for (let ingredientId of this.deleteIngredientsQueue) {
-        this.ingredientService.deleteIngredient(ingredientId).subscribe()
+        this.ingredientService.deleteIngredient(ingredientId).subscribe({
+          error: error => {
+            this.displayErrorMessage(error);
+          }
+        });
       }
     }
   }
 
   private getRecipeById(recipeId: number) {
-    this.recipeService.getRecipeById(recipeId).subscribe(
-      data => {
-        this.recipe = data
+    this.recipeService.getRecipeById(recipeId).subscribe({
+      next: data => {
+        this.recipe = data;
+      },
+      error: error => {
+        this.displayErrorMessage(error);
       }
-    )
+    });
   }
 
   private getIngredientsOfRecipe(recipeId: number) {
-    this.ingredientService.getIngredientsOfRecipe(recipeId).subscribe(
-      data => {
-        this.ingredientsOfRecipe = data
+    this.ingredientService.getIngredientsOfRecipe(recipeId).subscribe({
+      next: data => {
+        this.ingredientsOfRecipe = data;
+      },
+      error: error => {
+        this.displayErrorMessage(error);
       }
-    )
+    });
   }
 
   // Ingredients dürfen erst gelöscht werden wenn der Update des Rezeptes durchgeführt wird, deshalb werden erstmals die ID's gesammelt
@@ -84,5 +111,10 @@ export class RezeptBearbeitenComponent implements OnInit{
     if (foundIngredient){
       this.deleteIngredientsQueue.push(ingredient.id!)
     }
+  }
+
+  private displayErrorMessage(error: any) {
+    console.error('Fehler:', error);
+    this.messageService.add({ severity: 'error', summary: 'Fehler', detail: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.' });
   }
 }
