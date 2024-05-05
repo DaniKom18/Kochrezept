@@ -48,6 +48,7 @@ export class RezeptDetailViewComponent implements OnInit {
     visibility: false,
     showAuthor: false,
   }
+  isFavorite: boolean = true;
 
   ingredients: Ingredient[] = []
 
@@ -57,7 +58,13 @@ export class RezeptDetailViewComponent implements OnInit {
 
   commentz: CommentWithUsername[] = []
 
-  feedback: Feedback[] = []
+  feedback: Feedback = {
+    id: -1,
+    rating: '',
+    username: ''
+  }
+
+  AllFeedback: Feedback[] = []
 
   constructor(private recipeService: RecipeService,
               private ingredientService: IngredientService,
@@ -71,20 +78,36 @@ export class RezeptDetailViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadRecipe();
+    this.loadRecipe(() => {
+      this.getCurrentFavStatusOfRecipe();
+    });
     this.loadIngredient();
     this.loadFeedback(() => {
       this.loadComment(); // Aufruf von loadComment() nach dem Abschluss von loadFeedback()
     });
   }
 
-  private loadRecipe() {
+  private loadRecipe(callback: () => void) {
     this.recipeService.getRecipeById(this.recipeId).subscribe(
       data => {
         this.recipe = data;
         console.log(data);
+        callback();
       }
     )
+  }
+
+  private getCurrentFavStatusOfRecipe() {
+    this.recipeService.getAllFavoritesRecipes().subscribe(
+      data => {
+        data.forEach(recipe => {
+          if (recipe.id === this.recipeId) {
+            this.isFavorite = true;
+          }
+        });
+      }
+    );
+    console.log({message: "Recipe is favorite: " + this.isFavorite});
   }
 
   private updateCombinedIngredients() {
@@ -108,18 +131,26 @@ export class RezeptDetailViewComponent implements OnInit {
 
   private loadFeedback(callback: () => void) {
     this.feedbackService.getAllFeedbackOfRecipe(this.recipeId).subscribe(
-      data => {
-        this.feedback = data;
-        console.log(data);
-        callback();
+      {
+        next: data => {
+          this.AllFeedback = data;
+          console.log("Feedback loaded ");
+          console.log(data);
+          callback();
+        },
+        error: error => {
+          console.log("Error loading feedback");
+          console.log(error);
+        }
       }
     )
+
   }
 
   private loadComment() {
     console.log("loadComment()");
     this.commentz = [];
-    this.feedback.forEach(feedback => {
+    this.AllFeedback.forEach(feedback => {
       this.commentService.getAllCommentsOfFeedback(feedback.id).subscribe(
         data => {
           data.forEach(comment => {
@@ -131,10 +162,14 @@ export class RezeptDetailViewComponent implements OnInit {
     });
   }
 
-  isFavorite: boolean = false;
-
   toggleFavorite() {
     this.isFavorite = !this.isFavorite;
+    this.recipeService.userClickedRecipeAsFav(this.recipe).subscribe(
+      data => {
+        console.log(data);
+        console.log({message: "Recipe is now favorite: " + this.isFavorite});
+      }
+    );
   }
 
   newComment: Comment = {
@@ -150,35 +185,81 @@ export class RezeptDetailViewComponent implements OnInit {
     return this.newComment.text.trim() !== '';
   }
 
-  addCommentToFeedback() {
+  isUserFeedbackAvailable() {
+    console.log("Checking if user feedback is available");
+    return this.AllFeedback.some(feedback => feedback.username === userSession.username);
+  }
+
+  saveFeedback(newFeedback: Feedback, callback: () => void) {
+    this.feedbackService.saveFeedback(newFeedback, this.recipeId).subscribe(
+      {
+        next: data => {
+          console.log("Feedback saved");
+          console.log(data);
+          callback();
+        },
+        error: error => {
+          console.log("Error saving feedback");
+          console.log(error);
+        }
+      }
+    );
+  }
+
+  createFeedback() {
+    console.log("Creating User Feedback");
+    let newFeedback: Feedback = {
+      id: -1,
+      rating: '0',
+      username: userSession.username
+    };
+    this.saveFeedback(newFeedback, () => {
+      this.loadFeedback(() => {
+        this.loadComment();
+      });
+    });
+  }
+
+  addCommentToFeedback(callback: () => void) {
     // go through all feedbacks and add the comment to the matching username
     if (this.validateComment()) {
-      this.feedback.forEach(feedback => {
+      console.log("Adding comment to feedback");
+      if (!this.isUserFeedbackAvailable()) {
+        console.log("User feedback is not available");
+        this.createFeedback();
+      }
+      console.log("Feedback length: " + this.AllFeedback.length);
+      this.AllFeedback.forEach(feedback => {
+          console.log("Feedback username: " + feedback.username);
+          console.log("User session username: " + userSession.username);
           if (feedback.username === userSession.username) {
             this.commentService.saveComment(this.newComment, feedback.id).subscribe(
-              data => {
-                this.newComment.text = '';
-                console.log(data);
+              {
+                next: data => {
+                  console.log("Adding comment to feedback successful");
+                  this.newComment.text = '';
+                  console.log(data);
+                  callback();
+                },
+                error: error => {
+                  console.log("Error saving comment");
+                  console.log(error);
+                }
               }
             );
           }
         }
       );
+    } else {
+      // TODO: Show error message
+      console.log("Comment is empty");
     }
   }
 
   submitComment() {
-    console.log(this.newComment.text);
-    this.addCommentToFeedback();
-    this.saveFeedback();
-    this.refreshComments();
-  }
-
-  saveFeedback() {
-    this.feedbackService.saveFeedback(this.feedback, this.recipeId).subscribe(
-      data => {
-        console.log(data);
-      }
-    );
+    console.log("Comment text: " + this.newComment.text);
+    this.addCommentToFeedback(() => {
+      this.refreshComments();
+    });
   }
 }
