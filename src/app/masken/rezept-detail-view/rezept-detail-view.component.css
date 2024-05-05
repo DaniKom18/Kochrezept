@@ -129,6 +129,7 @@ h2 {
 .comment-author {
   grid-area: comment-author;
   font-weight: bold;
+  color: var(--text)
 }
 
 .comment-rating {
@@ -141,6 +142,7 @@ h2 {
   grid-area: comment-text;
   display: flex;
   align-items: center;
+  color: var(--text)
 }
 
 .comments {
