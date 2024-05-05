@@ -10,7 +10,7 @@ export class FeedbackService {
 
   private baseUrl: string = environment.baseUrl + "/api"
 
-  private headers = new HttpHeaders({'Content-Type': 'application/json', 'accept': 'application/json'});
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
   private options = {headers: this.headers};
 
   constructor(private httpClient: HttpClient) {
@@ -21,7 +21,7 @@ export class FeedbackService {
     return this.httpClient.get<Feedback[]>(url)
   }
 
-  saveFeedback(feedbackOfRecipe: Feedback[], recipeId: number) {
+  saveFeedback(feedbackOfRecipe: Feedback, recipeId: number) {
     console.log("Save Feedback On Recipe:=" + recipeId)
     const url = this.baseUrl + "/recipe/" + recipeId + "/feedback"
     return this.httpClient.post(url, feedbackOfRecipe, this.options)
