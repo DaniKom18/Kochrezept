@@ -10,7 +10,7 @@ export class CommentService {
 
   private baseUrl: string = environment.baseUrl + "/api"
 
-  private headers = new HttpHeaders({'Content-Type': 'application/json', 'accept': 'application/json'});
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
   private options = {headers: this.headers};
 
   constructor(private httpClient: HttpClient) {
