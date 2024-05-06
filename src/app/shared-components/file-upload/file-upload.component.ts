@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ButtonModule} from "primeng/button";
-import {Recipe} from "../../../models/recipe";
 
 @Component({
   selector: 'app-file-upload',

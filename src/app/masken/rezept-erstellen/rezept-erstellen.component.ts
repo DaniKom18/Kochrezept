@@ -8,7 +8,7 @@ import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 import {ScrollPanelModule} from "primeng/scrollpanel";
 import {FileUploadModule} from "primeng/fileupload";
 import {DropdownModule} from "primeng/dropdown";
-import {FileUploadComponent} from "./file-upload/file-upload.component";
+import {FileUploadComponent} from "../../shared-components/file-upload/file-upload.component";
 import {RezeptVerwaltungComponent} from "../../shared-components/rezept-verwaltung/rezept-verwaltung.component";
 import {RecipeService} from "../../services/recipe.service";
 import {RecipeWithIngredients} from "../../models/recipeWithIngredients";
