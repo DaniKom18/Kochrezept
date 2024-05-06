@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {DropdownModule} from "primeng/dropdown";
-import {FileUploadComponent} from "../file-upload/file-upload.component";
 import {FormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {InputTextareaModule} from "primeng/inputtextarea";
@@ -9,9 +8,9 @@ import {ScrollPanelModule} from "primeng/scrollpanel";
 import {Recipe} from "../../models/recipe";
 import {Ingredient} from "../../models/ingredient";
 import {RecipeWithIngredients} from "../../models/recipeWithIngredients";
-import {IngredientService} from "../../services/ingredient.service";
 import {RouterLink} from "@angular/router";
 import {MessageService} from "primeng/api";
+import {FileUploadComponent} from "../file-upload/file-upload.component";
 
 @Component({
   selector: 'app-rezept-verwaltung',
@@ -46,8 +45,7 @@ export class RezeptVerwaltungComponent implements OnInit{
   }
 
 
-  constructor(private ingredientService: IngredientService,
-              private messageService: MessageService) {
+  constructor(private messageService: MessageService) {
   }
 
   ngOnInit() {

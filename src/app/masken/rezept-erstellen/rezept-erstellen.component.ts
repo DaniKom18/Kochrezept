@@ -6,9 +6,7 @@ import {ButtonModule} from "primeng/button";
 import {InputGroupModule} from "primeng/inputgroup";
 import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 import {ScrollPanelModule} from "primeng/scrollpanel";
-import {FileUploadModule} from "primeng/fileupload";
 import {DropdownModule} from "primeng/dropdown";
-import {FileUploadComponent} from "../../shared-components/file-upload/file-upload.component";
 import {RezeptVerwaltungComponent} from "../../shared-components/rezept-verwaltung/rezept-verwaltung.component";
 import {RecipeService} from "../../services/recipe.service";
 import {RecipeWithIngredients} from "../../models/recipeWithIngredients";
@@ -29,9 +27,7 @@ import {Ingredient} from "../../models/ingredient";
     InputGroupModule,
     InputGroupAddonModule,
     ScrollPanelModule,
-    FileUploadModule,
     DropdownModule,
-    FileUploadComponent,
     RezeptVerwaltungComponent
   ],
   templateUrl: './rezept-erstellen.component.html',
