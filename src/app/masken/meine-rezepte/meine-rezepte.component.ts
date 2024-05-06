@@ -32,7 +32,7 @@ export class MeineRezepteComponent implements OnInit{
 
 
   constructor(private recipeService: RecipeService,
-              private userService: UserService) {
+              public userService: UserService) {
   }
 
   recipes:Recipe[] = []
@@ -43,11 +43,10 @@ export class MeineRezepteComponent implements OnInit{
     })
   }
 
-  private getUserRecipes() {
+  public getUserRecipes() {
     this.recipeService.getRecipesOfUser().subscribe(
       data => {
         this.recipes = data
-        console.log(data)
       }
     )
   }
