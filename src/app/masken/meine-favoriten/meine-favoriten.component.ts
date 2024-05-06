@@ -16,8 +16,8 @@ import {MessageService} from "primeng/api";
 export class MeineFavoritenComponent implements OnInit {
   recipes: Recipe[] = [];
 
-  constructor(private recipeService: RecipeService,
-              private messageService: MessageService) {}
+  constructor(public recipeService: RecipeService,
+              public messageService: MessageService) {}
 
   ngOnInit() {
     this.showFavoriteRecipes();
