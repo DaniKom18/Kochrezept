@@ -95,7 +95,7 @@ export class RezeptDetailViewComponent implements OnInit {
     )
   }
 
-  private getCurrentFavStatusOfRecipe() {
+  getCurrentFavStatusOfRecipe() {
     this.recipeService.getAllFavoritesRecipes().subscribe(
       {
         next: data => {
@@ -238,11 +238,11 @@ export class RezeptDetailViewComponent implements OnInit {
     this.addCommentToFeedback();
   }
 
-  private resetCommentField() {
+  resetCommentField() {
     this.newComment.text = '';
   }
 
-  private displayErrorMessage(error: any) {
+  displayErrorMessage(error: any) {
     console.error('Fehler:', error);
     this.messageService.add({
       severity: 'error',
