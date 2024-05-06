@@ -173,11 +173,11 @@ export class RezeptDetailViewComponent implements OnInit {
   isUserFeedbackAvailable() {
     console.log("Checking if user feedback is available");
     const feedback: Feedback[] = this.AllFeedback.filter(feedback => feedback.username === userSession.username);
-    if (feedback.length == 1){
+    if (feedback.length == 1) {
       console.log("Feedback is available")
       this.feedbackId = feedback[0].id
       return true
-    }else {
+    } else {
       console.log("Feedback is not available creating one")
       return false
     }
@@ -213,18 +213,18 @@ export class RezeptDetailViewComponent implements OnInit {
   addCommentToFeedback() {
     // go through all feedbacks and add the comment to the matching username
     if (this.validateComment()) {
-            this.commentService.saveComment(this.newComment, this.feedbackId).subscribe(
-              {
-                next: data => {
-                  console.log("Adding comment to feedback successful");
-                  this.resetCommentField()
-                  this.commentsWithUsername.push({username: userSession.username, text: data.text})
-                },
-                error: error => {
-                  this.displayErrorMessage(error)
-                }
-              }
-            );
+      this.commentService.saveComment(this.newComment, this.feedbackId).subscribe(
+        {
+          next: data => {
+            console.log("Adding comment to feedback successful");
+            this.resetCommentField()
+            this.commentsWithUsername.push({username: userSession.username, text: data.text})
+          },
+          error: error => {
+            this.displayErrorMessage(error)
+          }
+        }
+      );
     } else {
       // TODO: Show error message
       console.log("Comment is empty");
@@ -241,6 +241,10 @@ export class RezeptDetailViewComponent implements OnInit {
 
   private displayErrorMessage(error: any) {
     console.error('Fehler:', error);
-    this.messageService.add({ severity: 'error', summary: 'Fehler', detail: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.' });
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Fehler',
+      detail: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
+    });
   }
 }
