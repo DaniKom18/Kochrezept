@@ -54,8 +54,6 @@ export class RezeptDetailViewComponent implements OnInit {
 
   ingredients: Ingredient[] = []
 
-  combinedIngredients: any[] = [];
-
   commentsWithUsername: CommentWithUsername[] = []
 
   newComment: Comment = {
@@ -109,21 +107,11 @@ export class RezeptDetailViewComponent implements OnInit {
     );
   }
 
-  private updateCombinedIngredients() {
-    this.combinedIngredients = this.ingredients.map(ingredient => {
-      return {
-        ...ingredient,
-        quantityWithMeasure: `${ingredient.quantity} ${ingredient.measure}`
-      };
-    });
-  }
-
   private loadIngredient() {
     this.ingredientService.getIngredientsOfRecipe(this.recipeId).subscribe(
       data => {
         this.ingredients = data;
         console.log(data);
-        this.updateCombinedIngredients();
       }
     )
   }
