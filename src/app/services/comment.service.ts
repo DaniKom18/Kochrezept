@@ -25,6 +25,6 @@ export class CommentService {
   saveComment(commentOfFeedback: Comment, feedbackId: number) {
     console.log("Save Comment On Feedback:=" + feedbackId)
     const url = this.baseUrl + "/feedback/" + feedbackId + "/comments"
-    return this.httpClient.post(url, commentOfFeedback, this.options)
+    return this.httpClient.post<Comment>(url, commentOfFeedback, this.options)
   }
 }

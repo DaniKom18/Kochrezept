@@ -117,7 +117,6 @@ h2 {
   display: grid;
   grid-template-areas:
     "comment"
-    /*"rating"*/
     "submit";
 }
 
@@ -149,14 +148,10 @@ h2 {
   grid-area: comments;
   display: grid;
   row-gap: 10px;
-  /*grid-template-areas:*/
-  /*  "comment-author"*/
-  /*  "comment-rating"*/
-  /*  "comment-text";*/
+  padding: 2rem 0;
 }
 
 .comment {
-  /*grid-area: comment;*/
   display: grid;
   grid-template-areas:
     "comment-author comment-rating"
@@ -174,6 +169,10 @@ h2 {
   width: 100%;
   border-radius: 100px;
   font-size: 16px;
+}
+
+.submit-btn:hover {
+  cursor: pointer;
 }
 
 .preparation-text {
