@@ -97,21 +97,31 @@ export class RezeptDetailViewComponent implements OnInit {
 
   private getCurrentFavStatusOfRecipe() {
     this.recipeService.getAllFavoritesRecipes().subscribe(
-      data => {
-        data.forEach(recipe => {
-          if (recipe.id == this.recipeId) {
-            this.isFavorite = true;
-          }
-        });
+      {
+        next: data => {
+          data.forEach(recipe => {
+            if (recipe.id == this.recipeId) {
+              this.isFavorite = true;
+            }
+          });
+        },
+        error: error => {
+          this.displayErrorMessage(error)
+        }
       }
     );
   }
 
   private loadIngredient() {
     this.ingredientService.getIngredientsOfRecipe(this.recipeId).subscribe(
-      data => {
-        this.ingredients = data;
-        console.log(data);
+      {
+        next: data => {
+          this.ingredients = data;
+          console.log(data);
+        },
+        error: error => {
+          this.displayErrorMessage(error)
+        }
       }
     )
   }
@@ -135,10 +145,15 @@ export class RezeptDetailViewComponent implements OnInit {
     this.commentsWithUsername = [];
     this.AllFeedback.forEach(feedback => {
       this.commentService.getAllCommentsOfFeedback(feedback.id).subscribe(
-        data => {
-          data.forEach(comment => {
-            this.commentsWithUsername.push({text: comment.text, username: feedback.username});
-          });
+        {
+          next: data => {
+            data.forEach(comment => {
+              this.commentsWithUsername.push({text: comment.text, username: feedback.username});
+            });
+          },
+          error: error => {
+            this.displayErrorMessage(error)
+          }
         }
       )
     });
