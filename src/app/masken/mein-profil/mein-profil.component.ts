@@ -57,13 +57,4 @@ export class MeinProfilComponent implements OnInit{
       }
     )
   }
-
-  onDelete() {
-    // Logik zum Löschen des Benutzerkontos
-    if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
-      // Account löschen Logik
-    }
-  }
-
-
 }
