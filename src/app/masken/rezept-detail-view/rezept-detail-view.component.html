@@ -41,7 +41,7 @@
           <button class="submit-btn" type="button" (click)="submitComment()">Kommentar absenden</button>
         </div>
         <div class="comments">
-          <div *ngFor="let comment of commentz" class="comment">
+          <div *ngFor="let comment of commentsWithUsername" class="comment">
             <div class="comment-author">Author: {{ comment.username }}</div>
             <div class="comment-text">Comment: {{ comment.text }}</div>
           </div>

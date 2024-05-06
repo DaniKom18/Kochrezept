@@ -24,6 +24,6 @@ export class FeedbackService {
   saveFeedback(feedbackOfRecipe: Feedback, recipeId: number) {
     console.log("Save Feedback On Recipe:=" + recipeId)
     const url = this.baseUrl + "/recipe/" + recipeId + "/feedback"
-    return this.httpClient.post(url, feedbackOfRecipe, this.options)
+    return this.httpClient.post<Feedback>(url, feedbackOfRecipe, this.options)
   }
 }
