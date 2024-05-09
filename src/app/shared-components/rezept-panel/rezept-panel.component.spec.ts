@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RezeptPanelComponent } from './rezept-panel.component';
+import {RezeptPanelComponent} from './rezept-panel.component';
 
 describe('RezeptPanelComponent', () => {
   let component: RezeptPanelComponent;
@@ -10,8 +10,8 @@ describe('RezeptPanelComponent', () => {
     await TestBed.configureTestingModule({
       imports: [RezeptPanelComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(RezeptPanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -19,5 +19,21 @@ describe('RezeptPanelComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set fav', () => {
+    spyOn(component.favEvent, 'emit')
+    const recipe = {
+      id: 1,
+      name: 'Test',
+      preparation: 'Test',
+      image: 'Test',
+      rating: 1,
+      visibility: true,
+      showAuthor: true,
+      author: 'Test'
+    }
+    component.setFav(recipe)
+    expect(component.favEvent.emit).toHaveBeenCalledWith(recipe)
   });
 });

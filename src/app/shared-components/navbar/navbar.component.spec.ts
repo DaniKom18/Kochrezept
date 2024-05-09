@@ -1,6 +1,6 @@
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { NavbarComponent } from './navbar.component';
+import {NavbarComponent} from './navbar.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {By} from "@angular/platform-browser";
 import {Router, RouterLinkWithHref} from "@angular/router";
@@ -11,24 +11,31 @@ import {MeineFavoritenComponent} from "../../masken/meine-favoriten/meine-favori
 import {RezeptErstellenComponent} from "../../masken/rezept-erstellen/rezept-erstellen.component";
 import {MeinProfilComponent} from "../../masken/mein-profil/mein-profil.component";
 import {LeaderboardComponent} from "../../masken/leaderboard/leaderboard.component";
+import {KeycloakService} from "keycloak-angular";
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let location: Location;
+  let keycloakServiceSpy: jasmine.SpyObj<KeycloakService>;
 
   beforeEach(async () => {
+    const keycloakSpy = jasmine.createSpyObj('KeycloakService', ['clearToken', 'logout']);
+
     await TestBed.configureTestingModule({
       imports: [NavbarComponent, RouterTestingModule.withRoutes([
-        {path: 'startseite', component: StartseiteComponent },
-        {path: 'meine-rezepte', component: MeineRezepteComponent },
-        {path: 'meine-favoriten', component: MeineFavoritenComponent },
-        {path: 'rezept-erstellen', component: RezeptErstellenComponent },
-        {path: 'profil', component: MeinProfilComponent },
-        {path: 'leaderboard', component: LeaderboardComponent },
-      ])]
+        {path: 'startseite', component: StartseiteComponent},
+        {path: 'meine-rezepte', component: MeineRezepteComponent},
+        {path: 'meine-favoriten', component: MeineFavoritenComponent},
+        {path: 'rezept-erstellen', component: RezeptErstellenComponent},
+        {path: 'profil', component: MeinProfilComponent},
+        {path: 'leaderboard', component: LeaderboardComponent},
+      ])],
+      providers: [{provide: KeycloakService, useValue: keycloakSpy}]
     })
-    .compileComponents();
+      .compileComponents();
+
+    keycloakServiceSpy = TestBed.inject(KeycloakService) as jasmine.SpyObj<KeycloakService>;
 
     location = TestBed.inject(Location);
     fixture = TestBed.createComponent(NavbarComponent);
@@ -60,14 +67,14 @@ describe('NavbarComponent', () => {
   });
 
   it('should navigate to Startseite page when link is clicked', fakeAsync(() => {
-      // Arrange
-      const routerLink = fixture.debugElement.query(By.css('a[routerLink="/startseite"]')).nativeElement;
-      // Act
-      routerLink.click();
-      tick()
-      fixture.detectChanges();
+    // Arrange
+    const routerLink = fixture.debugElement.query(By.css('a[routerLink="/startseite"]')).nativeElement;
+    // Act
+    routerLink.click();
+    tick()
+    fixture.detectChanges();
 
-      expect(TestBed.inject(Router).url).toBe('/startseite');
+    expect(TestBed.inject(Router).url).toBe('/startseite');
   }));
 
   it('should navigate to Meine Rezepte page when link is clicked', fakeAsync(() => {
@@ -124,4 +131,15 @@ describe('NavbarComponent', () => {
 
     expect(TestBed.inject(Router).url).toBe('/leaderboard');
   }));
+
+  it('should call logout method when logout button is clicked', () => {
+    // // Arrange
+    // const logoutButton = fixture.debugElement.query(By.css('a[routerLink="/abmelden"]')).nativeElement;
+    // // Act
+    // logoutButton.click();
+    component.logout();
+    // Assert
+    expect(keycloakServiceSpy.clearToken).toHaveBeenCalled();
+    expect(keycloakServiceSpy.logout).toHaveBeenCalled();
+  });
 });
