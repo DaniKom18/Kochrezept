@@ -8,12 +8,12 @@ import {Comment} from "../models/comment";
 })
 export class CommentService {
 
-  private baseUrl: string = environment.baseUrl + "/api"
+  baseUrl: string = environment.baseUrl + "/api"
 
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
-  private options = {headers: this.headers};
+  options = {headers: this.headers};
 
-  constructor(private httpClient: HttpClient) {
+  constructor(public httpClient: HttpClient) {
   }
 
   getAllCommentsOfFeedback(feedbackId: number) {

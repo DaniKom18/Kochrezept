@@ -97,7 +97,10 @@ describe('RezeptDetailViewComponent', () => {
   it('should get comments by feedback id', () => {
     // Arrange
     const recipeId = 1;
-    spyOn(commentService, 'getAllCommentsOfFeedback').withArgs(recipeId).and.returnValue(of([]));
+    spyOn(commentService, 'getAllCommentsOfFeedback').withArgs(recipeId).and.returnValue(of([
+      {id: 1, text: 'Test'},
+      {id: 2, text: 'Test2'}
+    ]));
 
     // Act
     commentService.getAllCommentsOfFeedback(recipeId);
@@ -131,7 +134,7 @@ describe('RezeptDetailViewComponent', () => {
     }]));
 
     // Act
-   component.ngOnInit()
+    component.ngOnInit()
 
     // Assert
     expect(recipeService.getRecipeById).toHaveBeenCalled();
