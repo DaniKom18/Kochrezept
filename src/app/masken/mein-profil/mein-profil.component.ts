@@ -36,7 +36,7 @@ export class MeinProfilComponent implements OnInit{
     });
   }
 
-  private loadUserProfile() {
+  loadUserProfile() {
     console.log(userSession.id)
     this.userservice.getUserByUuid(userSession.id).subscribe(
       data => {
@@ -49,7 +49,7 @@ export class MeinProfilComponent implements OnInit{
     )
   }
 
-  private loadUserRecipes() {
+  loadUserRecipes() {
     this.recipeService.getRecipesOfUser().subscribe(
       data => {
         this.countOfUserRecipes = data.length
