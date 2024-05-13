@@ -62,7 +62,7 @@ export class RezeptBearbeitenComponent implements OnInit{
     this.router.navigate(['/meine-rezepte']);
   }
 
-  private saveIngredients(ingredients: Ingredient[], recipeId: number) {
+   saveIngredients(ingredients: Ingredient[], recipeId: number) {
     this.ingredientService.saveIngredients(ingredients, recipeId).subscribe({
       error: error => {
         this.displayErrorMessage(error);
@@ -71,7 +71,7 @@ export class RezeptBearbeitenComponent implements OnInit{
   }
 
   //Zutaten die schon zu einem Rezept gehört haben und in der Bearbeitung gelöscht wurden werden nun gelöscht
-  private removeIngredients() {
+   removeIngredients() {
     if (this.deleteIngredientsQueue.length > 0) {
       for (let ingredientId of this.deleteIngredientsQueue) {
         this.ingredientService.deleteIngredient(ingredientId).subscribe({
@@ -113,7 +113,7 @@ export class RezeptBearbeitenComponent implements OnInit{
     }
   }
 
-  private displayErrorMessage(error: any) {
+   displayErrorMessage(error: any) {
     console.error('Fehler:', error);
     this.messageService.add({ severity: 'error', summary: 'Fehler', detail: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.' });
   }
