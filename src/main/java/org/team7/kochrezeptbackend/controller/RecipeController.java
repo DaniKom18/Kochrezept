@@ -64,7 +64,7 @@ public class RecipeController {
         // gib mir alle Favoriten Rezepten Vom User
         List<Recipe> favRecipes = recipeService.getFavRecipesOfUser(userId);
         //Lösche alle Fav Rezepte des Users aus Allen Rezepten da die hier nicht angezeigt werden sollen
-        if (favRecipes != null && recipes != null)  {
+        if (!favRecipes.isEmpty() && !recipes.isEmpty())  {
             for (Recipe recipe : recipes) {
                 for (Recipe favRecipe : favRecipes) {
                     if (recipe.getId().longValue() == favRecipe.getId().longValue()) {
