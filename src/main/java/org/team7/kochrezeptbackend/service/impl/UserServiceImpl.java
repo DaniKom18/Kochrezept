@@ -44,14 +44,18 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User updateUser(User updatedUser) {
-        return userRepository.findById(updatedUser.getId())
-                .map(existingUser -> {
-                    if (updatedUser.getUsername() != null) existingUser.setUsername(updatedUser.getUsername());
-                    if (updatedUser.getXp() != null) existingUser.setXp(updatedUser.getXp());
-                    if (updatedUser.getLevel() != null) existingUser.setLevel(updatedUser.getLevel());
-                    return userRepository.save(existingUser);
-                })
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + updatedUser.getId()));
+        Optional<User> foundUser = userRepository.findById(updatedUser.getId());
+
+        if (foundUser.isEmpty()){
+            throw new RuntimeException("User not found with id: " + updatedUser.getId());
+        }
+
+        User exsistingUser = foundUser.get();
+        exsistingUser.setUsername(updatedUser.getUsername());
+        exsistingUser.setXp(updatedUser.getXp());
+        exsistingUser.setLevel(updatedUser.getLevel());
+
+        return userRepository.save(exsistingUser);
     }
 
     @Override
