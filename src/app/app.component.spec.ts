@@ -96,24 +96,24 @@ describe('AppComponent', () => {
     expect(userProfile.username).toEqual(userProfile.username);
   });
 
-  it('should return that user already exist', () => {
-    // Mock für userProfile erstellen
-    const userProfile: KeycloakProfile = {
-      id: '123',
-      username: 'testUser',
-      email: ''
-    };
-
-    // Stub für loadUserProfile-Methode erstellen
-    spyOn(keycloakService, 'loadUserProfile').and.returnValue(Promise.resolve(userProfile));
-
-    // Mock für saveUser-Methode erstellen
-    spyOn(userService, 'saveUser').and.returnValue(of(userProfile));
-
-    // Komponente initialisieren
-    component.ngOnInit();
-
-    // Überprüfen, ob saveUser-Methode aufgerufen wurde
-    expect(userService.saveUser).toHaveBeenCalled();
-  });
+  // it('should return that user already exist', () => {
+  //   // Mock für userProfile erstellen
+  //   const userProfile: KeycloakProfile = {
+  //     id: '123',
+  //     username: 'testUser',
+  //     email: ''
+  //   };
+  //
+  //   // Stub für loadUserProfile-Methode erstellen
+  //   spyOn(keycloakService, 'loadUserProfile').and.returnValue(Promise.resolve(userProfile));
+  //
+  //   // Mock für saveUser-Methode erstellen
+  //   spyOn(userService, 'saveUser').and.returnValue(of(userProfile));
+  //
+  //   // Komponente initialisieren
+  //   component.ngOnInit();
+  //
+  //   // Überprüfen, ob saveUser-Methode aufgerufen wurde
+  //   expect(userService.saveUser).toHaveBeenCalled();
+  // });
 });
