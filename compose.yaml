@@ -1,0 +1,36 @@
+services:
+  #  backend:
+  #    build:
+  #      context: ./backend
+  #    container_name: backend
+  #    ports:
+  #      - "8000:8081"
+  #    environment:
+  #      - SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
+  #      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.h2.Driver
+  #      - SPRING_DATASOURCE_USERNAME=sa
+  #      - SPRING_DATASOURCE_PASSWORD=
+  #
+  #  frontend:
+  #    build:
+  #      context: ./frontend
+  #    container_name: frontend
+  #    ports:
+  #      - "3000:4200"
+  #    environment:
+  #      - API_URL=http://backend:8000
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    ports:
+      - "8080:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - DB_VENDOR=h2
+    volumes:
+      - ./realm-export.json:/opt/keycloak/data/import/realm-export.json
+    command:
+      - start-dev
+      - --import-realm
