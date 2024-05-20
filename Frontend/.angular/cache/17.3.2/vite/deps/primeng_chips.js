@@ -4,18 +4,18 @@ import {
 import {
   TimesIcon
 } from "./chunk-ZTZLEH5A.js";
-import "./chunk-5D37AXT5.js";
-import {
-  PrimeTemplate,
-  SharedModule,
-  UniqueComponentId
-} from "./chunk-CHKPHMVK.js";
 import {
   InputTextModule
 } from "./chunk-G4F4JPW6.js";
 import {
   NG_VALUE_ACCESSOR
 } from "./chunk-2GFFBTBY.js";
+import "./chunk-5D37AXT5.js";
+import {
+  PrimeTemplate,
+  SharedModule,
+  UniqueComponentId
+} from "./chunk-CHKPHMVK.js";
 import {
   CommonModule,
   DOCUMENT,

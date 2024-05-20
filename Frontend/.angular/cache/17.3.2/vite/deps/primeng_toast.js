@@ -8,6 +8,15 @@ import {
   TimesIcon
 } from "./chunk-ZTZLEH5A.js";
 import {
+  animate,
+  animateChild,
+  query,
+  state,
+  style,
+  transition,
+  trigger
+} from "./chunk-KWLRQ63E.js";
+import {
   Ripple,
   RippleModule
 } from "./chunk-7MZQVTDL.js";
@@ -23,15 +32,6 @@ import {
   UniqueComponentId,
   zindexutils
 } from "./chunk-CHKPHMVK.js";
-import {
-  animate,
-  animateChild,
-  query,
-  state,
-  style,
-  transition,
-  trigger
-} from "./chunk-KWLRQ63E.js";
 import "./chunk-EK2YCWCT.js";
 import {
   CommonModule,
