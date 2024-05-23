@@ -57,7 +57,7 @@ describe('NavbarComponent', () => {
     expect(linkDes[4].href).toContain('/rezept-erstellen');
     expect(linkDes[5].href).toContain('/leaderboard');
     expect(linkDes[6].href).toContain('/profil');
-    expect(linkDes[7].href).toContain('/abmelden');
+    expect(linkDes[7].href).toContain('/');
   });
 
   it('should display logo image correctly', () => {
