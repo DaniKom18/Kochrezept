@@ -112,9 +112,8 @@ describe('RezeptDetailViewComponent', () => {
     expect(commentService.getAllCommentsOfFeedback).toHaveBeenCalled();
   });
 
-  it('should load ngOnInit', () => {
+  it('should load ngOnInit', async () => {
     // Arrange
-    const userServiceMock = spyOn(userService, "waitForUserSession").and.returnValue(Promise.resolve());
     const recipeId = 1;
     spyOn(recipeService, 'getRecipeById').and.returnValue(of({
       id: 1,
@@ -136,6 +135,7 @@ describe('RezeptDetailViewComponent', () => {
       id: 2,
       text: 'Test2'
     }]));
+    const userServiceMock = spyOn(userService, "waitForUserSession").and.returnValue(Promise.resolve());
 
     // Act
     component.ngOnInit()
