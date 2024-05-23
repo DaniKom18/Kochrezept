@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -102,5 +103,28 @@ public class FeedbackControllerTest {
     // Assert
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(updatedFeedback, response.getBody());
+  }
+
+  // updateRecipeRating
+  @Test
+  public void calculate_average_rating_with_valid_feedbacks() {
+    Recipe recipe = new Recipe();
+    recipe.setId(1L);
+    Feedback feedback1 = new Feedback();
+    feedback1.setRating(4.0);
+    Feedback feedback2 = new Feedback();
+    feedback2.setRating(5.0);
+
+    List<Feedback> feedbacks = List.of(
+      feedback1,
+      feedback2
+    );
+
+    when(feedbackService.findByRecipeId(1L)).thenReturn(feedbacks);
+    when(recipeService.updateRecipe(any(Recipe.class))).thenAnswer(i -> i.getArguments()[0]);
+
+    feedbackController.updateRecipeRating(recipe);
+
+    assertEquals(4.5, recipe.getRating(), 0.01);
   }
 }
