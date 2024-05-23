@@ -49,7 +49,7 @@ public class FeedbackController {
         return new ResponseEntity<>(feedbacks, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("feedback/{id}")
     public ResponseEntity<Feedback> updateFeedback(@PathVariable Long id, @RequestBody Feedback requestFeedback) {
         if (!requestFeedback.getId().equals(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
