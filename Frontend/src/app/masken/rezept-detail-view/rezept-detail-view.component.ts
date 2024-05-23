@@ -65,7 +65,11 @@ export class RezeptDetailViewComponent implements OnInit {
   };
 
   AllFeedback: Feedback[] = []
-  userFeedback: Feedback | undefined;
+  userFeedback: Feedback = {
+    id: -1,
+    rating: '0',
+    username: userSession.username
+  };
 
   constructor(private recipeService: RecipeService,
               private ingredientService: IngredientService,
@@ -212,12 +216,7 @@ export class RezeptDetailViewComponent implements OnInit {
   createFeedback() {
     if (!this.isUserFeedbackAvailable()) {
       console.log("Creating User Feedback");
-      let newFeedback: Feedback = {
-        id: -1,
-        rating: '0',
-        username: userSession.username
-      };
-      this.saveFeedback(newFeedback)
+      this.saveFeedback(this.userFeedback)
     }
   }
 
@@ -260,10 +259,6 @@ export class RezeptDetailViewComponent implements OnInit {
 
   submitFeedback(rating: string) {
     console.log("Submit Feedback for rating with number" + rating)
-    if (!this.userFeedback){
-      console.log("user feedback is undefined")
-      return
-    }
 
     this.userFeedback.rating = rating
     this.feedbackService.updateFeedback(this.userFeedback, this.recipeId).subscribe(

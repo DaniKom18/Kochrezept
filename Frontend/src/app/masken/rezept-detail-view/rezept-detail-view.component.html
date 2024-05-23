@@ -8,8 +8,8 @@
         <div class="user-interaction-bar">
           <div class="rating">
             <i class="pi pi-star-fill"></i> {{ recipe.rating }}
-            <p-rating [(ngModel)]="userFeedback!.rating" [cancel]="false"
-                      (onRate)="submitFeedback(userFeedback!.rating)"></p-rating>
+            <p-rating [(ngModel)]="userFeedback.rating" [cancel]="false"
+                      (onRate)="submitFeedback(userFeedback.rating)"></p-rating>
           </div>
           <div class="favorite">
             <button pButton pRipple type="button" icon="pi pi-heart"
