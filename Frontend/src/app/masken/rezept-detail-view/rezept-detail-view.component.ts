@@ -17,6 +17,7 @@ import {userSession} from "../../../environments/user-uuid";
 import {FormsModule} from "@angular/forms";
 import {MessageService} from "primeng/api";
 import {RatingModule} from "primeng/rating";
+import {UserService} from "../../services/user.service";
 
 class CommentWithUsername {
   text: string = '';
@@ -70,7 +71,8 @@ export class RezeptDetailViewComponent implements OnInit {
               private ingredientService: IngredientService,
               private commentService: CommentService,
               private feedbackService: FeedbackService,
-              private messageService: MessageService) {
+              private messageService: MessageService,
+              private userService: UserService) {
   }
 
   @Input() //Mapped id die durch die URL übergeben wurde auf recipeId
@@ -79,11 +81,13 @@ export class RezeptDetailViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadRecipe();
-    this.createFeedback();
-    this.loadIngredient();
-    this.loadFeedback(() => {
-      this.loadComment(); // Aufruf von loadComment() nach dem Abschluss von loadFeedback()
+    this.userService.waitForUserSession().then(() => {
+      this.loadRecipe();
+      this.loadFeedback(() => {
+        this.loadComment(); // Aufruf von loadComment() nach dem Abschluss von loadFeedback()
+        this.createFeedback();
+      });
+      this.loadIngredient();
     });
   }
 
@@ -178,6 +182,7 @@ export class RezeptDetailViewComponent implements OnInit {
 
   isUserFeedbackAvailable() {
     console.log("Checking if user feedback is available");
+    console.log()
     const feedback: Feedback[] = this.AllFeedback.filter(feedback => feedback.username === userSession.username);
     if (feedback.length == 1) {
       console.log("Feedback is available")
@@ -253,14 +258,23 @@ export class RezeptDetailViewComponent implements OnInit {
     });
   }
 
-  submitFeedback() {
-    console.log("Submit Feedback for rating")
-    this.feedbackService.updateFeedback(this.userFeedback!, this.recipeId).subscribe(
+  submitFeedback(rating: string) {
+    console.log("Submit Feedback for rating with number" + rating)
+    if (!this.userFeedback){
+      console.log("user feedback is undefined")
+      return
+    }
+
+    this.userFeedback.rating = rating
+    this.feedbackService.updateFeedback(this.userFeedback, this.recipeId).subscribe(
       {
         next: data => {
-          console.log("Feedback updated for rating");
-          console.log(data);
           this.userFeedback = data;
+          this.recipeService.getRecipeById(this.recipeId).subscribe(
+            data => {
+              this.recipe.rating = data.rating;
+            }
+          );
         },
         error: error => {
           this.displayErrorMessage(error)
@@ -268,4 +282,6 @@ export class RezeptDetailViewComponent implements OnInit {
       }
     );
   }
+
+  protected readonly Number = Number;
 }
