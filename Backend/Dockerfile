@@ -1,12 +1,12 @@
 #
 # Build stage
 #
-FROM eclipse-temurin:17-jdk-jammy AS build
+FROM maven:3.8.4 AS build
 ENV HOME=/usr/app
 RUN mkdir -p $HOME
 WORKDIR $HOME
-ADD . $HOME
-RUN --mount=type=cache,target=/root/.m2 ./mvnw -f $HOME/pom.xml clean package
+COPY . .
+RUN mvn clean package
 
 #
 # Package stage
