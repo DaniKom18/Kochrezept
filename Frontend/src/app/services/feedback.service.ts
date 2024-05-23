@@ -29,7 +29,7 @@ export class FeedbackService {
 
   updateFeedback(feedbackOfRecipe: Feedback, recipeId: number) {
     console.log("Update Feedback On Recipe:=" + feedbackOfRecipe.id)
-    const url = this.baseUrl + "/" + recipeId + "/feedback/" + feedbackOfRecipe.id
+    const url = this.baseUrl + "/recipe/" + recipeId + "/feedback/" + feedbackOfRecipe.id
     return this.httpClient.put<Feedback>(url, feedbackOfRecipe, this.options)
   }
 }

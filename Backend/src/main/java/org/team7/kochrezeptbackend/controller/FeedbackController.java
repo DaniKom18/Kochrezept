@@ -65,9 +65,10 @@ public class FeedbackController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    Feedback updatedFeedback = feedbackService.updateFeedback(requestFeedback, foundFeedback.get());
+
     updateRecipeRating(recipe.get());
 
-    Feedback updatedFeedback = feedbackService.updateFeedback(requestFeedback, foundFeedback.get());
     return new ResponseEntity<>(updatedFeedback, HttpStatus.OK);
   }
 
