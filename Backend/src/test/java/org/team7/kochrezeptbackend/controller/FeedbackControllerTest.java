@@ -21,83 +21,86 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class FeedbackControllerTest {
-    @MockBean
-    FeedbackService feedbackService;
-    @MockBean
-    RecipeService recipeService;
-    FeedbackController feedbackController;
-    @BeforeEach
-    public void setupFeedback(){
-        feedbackController = new FeedbackController(feedbackService, recipeService);
-    }
+  @MockBean
+  FeedbackService feedbackService;
+  @MockBean
+  RecipeService recipeService;
+  FeedbackController feedbackController;
 
-    //Post-Mapping
-    @Test
-    public void test_valid_recipeId_and_feedbackRequest() {
-        // Arrange
-        Long recipeId = 1L;
-        Feedback feedbackRequest = new Feedback();
-        feedbackRequest.setRating(4.5);
+  @BeforeEach
+  public void setupFeedback() {
+    feedbackController = new FeedbackController(feedbackService, recipeService);
+  }
 
-        Recipe recipe = new Recipe();
-        recipe.setId(recipeId);
-        Optional<Recipe> optionalRecipe = Optional.of(recipe);
+  //Post-Mapping
+  @Test
+  public void test_valid_recipeId_and_feedbackRequest() {
+    // Arrange
+    Long recipeId = 1L;
+    Feedback feedbackRequest = new Feedback();
+    feedbackRequest.setRating(4.5);
 
-        Feedback savedFeedback = new Feedback();
+    Recipe recipe = new Recipe();
+    recipe.setId(recipeId);
+    Optional<Recipe> optionalRecipe = Optional.of(recipe);
 
-        when(recipeService.getRecipeById(recipeId)).thenReturn(optionalRecipe);
-        when(feedbackService.saveFeedback(feedbackRequest)).thenReturn(savedFeedback);
+    Feedback savedFeedback = new Feedback();
 
-        // Act
-        ResponseEntity<Feedback> response = feedbackController.createFeedback(recipeId, feedbackRequest);
+    when(recipeService.getRecipeById(recipeId)).thenReturn(optionalRecipe);
+    when(feedbackService.saveFeedback(feedbackRequest)).thenReturn(savedFeedback);
 
-        // Assert
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(savedFeedback, response.getBody());
-    }
+    // Act
+    ResponseEntity<Feedback> response = feedbackController.createFeedback(recipeId, feedbackRequest);
 
-    //Get-Mapping
-    @Test
-    public void test_valid_recipeId() {
-        // Arrange
-        Long recipeId = 1L;
-        List<Feedback> expectedFeedbacks = new ArrayList<>();
-        expectedFeedbacks.add(new Feedback());
-        expectedFeedbacks.add(new Feedback());
+    // Assert
+    assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    assertEquals(savedFeedback, response.getBody());
+  }
 
-        Mockito.when(recipeService.getRecipeById(recipeId)).thenReturn(Optional.of(new Recipe()));
-        Mockito.when(feedbackService.findByRecipeId(recipeId)).thenReturn(expectedFeedbacks);
+  //Get-Mapping
+  @Test
+  public void test_valid_recipeId() {
+    // Arrange
+    Long recipeId = 1L;
+    List<Feedback> expectedFeedbacks = new ArrayList<>();
+    expectedFeedbacks.add(new Feedback());
+    expectedFeedbacks.add(new Feedback());
 
-        // Act
-        ResponseEntity<List<Feedback>> response = feedbackController.getAllFeedbacksOfRecipe(recipeId);
+    Mockito.when(recipeService.getRecipeById(recipeId)).thenReturn(Optional.of(new Recipe()));
+    Mockito.when(feedbackService.findByRecipeId(recipeId)).thenReturn(expectedFeedbacks);
 
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(expectedFeedbacks, response.getBody());
-    }
+    // Act
+    ResponseEntity<List<Feedback>> response = feedbackController.getAllFeedbacksOfRecipe(recipeId);
 
-    //Put-Mapping
-//    @Test
-//    public void test_updateFeedback_success() {
-//        // Arrange
-//        Long id = 1L;
-//        Feedback requestFeedback = new Feedback();
-//        requestFeedback.setId(id);
-//
-//        Feedback foundFeedback = new Feedback();
-//        foundFeedback.setId(id);
-//
-//        Feedback updatedFeedback = new Feedback();
-//        updatedFeedback.setId(id);
-//
-//        Mockito.when(feedbackService.findById(id)).thenReturn(Optional.of(foundFeedback));
-//        Mockito.when(feedbackService.updateFeedback(requestFeedback, foundFeedback)).thenReturn(updatedFeedback);
-//
-//        // Act
-//        ResponseEntity<Feedback> response = feedbackController.updateFeedback(id, requestFeedback);
-//
-//        // Assert
-//        assertEquals(HttpStatus.OK, response.getStatusCode());
-//        assertEquals(updatedFeedback, response.getBody());
-//    }
+    // Assert
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(expectedFeedbacks, response.getBody());
+  }
+
+  //Put-Mapping
+  @Test
+  public void test_updateFeedback_success() {
+    // Arrange
+    Long feedbackId = 1L;
+    Long recipeId = 1L;
+    Feedback requestFeedback = new Feedback();
+    requestFeedback.setId(feedbackId);
+
+    Feedback foundFeedback = new Feedback();
+    foundFeedback.setId(feedbackId);
+
+    Feedback updatedFeedback = new Feedback();
+    updatedFeedback.setId(feedbackId);
+
+    Mockito.when(recipeService.getRecipeById(recipeId)).thenReturn(Optional.of(new Recipe()));
+    Mockito.when(feedbackService.findById(feedbackId)).thenReturn(Optional.of(foundFeedback));
+    Mockito.when(feedbackService.updateFeedback(requestFeedback, foundFeedback)).thenReturn(updatedFeedback);
+
+    // Act
+    ResponseEntity<Feedback> response = feedbackController.updateFeedback(recipeId, feedbackId, requestFeedback);
+
+    // Assert
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(updatedFeedback, response.getBody());
+  }
 }
