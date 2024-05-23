@@ -4,7 +4,7 @@ services:
       context: ./Backend
     container_name: backend
     ports:
-      - "8001:8081"
+      - "8081:8081"
 
   frontend:
     build:
@@ -12,6 +12,7 @@ services:
     container_name: frontend
     ports:
       - "4200:80"
+
 
   keycloak:
     image: quay.io/keycloak/keycloak:latest
