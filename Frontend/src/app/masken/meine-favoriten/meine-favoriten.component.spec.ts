@@ -18,7 +18,7 @@ describe('MeineFavoritenComponent', () => {
       imports: [MeineFavoritenComponent, HttpClientTestingModule],
       providers: [MessageService]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(MeineFavoritenComponent);
     component = fixture.componentInstance;

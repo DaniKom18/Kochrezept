@@ -39,7 +39,7 @@ export class StartseiteComponent implements OnInit {
     })
   }
 
-  private getAllRecipes() {
+  getAllRecipes() {
     this.recipeService.getAllHomePageRecipes().subscribe(
       data =>  {
         this.allRecipes = data

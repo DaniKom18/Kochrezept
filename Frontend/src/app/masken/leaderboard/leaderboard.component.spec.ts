@@ -15,7 +15,7 @@ describe('LeaderboardComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LeaderboardComponent, HttpClientTestingModule],
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LeaderboardComponent);
     component = fixture.componentInstance;

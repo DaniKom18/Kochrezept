@@ -10,6 +10,7 @@ import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {of} from "rxjs";
 import {Ingredient} from "../../models/ingredient";
 import {userSession} from "../../../environments/user-uuid";
+import {UserService} from "../../services/user.service";
 
 describe('RezeptDetailViewComponent', () => {
   let component: RezeptDetailViewComponent;
@@ -18,6 +19,7 @@ describe('RezeptDetailViewComponent', () => {
   let ingredientService: IngredientService;
   let commentService: CommentService;
   let feedbackService: FeedbackService;
+  let userService: UserService;
   let fixture: ComponentFixture<RezeptDetailViewComponent>;
 
   beforeEach(async () => {
@@ -34,6 +36,7 @@ describe('RezeptDetailViewComponent', () => {
     ingredientService = TestBed.inject(IngredientService);
     commentService = TestBed.inject(CommentService);
     feedbackService = TestBed.inject(FeedbackService);
+    userService = TestBed.inject(UserService);
     fixture.detectChanges();
   });
 
@@ -97,7 +100,10 @@ describe('RezeptDetailViewComponent', () => {
   it('should get comments by feedback id', () => {
     // Arrange
     const recipeId = 1;
-    spyOn(commentService, 'getAllCommentsOfFeedback').withArgs(recipeId).and.returnValue(of([]));
+    spyOn(commentService, 'getAllCommentsOfFeedback').withArgs(recipeId).and.returnValue(of([
+      {id: 1, text: 'Test'},
+      {id: 2, text: 'Test2'}
+    ]));
 
     // Act
     commentService.getAllCommentsOfFeedback(recipeId);
@@ -108,6 +114,7 @@ describe('RezeptDetailViewComponent', () => {
 
   it('should load ngOnInit', () => {
     // Arrange
+    const userServiceMock = spyOn(userService, "waitForUserSession").and.returnValue(Promise.resolve());
     const recipeId = 1;
     spyOn(recipeService, 'getRecipeById').and.returnValue(of({
       id: 1,
@@ -131,9 +138,10 @@ describe('RezeptDetailViewComponent', () => {
     }]));
 
     // Act
-   component.ngOnInit()
+    component.ngOnInit()
 
     // Assert
+    expect(userServiceMock).toHaveBeenCalled();
     expect(recipeService.getRecipeById).toHaveBeenCalled();
     expect(ingredientService.getIngredientsOfRecipe).toHaveBeenCalled();
     expect(feedbackService.getAllFeedbackOfRecipe).toHaveBeenCalled();

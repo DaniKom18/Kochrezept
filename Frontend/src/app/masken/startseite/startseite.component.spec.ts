@@ -36,4 +36,63 @@ describe('StartseiteComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should load recipes', () => {
+    userService.waitForUserSession().then(() => {
+      spyOn(recipeService, 'getAllHomePageRecipes').and.callThrough();
+      component.getAllRecipes();
+      expect(recipeService.getAllHomePageRecipes).toHaveBeenCalled();
+    });
+  });
+
+  it('should add recipe to favorites', () => {
+    spyOn(messageService, 'add').and.callThrough();
+    spyOn(recipeService, 'userClickedRecipeAsFav').and.callThrough();
+    const recipe = {
+      id: 1,
+      name: 'Test',
+      ingredients: [],
+      preparation: 'Test',
+      image: 'Test',
+      rating: 1,
+      visibility: true,
+      showAuthor: true,
+      author: 'Test'
+    };
+    component.favEvent(recipe);
+    expect(messageService.add).toHaveBeenCalledWith({
+      severity: 'success',
+      summary: 'Erfolgreich',
+      detail: 'Rezept wurde erfolgreich zu deinen Favoriten hinzugefügt'
+    });
+    expect(recipeService.userClickedRecipeAsFav).toHaveBeenCalled();
+  });
+
+  it('should filter recipes', () => {
+    const recipe = {
+      id: 1,
+      name: 'Test',
+      ingredients: [],
+      preparation: 'Test',
+      image: 'Test',
+      rating: 1,
+      visibility: true,
+      showAuthor: true,
+      author: 'Test'
+    };
+
+    component.allRecipes = [recipe];
+    component.filteredRecipes = [recipe];
+    component.search = 'Test';
+    component.ExecuteSearchOnInput(component.search);
+
+    expect(component.filteredRecipes).toEqual([recipe]);
+    component.search = 'Test2';
+    component.ExecuteSearchOnInput(component.search);
+    expect(component.filteredRecipes).toEqual([]);
+
+    component.search = '';
+    component.ExecuteSearchOnInput(component.search);
+    expect(component.filteredRecipes).toEqual([recipe]);
+  });
 });

@@ -17,7 +17,7 @@ describe('MeineRezepteComponent', () => {
     await TestBed.configureTestingModule({
       imports: [MeineRezepteComponent, HttpClientTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(MeineRezepteComponent);
     component = fixture.componentInstance;
