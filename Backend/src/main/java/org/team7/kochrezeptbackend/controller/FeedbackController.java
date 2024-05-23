@@ -49,18 +49,53 @@ public class FeedbackController {
         return new ResponseEntity<>(feedbacks, HttpStatus.OK);
     }
 
-    @PutMapping("feedback/{id}")
-    public ResponseEntity<Feedback> updateFeedback(@PathVariable Long id, @RequestBody Feedback requestFeedback) {
-        if (!requestFeedback.getId().equals(id)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        Optional<Feedback> foundFeedback = feedbackService.findById(id);
-        if (foundFeedback.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @PutMapping("/recipe/{recipeId}/feedback/{feedbackId}")
+    public ResponseEntity<Feedback> updateFeedback(@PathVariable Long recipeId, @PathVariable Long feedbackId, @RequestBody Feedback requestFeedback) {
+      Optional<Recipe> recipe = recipeService.getRecipeById(recipeId);
+      if (recipe.isEmpty()){
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
 
-        Feedback updatedFeedback = feedbackService.updateFeedback(requestFeedback, foundFeedback.get());
-        return new ResponseEntity<>(updatedFeedback, HttpStatus.OK);
+      if (!requestFeedback.getId().equals(feedbackId)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
+
+      Optional<Feedback> foundFeedback = feedbackService.findById(feedbackId);
+      if (foundFeedback.isEmpty()){
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+
+      updateRecipeRating(recipe.get());
+
+      Feedback updatedFeedback = feedbackService.updateFeedback(requestFeedback, foundFeedback.get());
+      return new ResponseEntity<>(updatedFeedback, HttpStatus.OK);
     }
 
+
+  public void updateRecipeRating(Recipe recipe) {
+    // Alle Feedbacks für das Rezept abrufen
+    List<Feedback> feedbacks = feedbackService.findByRecipeId(recipe.getId());
+
+    // Anzahl der Feedbacks
+    int numberOfUserFeedbacks = feedbacks.size();
+
+    // Summe der Ratings berechnen
+    double sumOfRatings = 0.0;
+    for (Feedback feedback : feedbacks) {
+      // Feedbacks die 0.0 haben werden nicht in der Rechnung berücksichtigt
+      if (feedback.getRating() == 0.0){
+        numberOfUserFeedbacks--;
+        continue;
+      }
+      sumOfRatings += feedback.getRating();
+    }
+
+    // Durchschnitt berechnen
+    double averageRating = sumOfRatings / numberOfUserFeedbacks;
+
+    recipe.setRating(averageRating);
+
+    // Rezept aktualisieren
+    recipeService.updateRecipe(recipe);
+  }
 }
