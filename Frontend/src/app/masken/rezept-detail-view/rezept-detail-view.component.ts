@@ -16,6 +16,7 @@ import {FeedbackService} from "../../services/feedback.service";
 import {userSession} from "../../../environments/user-uuid";
 import {FormsModule} from "@angular/forms";
 import {MessageService} from "primeng/api";
+import {RatingModule} from "primeng/rating";
 
 class CommentWithUsername {
   text: string = '';
@@ -32,7 +33,8 @@ class CommentWithUsername {
     ChipsModule,
     RippleModule,
     InputTextareaModule,
-    FormsModule
+    FormsModule,
+    RatingModule
   ],
   templateUrl: './rezept-detail-view.component.html',
   styleUrl: './rezept-detail-view.component.css'
@@ -62,6 +64,7 @@ export class RezeptDetailViewComponent implements OnInit {
   };
 
   AllFeedback: Feedback[] = []
+  userFeedback: Feedback | undefined;
 
   constructor(private recipeService: RecipeService,
               private ingredientService: IngredientService,
@@ -178,7 +181,7 @@ export class RezeptDetailViewComponent implements OnInit {
     const feedback: Feedback[] = this.AllFeedback.filter(feedback => feedback.username === userSession.username);
     if (feedback.length == 1) {
       console.log("Feedback is available")
-      this.feedbackId = feedback[0].id
+      this.userFeedback = feedback[0]
       return true
     } else {
       console.log("Feedback is not available creating one")
@@ -192,7 +195,7 @@ export class RezeptDetailViewComponent implements OnInit {
         next: data => {
           console.log("Feedback saved");
           console.log(data);
-          this.feedbackId = data.id
+          this.userFeedback = data
         },
         error: error => {
           this.displayErrorMessage(error)
@@ -216,7 +219,7 @@ export class RezeptDetailViewComponent implements OnInit {
   addCommentToFeedback() {
     // go through all feedbacks and add the comment to the matching username
     if (this.validateComment()) {
-      this.commentService.saveComment(this.newComment, this.feedbackId).subscribe(
+      this.commentService.saveComment(this.newComment, this.userFeedback!.id).subscribe(
         {
           next: data => {
             console.log("Adding comment to feedback successful");
@@ -229,7 +232,6 @@ export class RezeptDetailViewComponent implements OnInit {
         }
       );
     } else {
-      // TODO: Show error message
       console.log("Comment is empty");
     }
   }
@@ -249,5 +251,21 @@ export class RezeptDetailViewComponent implements OnInit {
       summary: 'Fehler',
       detail: 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
     });
+  }
+
+  submitFeedback() {
+    console.log("Submit Feedback for rating")
+    this.feedbackService.updateFeedback(this.userFeedback!, this.recipeId).subscribe(
+      {
+        next: data => {
+          console.log("Feedback updated for rating");
+          console.log(data);
+          this.userFeedback = data;
+        },
+        error: error => {
+          this.displayErrorMessage(error)
+        }
+      }
+    );
   }
 }
