@@ -26,14 +26,11 @@ public class UserControllerTest {
   @MockBean
   UserService userService;
 
-  @MockBean
-  RecipeService recipeService;
-
   UserController userController;
 
   @BeforeEach
   public void setup() {
-    userController = new UserController(userService, recipeService);
+    userController = new UserController(userService);
   }
 
   @Test
