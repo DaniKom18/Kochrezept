@@ -21,15 +21,17 @@
 6. **Privatsphäre-Einstellungen für Rezepte**: Nutzer können ihre Rezepte öffentlich machen oder wieder privat setzen.
 7. **Privater Rezepte-Bereich**: Jeder Nutzer verfügt über einen privaten Bereich für seine Rezepte wo er seine Rezepte verwalten kann.
 8. **Öffentlicher Rezepte-Bereich**: Hier werden nur Rezepte gezeigt die auf Öffentlich gestellt wurden.
-9. **Master-Page für jedes Rezept**: Eine umfassende Seite für alle Details eines Rezeptes.
-10. **Suchfunktion**: Rezepte können anhand von Namen gesucht werden.
-11. **Bewertungssystem**: Nutzer können Rezepte bewerten.
-12. **Rating eines Rezeptes**: Berechnung des Durchschnitts der vorhandenen User Ratings
-13. **Kommentarfunktion**: Nutzer können Rezepte kommentieren.
-14. **Favorisieren von Rezepten**: Nutzer können Rezepte, einschließlich ihrer eigenen, als Favoriten speichern.
-15. **XP Balken anzeige basierend auf den erstellten Rezepten**:
-16. **Anzeige von Levels im User-Profil**: Abhängig von XP
-17. **LeaderBoard von den höchsten 10 Level**
+9.  **Suchfunktion**: Rezepte können anhand von Namen gesucht werden.
+10. **Master-Page für jedes Rezept**: Eine umfassende Seite für alle Details eines Rezeptes.
+11. **Master-Page für jedes Rezept zeigt Kommentare von Usern**
+12.  **Kommentarfunktion**: Nutzer können Rezepte kommentieren.
+13. **Bewertungssystem**: Nutzer können Rezepte bewerten.
+14. **Bewertungssystem**: Wenn ein Nutzer ein Rezept bewertet, wird die Bewertung die der Benutzer abgegeben hat angezeigt.
+15. **Bewertungssystem**: Berechnung des Durchschnitts Rating für ein Rezept
+16. **Favorisieren von Rezepten**: Nutzer können Rezepte, einschließlich ihrer eigenen, als Favoriten speichern.
+17. **XP Balken anzeige basierend auf den erstellten Rezepten**:
+18. **Anzeige von Levels im User-Profil**: Abhängig von XP
+19. **LeaderBoard von den höchsten 10 Level**
 
 
 # Kochrezept starten
