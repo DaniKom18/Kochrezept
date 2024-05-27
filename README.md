@@ -34,5 +34,6 @@
 
 # Kochrezept starten
 
-Termial: docker compose up
-Lokal: [localhost:4200](http://localhost:4200/)
+1. Termial: docker compose up
+2. Lokal: [localhost:4200](http://localhost:4200/)
+
