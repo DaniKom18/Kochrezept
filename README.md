@@ -3,13 +3,12 @@
 ## Technologien
 
 - **Java Spring Boot**: Hauptbackend-Technologie.
-  - **Testing**: SoapUI (Wird dann in CI/CD integriert)
-- **Angular**: Frontend-Framework.
-  - **UI Component Library**: PrimeNg für anspruchsvolle User Interfaces.
   - **Testing**: Unit Tests
-  - **Clients durch OpenApi generieren**: Automatische Erstellung von Frontend-Clients basierend auf der OpenAPI-Spezifikation.
-- **MySql**: Datenbanksystem für die Speicherung aller Daten.
-- **Security**: KeyCloak -> Anmelden/Abmelden + JWT für Kommunikation zwischen Frontend und Backend
+- **Angular**: Frontend-Framework.
+  - **UI Component Library**: PrimeNg
+  - **Testing**: Unit Tests
+- **H2 Database**: integriert in Spring Boot
+- **Security**: KeyCloak -> Anmelden/Abmelden
 
 ## Anmerkung
 
