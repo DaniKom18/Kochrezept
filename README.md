@@ -10,12 +10,6 @@
 - **H2 Database**: integriert in Spring Boot
 - **Security**: KeyCloak -> Anmelden/Abmelden
 
-## Anmerkung
-
-In Spring Boot sollten 2 Profile vorhanden sein, zum einem ein Test Profil und zum anderen ein Production Profil.
-Das Test Profil validiert keine JWT, damit SOAPUI Tests möglich sind ohne JWT.
-Das Prod profil sollte hingegen die JWT validieren.
-
 
 ## Funktionale Anforderungen
 
