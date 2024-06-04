@@ -23,16 +23,15 @@
 8. **Privater Rezepte-Bereich**: Jeder Nutzer verfügt über einen privaten Bereich für seine Rezepte wo er seine Rezepte verwalten kann.
 9. **Öffentlicher Rezepte-Bereich**: Hier werden nur Rezepte gezeigt die auf Öffentlich gestellt wurden.
 10.  **Suchfunktion**: Rezepte können anhand von Namen gesucht werden.
-11. **Master-Page für jedes Rezept**: Eine umfassende Seite für alle Details eines Rezeptes.
-12. **Master-Page für jedes Rezept zeigt Kommentare von Usern**
-13.  **Kommentarfunktion**: Nutzer können Rezepte kommentieren.
-14. **Bewertungssystem**: Nutzer können Rezepte bewerten.
-15. **Bewertungssystem**: Wenn ein Nutzer ein Rezept bewertet, wird die Bewertung die der Benutzer abgegeben hat angezeigt.
-16. **Bewertungssystem**: Berechnung des Durchschnitts Rating für ein Rezept
-17. **Favorisieren von Rezepten**: Nutzer können Rezepte, einschließlich ihrer eigenen, als Favoriten speichern.
-18. **XP Balken anzeige basierend auf den erstellten Rezepten**:
-19. **Anzeige von Levels im User-Profil**: Abhängig von XP
-20. **LeaderBoard von den höchsten 10 Level**
+11. **Master-Page für jedes Rezept**: Eine umfassende Seite für alle Details eines Rezeptes sowie auch die Kommentare von Benutzern. 
+12.  **Kommentarfunktion**: Nutzer können Rezepte kommentieren.
+13. **Bewertungssystem**: Nutzer können Rezepte bewerten.
+14. **Bewertungssystem**: Wenn ein Nutzer ein Rezept bewertet, wird die Bewertung die der Benutzer abgegeben hat angezeigt selbst wenn er zu einem späteren Zeitpunkt das Rezept wieder öffnet.
+15. **Bewertungssystem**: Jedes Rezept zeigt den Durchschnitt aller Bewertungen
+16. **Favorisieren von Rezepten**: Nutzer können Rezepte, einschließlich ihrer eigenen, als Favoriten speichern.
+17. **Jedes erstellte Rezept gibt 10xp, die XP werden im UserProfil angezeigt**:
+18. **Level Anzeige**: Nachdem ein User 100xp erreicht, wird sein Level erhöht und die Xp wieder auf 0 gesetzt <img width="708" alt="image" src="https://github.com/DaniKom18/Kochrezept/assets/106764451/664f9f01-1a4b-4321-8b3a-2c5b6e506c49">
+19. **LeaderBoard** Hier werden die Top 10 User angezeigt mit dem höchsten Level
 
 
 # Kochrezept starten
