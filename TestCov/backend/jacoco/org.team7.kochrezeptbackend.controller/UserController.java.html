@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Kochrezept-Backend</a> &gt; <a href="index.source.html" class="el_package">org.team7.kochrezeptbackend.controller</a> &gt; <span class="el_source">UserController.java</span></div><h1>UserController.java</h1><pre class="source lang-java linenums">package org.team7.kochrezeptbackend.controller;
+
+import org.team7.kochrezeptbackend.entity.User;
+import org.team7.kochrezeptbackend.service.RecipeService;
+import org.team7.kochrezeptbackend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@RestController
+@RequestMapping(&quot;/api/users&quot;)
+@CrossOrigin(originPatterns = &quot;*&quot;)
+public class UserController {
+
+    private final UserService userService;
+
+    @Autowired
+<span class="fc" id="L23">    public UserController(UserService userService) {</span>
+<span class="fc" id="L24">        this.userService = userService;</span>
+<span class="fc" id="L25">    }</span>
+
+    @PostMapping
+    public ResponseEntity&lt;User&gt; createUser(@RequestBody User requestUser) {
+<span class="fc" id="L29">        Optional&lt;User&gt; foundUser = userService.getUserById(requestUser.getId());</span>
+
+        User responseUser;
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">        if (foundUser.isEmpty()){</span>
+<span class="fc" id="L33">            User newUser = User.createUser(requestUser.getId(), requestUser.getUsername());</span>
+<span class="fc" id="L34">            responseUser = userService.saveUser(newUser);</span>
+<span class="fc" id="L35">        }else {</span>
+<span class="nc" id="L36">            responseUser = foundUser.get();</span>
+        }
+<span class="fc" id="L38">        return new ResponseEntity&lt;&gt;(responseUser, HttpStatus.CREATED);</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;User&gt; getUserById(@PathVariable UUID id) {
+<span class="fc" id="L43">        Optional&lt;User&gt; user = userService.getUserById(id);</span>
+<span class="fc" id="L44">        return user.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="pc" id="L45">                .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @GetMapping(&quot;/leaderboard&quot;)
+    public ResponseEntity&lt;List&lt;User&gt;&gt; getLeaderboard() {
+<span class="fc" id="L50">        List&lt;User&gt; users = userService.getLeaderboard();</span>
+<span class="fc" id="L51">        return new ResponseEntity&lt;&gt;(users, HttpStatus.OK);</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;User&gt; updateUser(@PathVariable UUID id, @RequestBody User requestUser) {
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if (!requestUser.getId().equals(id)) {</span>
+<span class="nc" id="L57">            return new ResponseEntity&lt;&gt;(HttpStatus.BAD_REQUEST);</span>
+        }
+<span class="fc" id="L59">        Optional&lt;User&gt; existingUser = userService.getUserById(id);</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (existingUser.isPresent()) {</span>
+<span class="fc" id="L61">            User user = existingUser.get();</span>
+
+            //Level System
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">            if (requestUser.getXp() != null){</span>
+<span class="fc" id="L65">                user.setXp(user.getXp() + requestUser.getXp());</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">                if (user.getXp() &gt;= 100){</span>
+<span class="fc" id="L67">                    user.setLevel(user.getLevel() + 1);</span>
+<span class="fc" id="L68">                    user.setXp(user.getXp() - 100);</span>
+                }
+            }
+
+<span class="fc" id="L72">            User updatedUser = userService.updateUser(user);</span>
+<span class="fc" id="L73">            return new ResponseEntity&lt;&gt;(updatedUser, HttpStatus.OK);</span>
+        }
+<span class="nc" id="L75">        return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteUser(@PathVariable UUID id) {
+<span class="fc" id="L80">        Optional&lt;User&gt; user = userService.getUserById(id);</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (user.isPresent()) {</span>
+<span class="fc" id="L82">            userService.deleteUser(id);</span>
+<span class="fc" id="L83">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+        }
+<span class="nc" id="L85">        return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

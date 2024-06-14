@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecipeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Kochrezept-Backend</a> &gt; <a href="index.source.html" class="el_package">org.team7.kochrezeptbackend.controller</a> &gt; <span class="el_source">RecipeController.java</span></div><h1>RecipeController.java</h1><pre class="source lang-java linenums">package org.team7.kochrezeptbackend.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.team7.kochrezeptbackend.entity.Recipe;
+import org.team7.kochrezeptbackend.entity.User;
+import org.team7.kochrezeptbackend.service.RecipeService;
+import org.team7.kochrezeptbackend.service.UserService;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@RestController
+@RequestMapping(value = &quot;api&quot;)
+@CrossOrigin(originPatterns = &quot;*&quot;)
+public class RecipeController {
+
+    private final RecipeService recipeService;
+    private final UserService userService;
+
+    @Autowired
+<span class="fc" id="L25">    public RecipeController(RecipeService recipeService, UserService userService) { this.recipeService = recipeService;</span>
+<span class="fc" id="L26">        this.userService = userService;</span>
+<span class="fc" id="L27">    }</span>
+
+    @PostMapping(&quot;/user/{userId}/recipes&quot;)
+    public ResponseEntity&lt;Recipe&gt; createRecipe(@PathVariable UUID userId, @RequestBody Recipe recipe){
+<span class="fc" id="L31">        Optional&lt;User&gt; foundUser = userService.getUserById(userId);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (foundUser.isEmpty()){</span>
+<span class="fc" id="L33">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+
+<span class="fc" id="L36">        recipe.setOwner(foundUser.get());</span>
+<span class="fc" id="L37">        recipe.setAuthor(foundUser.get().getUsername());</span>
+<span class="fc" id="L38">        Recipe savedRecipe = recipeService.saveRecipe(recipe);</span>
+<span class="fc" id="L39">        return new ResponseEntity&lt;&gt;(savedRecipe, HttpStatus.CREATED);</span>
+    }
+
+    @GetMapping(&quot;/user/{userId}/recipes&quot;)
+    public ResponseEntity&lt;List&lt;Recipe&gt;&gt; getAllRecipesOfUser(@PathVariable UUID userId) {
+<span class="fc" id="L44">        Optional&lt;User&gt; foundUser = userService.getUserById(userId);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (foundUser.isEmpty()){</span>
+<span class="fc" id="L46">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+
+<span class="fc" id="L49">        List&lt;Recipe&gt; recipes = this.recipeService.findByUser(userId);</span>
+
+<span class="fc" id="L51">        return new ResponseEntity&lt;&gt;(recipes, HttpStatus.OK);</span>
+    }
+
+    @GetMapping(&quot;/recipes/{id}&quot;)
+    public ResponseEntity&lt;Recipe&gt; getRecipeById(@PathVariable Long id){
+<span class="fc" id="L56">        Optional&lt;Recipe&gt; recipe = recipeService.getRecipeById(id);</span>
+<span class="fc" id="L57">        return recipe.map(value -&gt; new ResponseEntity&lt;&gt;(value, HttpStatus.OK))</span>
+<span class="fc" id="L58">                .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+    }
+
+    @GetMapping(&quot;/user/{userId}/home/recipes&quot;)
+    public ResponseEntity&lt;List&lt;Recipe&gt;&gt; getAllHomePageRecipes(@PathVariable UUID userId){
+<span class="fc" id="L63">        List&lt;Recipe&gt; recipes = recipeService.getAllHomePageRecipes();</span>
+        // gib mir alle Favoriten Rezepten Vom User
+<span class="fc" id="L65">        List&lt;Recipe&gt; favRecipes = recipeService.getFavRecipesOfUser(userId);</span>
+        //Lösche alle Fav Rezepte des Users aus Allen Rezepten da die hier nicht angezeigt werden sollen
+<span class="pc bpc" id="L67" title="2 of 4 branches missed.">        if (favRecipes != null &amp;&amp; recipes != null)  {</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">            for (Recipe recipe : recipes) {</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">                for (Recipe favRecipe : favRecipes) {</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">                    if (recipe.getId().longValue() == favRecipe.getId().longValue()) {</span>
+<span class="fc" id="L71">                        recipes.remove(recipe);</span>
+                    }
+<span class="fc" id="L73">                }</span>
+<span class="fc" id="L74">            }</span>
+        }
+<span class="fc" id="L76">        return new ResponseEntity&lt;&gt;(recipes, HttpStatus.OK);</span>
+    }
+
+    @GetMapping(&quot;/user/{userId}/fav/recipes&quot;)
+    public ResponseEntity&lt;List&lt;Recipe&gt;&gt; getAllUserFavRecipies(@PathVariable UUID userId){
+<span class="fc" id="L81">        List&lt;Recipe&gt; favRecipesOfUser = recipeService.getFavRecipesOfUser(userId);</span>
+<span class="fc" id="L82">        return new ResponseEntity&lt;&gt;(favRecipesOfUser, HttpStatus.OK);</span>
+    }
+
+    /**
+     * Verändert nicht das markedAsFavorite Attribut im Recipe, dafür gibt es extra API'S
+     */
+    @PutMapping(&quot;/recipes/{id}&quot;)
+    public ResponseEntity&lt;Recipe&gt; updateRecipe(@PathVariable Long id, @RequestBody  Recipe requestRecipe){
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (!requestRecipe.getId().equals(id)){</span>
+<span class="nc" id="L91">            return new ResponseEntity&lt;&gt;(HttpStatus.BAD_REQUEST);</span>
+        }
+<span class="fc" id="L93">        Optional&lt;Recipe&gt; existingRecipe = recipeService.getRecipeById(id);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (existingRecipe.isPresent()){</span>
+<span class="fc" id="L95">            Recipe recipe = existingRecipe.get();</span>
+<span class="fc" id="L96">            recipe.setName(requestRecipe.getName());</span>
+<span class="fc" id="L97">            recipe.setImage(requestRecipe.getImage());</span>
+<span class="fc" id="L98">            recipe.setPreparation(requestRecipe.getPreparation());</span>
+<span class="fc" id="L99">            recipe.setRating(requestRecipe.getRating());</span>
+<span class="fc" id="L100">            recipe.setVisibility(requestRecipe.getVisibility());</span>
+<span class="fc" id="L101">            recipe.setShowAuthor(requestRecipe.getShowAuthor());</span>
+<span class="fc" id="L102">            Recipe updateRecipe = recipeService.updateRecipe(recipe);</span>
+<span class="fc" id="L103">            return new ResponseEntity&lt;&gt;(updateRecipe, HttpStatus.OK);</span>
+        }
+<span class="nc" id="L105">        return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+    }
+
+    @PutMapping(&quot;/user/{userId}/fav/recipes/{recipeId}&quot;)
+    public ResponseEntity&lt;Recipe&gt; userAddedRecipeAsFav(@PathVariable UUID userId, @PathVariable Long recipeId){
+<span class="fc" id="L110">        Optional&lt;User&gt; foundUser = userService.getUserById(userId);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        if (foundUser.isEmpty()){</span>
+<span class="fc" id="L112">            return new ResponseEntity&lt;&gt;(HttpStatus.BAD_REQUEST);</span>
+        }
+
+<span class="fc" id="L115">        Optional&lt;Recipe&gt; existingRecipe = recipeService.getRecipeById(recipeId);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">        if (existingRecipe.isPresent()){</span>
+<span class="fc" id="L117">            Recipe recipe = existingRecipe.get();</span>
+
+<span class="fc" id="L119">            boolean userFound = recipe.getMarkedAsFavorite().contains(foundUser.get());</span>
+
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">            if (userFound){</span>
+<span class="nc" id="L122">                recipe.getMarkedAsFavorite().remove(foundUser.get());</span>
+            }else {
+<span class="fc" id="L124">                recipe.getMarkedAsFavorite().add(foundUser.get());</span>
+            }
+
+<span class="fc" id="L127">            Recipe updateRecipe = recipeService.updateRecipe(recipe);</span>
+<span class="fc" id="L128">            return new ResponseEntity&lt;&gt;(updateRecipe, HttpStatus.OK);</span>
+        }
+<span class="nc" id="L130">        return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+    }
+
+
+    @DeleteMapping(&quot;/recipes/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteRecipe(@PathVariable Long id){
+<span class="fc" id="L136">        Optional&lt;Recipe&gt; recipe = recipeService.getRecipeById(id);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (recipe.isPresent()){</span>
+<span class="fc" id="L138">            recipeService.deleteRecipe(id);</span>
+<span class="fc" id="L139">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+        }
+<span class="fc" id="L141">        return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecipeServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Kochrezept-Backend</a> &gt; <a href="index.source.html" class="el_package">org.team7.kochrezeptbackend.service.impl</a> &gt; <span class="el_source">RecipeServiceImpl.java</span></div><h1>RecipeServiceImpl.java</h1><pre class="source lang-java linenums">package org.team7.kochrezeptbackend.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.team7.kochrezeptbackend.entity.Recipe;
+import org.team7.kochrezeptbackend.repository.RecipeRepository;
+import org.team7.kochrezeptbackend.service.RecipeService;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+
+@Service
+public class RecipeServiceImpl implements RecipeService {
+
+    private final RecipeRepository recipeRepository;
+
+    @Autowired
+<span class="fc" id="L21">    public RecipeServiceImpl(RecipeRepository recipeRepository) {</span>
+<span class="fc" id="L22">        this.recipeRepository = recipeRepository;</span>
+<span class="fc" id="L23">    }</span>
+
+
+    @Override
+    @Transactional
+    public Recipe saveRecipe(Recipe recipe) {
+<span class="fc" id="L29">        return recipeRepository.save(recipe);</span>
+    }
+
+    @Override
+    public Optional&lt;Recipe&gt; getRecipeById(Long id) {
+<span class="nc" id="L34">        return recipeRepository.findById(id);</span>
+    }
+
+    @Override
+    public List&lt;Recipe&gt; getAllHomePageRecipes() {
+<span class="fc" id="L39">        return recipeRepository.findAllRecipesWithVisibilityTrue();</span>
+    }
+
+    @Override
+    public List&lt;Recipe&gt; getRecipesByIds(Set&lt;Long&gt; recipeIds) {
+<span class="fc" id="L44">        return recipeRepository.findByIdIn(recipeIds);</span>
+    }
+
+    @Override
+    public Recipe updateRecipe(Recipe updatedRecipe) {
+<span class="fc" id="L49">        return recipeRepository.save(updatedRecipe);</span>
+    }
+
+    @Override
+    public void deleteRecipe(Long id) {
+<span class="fc" id="L54">        recipeRepository.deleteById(id);</span>
+<span class="fc" id="L55">    }</span>
+
+    @Override
+    public List&lt;Recipe&gt; findByUser(UUID userId) {
+<span class="fc" id="L59">        return recipeRepository.findRecipeByOwnerId(userId);</span>
+    }
+
+    @Override
+    public List&lt;Recipe&gt; getFavRecipesOfUser(UUID userId) {
+<span class="fc" id="L64">        return recipeRepository.findAllFavoriteRecipesByUserId(userId);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Kochrezept-Backend</a> &gt; <a href="index.source.html" class="el_package">org.team7.kochrezeptbackend.service.impl</a> &gt; <span class="el_source">UserServiceImpl.java</span></div><h1>UserServiceImpl.java</h1><pre class="source lang-java linenums">package org.team7.kochrezeptbackend.service.impl;
+
+import org.springframework.data.domain.PageRequest;
+import org.team7.kochrezeptbackend.entity.Recipe;
+import org.team7.kochrezeptbackend.entity.User;
+import org.team7.kochrezeptbackend.repository.UserRepository;
+import org.team7.kochrezeptbackend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+
+    @Autowired
+<span class="fc" id="L22">    public UserServiceImpl(UserRepository userRepository) {</span>
+<span class="fc" id="L23">        this.userRepository = userRepository;</span>
+<span class="fc" id="L24">    }</span>
+
+    @Override
+    @Transactional
+    public User saveUser(User user) {
+<span class="fc" id="L29">        return userRepository.save(user);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional&lt;User&gt; getUserById(UUID id) {
+<span class="fc" id="L35">        return userRepository.findById(id);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List&lt;User&gt; getLeaderboard() {
+<span class="fc" id="L41">        return userRepository.findTop10ByOrderByLevelDesc(PageRequest.of(0, 10));</span>
+    }
+
+    @Override
+    @Transactional
+    public User updateUser(User updatedUser) {
+<span class="fc" id="L47">        return userRepository.findById(updatedUser.getId())</span>
+<span class="fc" id="L48">                .map(existingUser -&gt; {</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">                    if (updatedUser.getUsername() != null) existingUser.setUsername(updatedUser.getUsername());</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">                    if (updatedUser.getXp() != null) existingUser.setXp(updatedUser.getXp());</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">                    if (updatedUser.getLevel() != null) existingUser.setLevel(updatedUser.getLevel());</span>
+<span class="fc" id="L52">                    return userRepository.save(existingUser);</span>
+                })
+<span class="pc" id="L54">                .orElseThrow(() -&gt; new RuntimeException(&quot;User not found with id: &quot; + updatedUser.getId()));</span>
+    }
+
+    @Override
+    @Transactional
+    public void deleteUser(UUID id) {
+<span class="fc" id="L60">        userRepository.deleteById(id);</span>
+<span class="fc" id="L61">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

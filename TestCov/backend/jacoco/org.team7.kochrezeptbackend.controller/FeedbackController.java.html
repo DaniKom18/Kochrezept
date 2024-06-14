@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FeedbackController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Kochrezept-Backend</a> &gt; <a href="index.source.html" class="el_package">org.team7.kochrezeptbackend.controller</a> &gt; <span class="el_source">FeedbackController.java</span></div><h1>FeedbackController.java</h1><pre class="source lang-java linenums">package org.team7.kochrezeptbackend.controller;
+
+import org.team7.kochrezeptbackend.entity.Feedback;
+import org.team7.kochrezeptbackend.entity.Recipe;
+import org.team7.kochrezeptbackend.service.FeedbackService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.team7.kochrezeptbackend.service.RecipeService;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping(&quot;/api&quot;)
+@CrossOrigin(originPatterns = &quot;*&quot;)
+public class FeedbackController {
+
+  private final FeedbackService feedbackService;
+  private final RecipeService recipeService;
+
+  @Autowired
+<span class="fc" id="L24">  public FeedbackController(FeedbackService feedbackService, RecipeService recipeService) {</span>
+<span class="fc" id="L25">    this.feedbackService = feedbackService;</span>
+<span class="fc" id="L26">    this.recipeService = recipeService;</span>
+<span class="fc" id="L27">  }</span>
+
+  @PostMapping(&quot;/recipe/{recipeId}/feedback&quot;)
+  public ResponseEntity&lt;Feedback&gt; createFeedback(@PathVariable Long recipeId, @RequestBody Feedback feedbackRequest) {
+<span class="fc" id="L31">    Optional&lt;Recipe&gt; recipe = recipeService.getRecipeById(recipeId);</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">    if (recipe.isEmpty()) {</span>
+<span class="nc" id="L33">      return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+    }
+<span class="fc" id="L35">    feedbackRequest.setRecipe(recipe.get());</span>
+<span class="fc" id="L36">    Feedback savedFeedback = feedbackService.saveFeedback(feedbackRequest);</span>
+
+<span class="fc" id="L38">    return new ResponseEntity&lt;&gt;(savedFeedback, HttpStatus.CREATED);</span>
+  }
+
+  @GetMapping(&quot;/recipe/{recipeId}/feedback&quot;)
+  public ResponseEntity&lt;List&lt;Feedback&gt;&gt; getAllFeedbacksOfRecipe(@PathVariable Long recipeId) {
+<span class="fc" id="L43">    Optional&lt;Recipe&gt; recipe = recipeService.getRecipeById(recipeId);</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">    if (recipe.isEmpty()) {</span>
+<span class="nc" id="L45">      return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+    }
+
+<span class="fc" id="L48">    List&lt;Feedback&gt; feedbacks = feedbackService.findByRecipeId(recipeId);</span>
+<span class="fc" id="L49">    return new ResponseEntity&lt;&gt;(feedbacks, HttpStatus.OK);</span>
+  }
+
+  @PutMapping(&quot;/recipe/{recipeId}/feedback/{feedbackId}&quot;)
+  public ResponseEntity&lt;Feedback&gt; updateFeedback(@PathVariable Long recipeId, @PathVariable Long feedbackId, @RequestBody Feedback requestFeedback) {
+<span class="fc" id="L54">    Optional&lt;Recipe&gt; recipe = recipeService.getRecipeById(recipeId);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">    if (recipe.isEmpty()) {</span>
+<span class="nc" id="L56">      return new ResponseEntity&lt;&gt;(HttpStatus.BAD_REQUEST);</span>
+    }
+
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">    if (!requestFeedback.getId().equals(feedbackId)) {</span>
+<span class="nc" id="L60">      return new ResponseEntity&lt;&gt;(HttpStatus.BAD_REQUEST);</span>
+    }
+
+<span class="fc" id="L63">    Optional&lt;Feedback&gt; foundFeedback = feedbackService.findById(feedbackId);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">    if (foundFeedback.isEmpty()) {</span>
+<span class="nc" id="L65">      return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+    }
+
+<span class="fc" id="L68">    Feedback updatedFeedback = feedbackService.updateFeedback(requestFeedback, foundFeedback.get());</span>
+
+<span class="fc" id="L70">    updateRecipeRating(recipe.get());</span>
+
+<span class="fc" id="L72">    return new ResponseEntity&lt;&gt;(updatedFeedback, HttpStatus.OK);</span>
+  }
+
+
+  public void updateRecipeRating(Recipe recipe) {
+    // Alle Feedbacks für das Rezept abrufen
+<span class="fc" id="L78">    List&lt;Feedback&gt; feedbacks = feedbackService.findByRecipeId(recipe.getId());</span>
+
+    // Anzahl der Feedbacks
+<span class="fc" id="L81">    int numberOfUserFeedbacks = feedbacks.size();</span>
+
+    // Summe der Ratings berechnen
+<span class="fc" id="L84">    double sumOfRatings = 0.0;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">    for (Feedback feedback : feedbacks) {</span>
+      // Feedbacks die 0.0 haben werden nicht in der Rechnung berücksichtigt
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">      if (feedback.getRating() == 0.0) {</span>
+<span class="nc" id="L88">        numberOfUserFeedbacks--;</span>
+<span class="nc" id="L89">        continue;</span>
+      }
+<span class="fc" id="L91">      sumOfRatings += feedback.getRating();</span>
+<span class="fc" id="L92">    }</span>
+
+    // Durchschnitt berechnen
+<span class="fc" id="L95">    double averageRating = sumOfRatings / numberOfUserFeedbacks;</span>
+
+<span class="fc" id="L97">    recipe.setRating(averageRating);</span>
+
+    // Rezept aktualisieren
+<span class="fc" id="L100">    recipeService.updateRecipe(recipe);</span>
+<span class="fc" id="L101">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

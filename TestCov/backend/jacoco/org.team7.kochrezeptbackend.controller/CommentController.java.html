@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommentController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Kochrezept-Backend</a> &gt; <a href="index.source.html" class="el_package">org.team7.kochrezeptbackend.controller</a> &gt; <span class="el_source">CommentController.java</span></div><h1>CommentController.java</h1><pre class="source lang-java linenums">package org.team7.kochrezeptbackend.controller;
+
+import org.team7.kochrezeptbackend.entity.Comment;
+import org.team7.kochrezeptbackend.entity.Feedback;
+import org.team7.kochrezeptbackend.service.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.team7.kochrezeptbackend.service.FeedbackService;
+
+import java.util.List;
+import java.util.Optional;
+
+
+@RestController
+@RequestMapping(&quot;/api&quot;)
+@CrossOrigin(originPatterns = &quot;*&quot;)
+public class CommentController {
+
+    private final CommentService commentService;
+    private final FeedbackService feedbackService;
+
+    @Autowired
+<span class="fc" id="L25">    public CommentController(CommentService commentService, FeedbackService feedbackService) {</span>
+<span class="fc" id="L26">        this.commentService = commentService;</span>
+<span class="fc" id="L27">        this.feedbackService = feedbackService;</span>
+<span class="fc" id="L28">    }</span>
+
+    @PostMapping(&quot;/feedback/{feedbackId}/comments&quot;)
+    public ResponseEntity&lt;Comment&gt; createComment(@PathVariable Long feedbackId, @RequestBody Comment commentRequest) {
+<span class="fc" id="L32">        Optional&lt;Feedback&gt; foundFeedback = feedbackService.findById(feedbackId);</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (foundFeedback.isEmpty()){</span>
+<span class="nc" id="L34">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+<span class="fc" id="L36">        commentRequest.setFeedback(foundFeedback.get());</span>
+<span class="fc" id="L37">        Comment savedComment = commentService.saveComment(commentRequest);</span>
+<span class="fc" id="L38">        return new ResponseEntity&lt;&gt;(savedComment, HttpStatus.CREATED);</span>
+    }
+
+    @GetMapping(&quot;/feedback/{feedbackId}/comments&quot;)
+    public ResponseEntity&lt;List&lt;Comment&gt;&gt; getAllCommentsOfFeedback(@PathVariable Long feedbackId) {
+<span class="fc" id="L43">        Optional&lt;Feedback&gt; foundFeedback = feedbackService.findById(feedbackId);</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if (foundFeedback.isEmpty()){</span>
+<span class="nc" id="L45">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+
+<span class="fc" id="L48">        List&lt;Comment&gt; comments = commentService.findByFeedbackId(feedbackId);</span>
+<span class="fc" id="L49">        return new ResponseEntity&lt;&gt;(comments, HttpStatus.OK);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

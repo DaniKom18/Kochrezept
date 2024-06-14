@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IngredientController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Kochrezept-Backend</a> &gt; <a href="index.source.html" class="el_package">org.team7.kochrezeptbackend.controller</a> &gt; <span class="el_source">IngredientController.java</span></div><h1>IngredientController.java</h1><pre class="source lang-java linenums">package org.team7.kochrezeptbackend.controller;
+
+import org.team7.kochrezeptbackend.entity.Ingredient;
+import org.team7.kochrezeptbackend.entity.Recipe;
+import org.team7.kochrezeptbackend.service.IngredientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.team7.kochrezeptbackend.service.RecipeService;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping(&quot;/api&quot;)
+@CrossOrigin(originPatterns = &quot;*&quot;)
+public class IngredientController {
+
+    private final IngredientService ingredientService;
+    private final RecipeService recipeService;
+
+    @Autowired
+<span class="fc" id="L25">    public IngredientController(IngredientService ingredientService, RecipeService recipeService) {</span>
+<span class="fc" id="L26">        this.ingredientService = ingredientService;</span>
+<span class="fc" id="L27">        this.recipeService = recipeService;</span>
+<span class="fc" id="L28">    }</span>
+
+    @PostMapping(&quot;/recipe/{recipeId}/ingredients&quot;)
+    public ResponseEntity&lt;List&lt;Ingredient&gt;&gt; createIngredient(@PathVariable Long recipeId, @RequestBody List&lt;Ingredient&gt; ingredientRequest) {
+<span class="fc" id="L32">        Optional&lt;Recipe&gt; recipe = recipeService.getRecipeById(recipeId);</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (recipe.isEmpty()){</span>
+<span class="nc" id="L34">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+
+<span class="fc" id="L37">        List&lt;Ingredient&gt; savedIngredients = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        for (Ingredient ingredient : ingredientRequest) {</span>
+<span class="fc" id="L40">            Optional&lt;Ingredient&gt; foundIngredient = ingredientService.findById(ingredient.getId());</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">            if (foundIngredient.isPresent()){</span>
+<span class="nc" id="L42">                continue; // schon vorhandene Zutaten nicht nochmal in die Datenbank schreiben</span>
+            }
+<span class="fc" id="L44">            ingredient.setRecipe(recipe.get());</span>
+<span class="fc" id="L45">            ingredient.setName(ingredient.getName().toLowerCase());</span>
+<span class="fc" id="L46">            savedIngredients.add(ingredientService.saveIngredient(ingredient));</span>
+<span class="fc" id="L47">        }</span>
+
+<span class="fc" id="L49">        return new ResponseEntity&lt;&gt;(savedIngredients, HttpStatus.CREATED);</span>
+    }
+
+    @GetMapping(&quot;/recipe/{recipeId}/ingredients&quot;)
+    public ResponseEntity&lt;List&lt;Ingredient&gt;&gt; getAllIngredientsOfRecipe(@PathVariable Long recipeId) {
+<span class="fc" id="L54">        Optional&lt;Recipe&gt; recipe = recipeService.getRecipeById(recipeId);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (recipe.isEmpty()){</span>
+<span class="nc" id="L56">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+
+<span class="fc" id="L59">        List&lt;Ingredient&gt; ingredients = ingredientService.findIngredientsByRecipeId(recipeId);</span>
+<span class="fc" id="L60">        return new ResponseEntity&lt;&gt;(ingredients, HttpStatus.OK);</span>
+    }
+
+    @DeleteMapping(&quot;/ingredients/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteIngredient(@PathVariable Long id) {
+<span class="fc" id="L65">        ingredientService.deleteIngredient(id);</span>
+<span class="fc" id="L66">        return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
+    }
+
+    @DeleteMapping(&quot;/recipe/{recipeId}/ingredients&quot;)
+    public ResponseEntity&lt;Void&gt; deleteAllIngredientsOfReciepe(@PathVariable Long recipeId) {
+<span class="fc" id="L71">        Optional&lt;Recipe&gt; recipe = recipeService.getRecipeById(recipeId);</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (recipe.isEmpty()){</span>
+<span class="nc" id="L73">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+<span class="fc" id="L75">        ingredientService.deleteByRecipeId(recipeId);</span>
+<span class="fc" id="L76">        return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
