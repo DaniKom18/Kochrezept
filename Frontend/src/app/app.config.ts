@@ -25,7 +25,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
        //   window.location.origin + '/assets/silent-check-sso.html' // URI for silent SSO checks
       },
       // Enables Bearer interceptor
-      enableBearerInterceptor: false,
+      enableBearerInterceptor: true,
       // Prefix for the Bearer token
       bearerPrefix: 'Bearer',
       // URLs excluded from Bearer token addition (empty by default)
