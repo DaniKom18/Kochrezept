@@ -30,7 +30,7 @@
 15. **Bewertungssystem**: Jedes Rezept zeigt den Durchschnitt aller Bewertungen
 16. **Favorisieren von Rezepten**: Nutzer können Rezepte, einschließlich ihrer eigenen, als Favoriten speichern.
 17. **Jedes erstellte Rezept gibt 10xp, die XP werden im UserProfil angezeigt**:
-18. **Level Anzeige**: Nachdem ein User 100xp erreicht, wird sein Level erhöht und die Xp wieder auf 0 gesetzt <img width="708" alt="image" src="https://github.com/DaniKom18/Kochrezept/assets/106764451/664f9f01-1a4b-4321-8b3a-2c5b6e506c49">
+18. **Level Anzeige**: Nachdem ein User 100xp erreicht, wird sein Level erhöht und die Xp wieder auf 0 gesetzt
 19. **LeaderBoard** Hier werden die Top 10 User angezeigt mit dem höchsten Level
 
 
